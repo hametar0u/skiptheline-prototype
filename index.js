@@ -17,7 +17,31 @@ express()
       const client = await pool.connect()
       const result = await client.query('SELECT * FROM users');
       const results = { 'results': (result) ? result.rows : null};
-      res.render('pages/db', results );
+      res.render('pages/users', results );
+      client.release();
+    } catch (err) {
+      console.error(err);
+      res.send("Error " + err);
+    }
+  })
+  .get('/orders', async (req, res) => {
+    try {
+      const client = await pool.connect()
+      const result = await client.query('SELECT * FROM orders');
+      const results = { 'results': (result) ? result.rows : null};
+      res.render('pages/orders', results );
+      client.release();
+    } catch (err) {
+      console.error(err);
+      res.send("Error " + err);
+    }
+  })
+  .get('/order_details', async (req, res) => {
+    try {
+      const client = await pool.connect()
+      const result = await client.query('SELECT * FROM order_details');
+      const results = { 'results': (result) ? result.rows : null};
+      res.render('pages/order_details', results );
       client.release();
     } catch (err) {
       console.error(err);
