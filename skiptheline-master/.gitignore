@@ -1,7 +1,0 @@
-# Project exclude paths
-sendgrid.env
-env/
-venv/
-__pycache__
-.idea
-app/app.log
