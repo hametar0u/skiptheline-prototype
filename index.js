@@ -52,24 +52,24 @@ express()
 .post("/login", async (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
-    var query = `select * from users where user.username = '${username}'`
+    var query = `select * from users where user.username = '${username}'`;
     pool.query(loginQuery, (error, result) => {
         if (error):
             res.send(error);
         else:
             results = {'rows': result.rows };
             if (results.rows === undefined || results.rows.length == 0){
-                res.redirect("failure.html")
+                res.redirect("failure.html");
                 //tell user email/password is wrong -> redirect to another page/go back to the beginning
             }
             else:
                 //check password
-                databasepassword = results.rows[0].password
+                databasepassword = results.rows[0].password;
                 if (databasepassword === loginPassword):
-                    res.redirect("success.html")
+                    res.redirect("success.html");
                     //redirect to main page, display "logged in as {username}"
                 else:
-                    res.redirect("failure.html")
+                    res.redirect("failure.html");
                     //tell user email/password is wrong -> redirect to another page/go back to the beginning
     
     });
