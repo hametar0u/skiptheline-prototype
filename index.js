@@ -9,6 +9,8 @@ const pool = new Pool({
 
 express()
   .use(express.static(path.join(__dirname, 'public')))
+  .use(express.urlencoded({ extended: false }))
+  .use(express.json())
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.redirect('login.html'))
@@ -49,10 +51,10 @@ express()
     }
     
   })
-.post("/login",  (req, res) => {
+  .post('/login',  (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
-    var query = `select * from users where user.username = '${username}'`;
+    var loginQuery = `select * from users where user.username = '${username}'`;
     pool.query(loginQuery, (error, result) => {
         if (error)
             res.send(error);
