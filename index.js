@@ -106,7 +106,7 @@ express()
   })
   .get('/logout', function (req, res) {
     delete req.session.user_id;
-    res.redirect('/login');
+    res.redirect('login.html');
   });
 
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
