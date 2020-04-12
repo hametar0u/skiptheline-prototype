@@ -7,6 +7,29 @@ const pool = new Pool({
     ssl: true
                       });
 
+function makeid(length) {
+   var result           = '';
+   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+   var charactersLength = characters.length;
+   for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+   }
+   return result;
+}
+
+function checkAuth(req, res, next) {
+  if (!req.session.user_id) {
+    res.send('You are not authorized to view this page');
+    res.redirect("login.html")
+  } else {
+    next();
+  }
+}
+
+
+
+
+
 express()
   .use(express.static(path.join(__dirname, 'public')))
   .use(express.urlencoded({ extended: false }))
@@ -69,6 +92,7 @@ express()
                 //check password
                 databasepassword = results.rows[0].password;
                 if (databasepassword === loginPassword){
+                    req.session.user_id = makeid(10);
                     res.redirect("success.html");}
                     //redirect to main page, display "logged in as {username}"
                 else{
@@ -78,9 +102,18 @@ express()
         }
     
     });
-})
-
+      
+  })
+  .get('/logout', function (req, res) {
+    delete req.session.user_id;
+    res.redirect('/login');
+  });
 
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 
+//every time app.get a page, add the check Auth function (ex:
+
+//app.get('/my_secret_page', checkAuth, function (req, res) {
+  //res.send('if you are viewing this page it means you are logged in');
+//});
