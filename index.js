@@ -54,10 +54,10 @@ express()
   .post('/login',  (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
-    var loginQuery = `select * from users where user.username = '${username}'`;
+    var loginQuery = `select * from users where users.username = '${username}'`;
     pool.query(loginQuery, (error, result) => {
         if (error)
-            res.send('error:'+ error);
+            res.send(error);
         else {
             results = {'rows': result.rows };
             if (results.rows === undefined || results.rows.length == 0){
