@@ -59,7 +59,7 @@
 			
 			
 		</style>
-		<script>
+		<!--<script>
 			function redirect(){
 				var redirectStatus = document.getElementById('redirect').checked;
 
@@ -110,11 +110,11 @@
 			}
 
 			
-		</script>
+		</script>-->
 	</head>
 	<body>
 		<h1>Some shit</h1>
-		<h4>Login:</h4>
+		<!--<h4>Login:</h4>
 
 		
 		<p>
@@ -134,7 +134,12 @@
 					onclick='login();' />
 		</p>
 
-		<p id='output'></p> 
+		<p id='output'></p> -->
+        <form method="POST" action="/login">
+            <input type="text" name="username" placeholder="Username">
+            <input type="password" name="password" placeholder="Password">
+            <input type="submit" value="Login">
+        </form>
 
 	</body>
 </html>

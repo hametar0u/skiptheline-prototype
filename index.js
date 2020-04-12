@@ -47,7 +47,9 @@ express()
       console.error(err);
       res.send("Error " + err);
     }
+ .post()
   })
+
 
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
