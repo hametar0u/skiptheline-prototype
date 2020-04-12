@@ -49,7 +49,7 @@ express()
     }
     
   })
-.post("/login", async (req, res) => {
+.post("/login",  (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
     var query = `select * from users where user.username = '${username}'`;
