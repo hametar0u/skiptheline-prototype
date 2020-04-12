@@ -54,7 +54,7 @@ express()
     var password = req.body.password;
     var query = `select * from users where user.username = '${username}'`
     pool.query(loginQuery, (error, result) => {
-        if (error)
+        if (error):
             res.send(error);
         else:
             results = {'rows': result.rows };
