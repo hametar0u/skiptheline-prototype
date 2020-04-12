@@ -52,9 +52,9 @@ express()
     
   })
   .post('/login',  (req, res) => {
-    var username = req.body.username;
-    var password = req.body.password;
-    var loginQuery = `select * from users where users.username = '${username}'`;
+    var loginUsername = req.body.username;
+    var loginPassword = req.body.password;
+    var loginQuery = `select * from users where users.username = '${loginUsername}'`;
     pool.query(loginQuery, (error, result) => {
         if (error)
             res.send(error);
