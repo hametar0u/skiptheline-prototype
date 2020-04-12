@@ -57,7 +57,7 @@ express()
     var loginQuery = `select * from users where user.username = '${username}'`;
     pool.query(loginQuery, (error, result) => {
         if (error)
-            res.send(error);
+            res.send('error:'+ error);
         else {
             results = {'rows': result.rows };
             if (results.rows === undefined || results.rows.length == 0){
