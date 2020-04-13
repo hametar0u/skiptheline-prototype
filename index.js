@@ -44,6 +44,11 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.redirect('login.html'))
+  .get('/login', (req, res) => res.redirect('login2.html'))
+  .get('/orderhistory', (req, res) => res.redirect('order_history.html'))
+  .get('/pendingorders', (req, res) => res.redirect('pending_orders.html'))
+  .get('/signup', (req, res) => res.redirect('sign_up.html'))
+  .get('/confirmorder', (req, res) => res.redirect('confirm_order.html'))
   .get('/users', async (req, res) => {
     try {
       const client = await pool.connect()
