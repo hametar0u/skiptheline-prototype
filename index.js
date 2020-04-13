@@ -100,6 +100,7 @@ express()
                 databasepassword = results.rows[0].password;
                 if (databasepassword === loginPassword){
                     req.session.user_id = makeid(10);
+                    console.log('user id: '+req.session.user_id);
                     res.redirect("success.html");}
                     //redirect to main page, display "logged in as {username}"
                 else{
