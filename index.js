@@ -6,6 +6,9 @@ const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: true
                       });
+const session = require('express-session');
+
+
 
 function makeid(length) {
    var result           = '';
@@ -34,6 +37,9 @@ express()
   .use(express.static(path.join(__dirname, 'public')))
   .use(express.urlencoded({ extended: false }))
   .use(express.json())
+  .use(session({
+    //user_id: ""
+  }))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.redirect('login.html'))
