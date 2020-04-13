@@ -38,6 +38,7 @@ express()
   .use(express.urlencoded({ extended: false }))
   .use(express.json())
   .use(session({
+    secret:"skiptheline"
     //user_id: ""
   }))
   .set('views', path.join(__dirname, 'views'))
