@@ -98,7 +98,6 @@ express()
                 else{
                     res.redirect("failure.html");}
                     //tell user email/password is wrong -> redirect to another page/go back to the beginning
-                
             }
         }
     
