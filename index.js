@@ -114,6 +114,7 @@ express()
   })
   .get('/logout', function (req, res) {
     delete req.session.user_id;
+    console.log('user id: '+req.session.user_id)
     res.redirect('login.html');
   })
 
