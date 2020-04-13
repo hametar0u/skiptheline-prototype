@@ -46,8 +46,10 @@ express()
   .get('/', (req, res) => res.redirect('login.html'))
   .get('/login', (req, res) => res.redirect('login2.html'))
   .get('/orderhistory', (req, res) => res.redirect('order_history.html'))
-  .get('/pendingorders', (req, checkAuth, res) => res.redirect('pending_orders.html'))
-  
+  .get('/pendingorders', (req, res) => res.redirect('pending_orders.html'))
+  .get('/my_secret_page', checkAuth, function (req, res) {
+    res.send('if you are viewing this page it means you are logged in');
+  })
   .get('/signup', (req, res) => res.redirect('sign_up.html'))
   .get('/confirmorder', (req, res) => res.redirect('confirm_order.html'))
   .get('/users', async (req, res) => {
