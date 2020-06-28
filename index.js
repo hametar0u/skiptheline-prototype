@@ -210,8 +210,9 @@ app.post('/login',  (req, res) => {
   var loginPassword = req.body.password;
   var loginQuery = `select * from users where users.username = '${loginUsername}' AND password = crypt('${loginPassword}', password)`;
   pool.query(loginQuery, (error, result) => {
-    if (error)
+    if (error){
       res.send(error);
+    }
     else {
       var results = {'rows': result.rows };
       if (results.rows === undefined || results.rows.length == 0){
@@ -220,14 +221,9 @@ app.post('/login',  (req, res) => {
       }
       else{
         //check password
-        var databasepassword = results.rows[0].password;
-        if (databasepassword === loginPassword){
-          req.session.user_id = makeid(10);
-          req.session.username = loginUsername;
-          res.redirect("/order_now");
-        }
-        else{
-          res.redirect("failure.html");
+        req.session.user_id = makeid(10);
+        req.session.username = loginUsername;
+        res.redirect("/order_now");
           //tell user email/password is wrong -> redirect to another page/go back to the beginning
         }
       }
