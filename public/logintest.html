@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--
+		
+			results:
+			    [[username, password], //[0]
+			     [username, password], // ...
+			     [username, password],
+			     [username, password]]
+
+
+			user inputs username/password
+			username input = loginUsername
+			password input = loginPassword
+
+			query = select * from users where user.username = '${username}'
+
+			pool.query(loginQuery, (error, result) => {
+			    if (error)
+			        res.send(error);
+			    else:
+			        results = {'rows': result.rows };
+			        if (results.rows === undefined || results.rows.length == 0){
+			            //tell user email/password is wrong -> redirect to another page/go back to the beginning
+			        }
+			        else:
+			            //check password
+			            databasepassword = results.rows[0].password
+			            if (databasepassword === loginPassword):
+			                //redirect to main page, display "logged in as {username}"
+			            else:
+			                //tell user email/password is wrong -> redirect to another page/go back to the beginning
+
+			});
+
+		-->
+
+		<link href="https://fonts.googleapis.com/css?family=Roboto" 
+			  rel="stylesheet">
+		<style>
+			html {
+				text-align:			center;
+				zoom:				1.8;
+				font-family: 		'Roboto', sans-serif;
+			}
+			
+			body {
+				background-color:	#99DBAD;
+			}
+			
+			h1 {
+				border-style:		groove;
+				border-width:		20px;
+				border-color:		#095240;
+				font-size:			40px;
+				background-color:	#7AD37A;
+			}	
+			
+			
+		</style>
+		<!--<script>
+			function redirect(){
+				var redirectStatus = document.getElementById('redirect').checked;
+
+				if (redirectStatus === true){
+					document.getElementById('redirectText').innerHTML = ("Redirects: ON");
+				} else {
+					document.getElementById('redirectText').innerHTML = ("Redirects: OFF");
+				}
+			}
+
+
+			function login() {
+			var redirectStatus = document.getElementById('redirect').checked;
+			
+			//sample username/password:
+			
+			var username = "testuser";
+			var password = "testpass";	
+
+			var userinput = document.getElementById('username').value;
+			var passinput = document.getElementById('password').value;
+			
+			console.log("Username: " + userinput);
+			console.log("Password: " + passinput);
+
+
+				//for both fail situations since the output is the same
+				if(userinput != username || passinput != password){
+					
+					console.log("failed");
+					if (redirectStatus === true) {
+						window.location.href = "failure.html"; 
+					}
+				}
+
+				//for the success situation
+				if (userinput == username && passinput == password){
+					console.log("redirected to logged in website");
+					if (redirectStatus === true) {
+						//window.location.href = "https://skiptheline.bss.design/"; - maybe use something like this once things get hosted
+						window.location.href = "success.html";
+					}
+				}
+
+				//for debugging if console is ass, remove in functional version
+				document.getElementById('output').innerHTML = ("Username entered: " + userinput + "<br>Password entered: " + passinput);
+
+			}
+
+			
+		</script>-->
+	</head>
+	<body>
+		<h1>Some shit</h1>
+		<!--<h4>Login:</h4>
+
+		
+		<p>
+			<input 	type='checkbox' id='redirect' onclick='redirect();' /> Toggle page redirects on/off
+			<p id='redirectText'></p> 
+		</p>
+
+		<p>	
+			Username<br>
+			<input 	type='text' id='username' /><br>
+			Password<br>
+			<input 	type='text' id='password' />
+		</p>
+
+		<p>
+			<input 	type='button' value='Login' id='loginBtn'
+					onclick='login();' />
+		</p>
+
+		<p id='output'></p> -->
+        <form method="POST" action="/login">
+            <input required type="text" name="username" id="username" placeholder="Username" >
+            <input required type="password" name="password" id="password" placeholder="Password">
+            <input type="submit" value="Login">
+        </form>
+
+	</body>
+</html>
