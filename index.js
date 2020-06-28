@@ -130,7 +130,7 @@ app.post('/confirmation', (req, res) => {
   if (codeconf == req.session.confcode) {
     var usr = req.session.usr;
     var pwd = req.session.pwd;
-    var createAccountQuery = `INSERT INTO users(username, password) SELECT '${usr}', '${pwd}' WHERE NOT EXISTS(SELECT 1 FROM users WHERE username = '${usr}');`;
+    var createAccountQuery = `INSERT INTO users(username, password) SELECT '${usr}', crypt('${pwd}', gen_salt('bf')) WHERE NOT EXISTS(SELECT 1 FROM users WHERE username = '${usr}');`;
     pool.query(createAccountQuery, (error, result) => {
       if (error) {
         res.send(error);
@@ -208,7 +208,7 @@ app.get('/menu', async (req, res) => { //make admin checkAuth function and call 
 app.post('/login',  (req, res) => {
   var loginUsername = req.body.username;
   var loginPassword = req.body.password;
-  var loginQuery = `select * from users where users.username = '${loginUsername}'`;
+  var loginQuery = `select * from users where users.username = '${loginUsername}' AND password = crypt('${loginPassword}', password)`;
   pool.query(loginQuery, (error, result) => {
     if (error)
       res.send(error);
