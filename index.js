@@ -219,6 +219,7 @@ app.post('/login',  (req, res) => {
         res.redirect("failure.html");
         //tell user email/password is wrong -> redirect to another page/go back to the beginning
       }
+      
       else{
         //check password
         req.session.user_id = makeid(10);
