@@ -260,7 +260,7 @@ app.post('/date_select', async (req,res) => {
     const drinkResult = await client.query(`SELECT item,price FROM drinkmenu;`);
     const foodResults = { 'fRows': (foodResult) ? foodResult.rows : null};
     const drinkResults = { 'dRows': (drinkResult) ? drinkResult.rows : null};
-    res.render('pages/order_now.ejs', {row1: foodResults, row2: drinkResults, row3: dateObject} );
+    res.render('pages/order_now.ejs', {row3: dateObject, row1: foodResults, row2: drinkResults} );
     client.release();
   } catch (err) {
     console.error(err);
