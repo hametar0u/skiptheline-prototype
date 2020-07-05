@@ -350,6 +350,7 @@ app.post('/drink_menu_add', function (req,res) {
       // }
       res.redirect('/menu');
     }
+  });
 });
 
 app.post('/menu_remove', function (req, res) {
