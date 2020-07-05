@@ -147,8 +147,7 @@ FRIDAY, APRIL 10, 2020
                 <div class="content">
 
                   <input type="number" step="1" min="0" name="menuItemQuantity" id="<%= 'menuItemQuantity' + i.toString() %>" placeholder="0">
-                  <button onclick="add_to_cart(<%= i %>)" href='#'>Add to Cart</button>
-                  <% i++; %>
+                  <button onclick="add_to_cart(<%= i %>); window.location.href='#'">Add to Cart</button>
                 </div>
               </div>
             </div>
@@ -168,7 +167,13 @@ FRIDAY, APRIL 10, 2020
     <input id="cart_items" name="cart_items" type="hidden" value=''>
     <input type="submit" value="Confirm Order">
   </form>
-  
+
+  <!-- sidebar for displaying cart -->
+  <div id="display_cart">
+
+
+  </div>
+
 </body>
 
 <script>
@@ -211,7 +216,8 @@ FRIDAY, APRIL 10, 2020
     console.log(cart);
 
     document.getElementById("cart_items").value = JSON.stringify(cart);
-
+    //update cart after someone adds stuff to it
+    displayCart();
   }
 
   function sendData() {
@@ -240,6 +246,43 @@ FRIDAY, APRIL 10, 2020
     }
     
   } );
+
+  function displayCart() {
+    var div = document.getElementById("display_cart");
+    var tbl = document.createElement("table");
+    for (var i = 0; i< cart.item_amount; i++) {
+      var tr = document.createElement("tr");
+
+      var tdItem = document.createElement("td");
+      var itemText = document.createTextNode(cart.cart_items[item]);
+      tdItem.appendChild(itemText);
+
+      var tdPrice = document.createElement("td");
+      var priceText = document.createTextNode(cart.cart_items[price]);
+      tdPrice.appendChild(priceText);
+      
+      var tdQuantity = document.createElement("td");
+      var quantityText = document.createTextNode(cart.cart_items[quantity]);
+      tdQuantity.appendChild(quantityText);
+    
+      var tdButton = document.createElement("td");
+      var button = document.createElement("button");
+      button.setAttribute("onClick",`removeCartItem('${i}')`);
+      tdButton.appendChild(button);
+
+      tr.appendChild(tdItem);
+      tr.appendChild(tdPrice);
+      tr.appendChild(tdQuantity);
+      tr.appendChild(tdButton);
+
+      tbl.appendChild(tr);
+    }
+    div.appendChild(tbl);
+  }
+
+  function removeCartItem(i) {
+    cart.cart_items.splice(i,1);
+  }
 
 </script>
 
