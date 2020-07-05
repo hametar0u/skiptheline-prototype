@@ -254,15 +254,15 @@ FRIDAY, APRIL 10, 2020
       var tr = document.createElement("tr");
 
       var tdItem = document.createElement("td");
-      var itemText = document.createTextNode(cart.cart_items[i][item]);
+      var itemText = document.createTextNode(cart.cart_items[i].item);
       tdItem.appendChild(itemText);
 
       var tdPrice = document.createElement("td");
-      var priceText = document.createTextNode(cart.cart_items[i][price]);
+      var priceText = document.createTextNode(cart.cart_items[i].price);
       tdPrice.appendChild(priceText);
       
       var tdQuantity = document.createElement("td");
-      var quantityText = document.createTextNode(cart.cart_items[i][quantity]);
+      var quantityText = document.createTextNode(cart.cart_items[i].quantity);
       tdQuantity.appendChild(quantityText);
     
       var tdButton = document.createElement("td");
