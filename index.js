@@ -330,7 +330,7 @@ app.post('/menu_add', function (req, res) {
 app.post('/drink_menu_add', function (req,res) {
   var menuItemAdd = req.body.drinkMenuItemAdd;
   var menuItemPrice = req.body.drinkMenuItemPrice;
-  var menuItemAddQuery = `INSERT INTO drinkmenu SELECT '${menuItemAdd}', '${menuItemPrice}', '${menuItemStartDate}', '${menuItemEndDate}' WHERE NOT EXISTS(SELECT 1 FROM drinkmenu WHERE item='${menuItemAdd}');`;
+  var menuItemAddQuery = `INSERT INTO drinkmenu SELECT '${menuItemAdd}', '${menuItemPrice}',  WHERE NOT EXISTS(SELECT 1 FROM drinkmenu WHERE item='${menuItemAdd}');`;
   console.log("Menu add item Query");
   pool.query(menuItemAddQuery, (error, result) => {
     if (error) {
