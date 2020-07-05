@@ -327,6 +327,31 @@ app.post('/menu_add', function (req, res) {
   
 });
 
+app.post('/drink_menu_add', function (req,res) {
+  var menuItemAdd = req.body.drinkMenuItemAdd;
+  var menuItemPrice = req.body.drinkMenuItemPrice;
+  var menuItemAddQuery = `INSERT INTO drinkmenu SELECT '${menuItemAdd}', '${menuItemPrice}', '${menuItemStartDate}', '${menuItemEndDate}' WHERE NOT EXISTS(SELECT 1 FROM drinkmenu WHERE item='${menuItemAdd}');`;
+  console.log("Menu add item Query");
+  pool.query(menuItemAddQuery, (error, result) => {
+    if (error) {
+      console.log(error);
+      res.send(error);
+    }
+    else {
+      console.log(result);
+      
+      // if (result.rowCount === 0) {
+      //   var errorMessage = "Item already in the menu";
+      //   res.render('pages/menu.ejs');
+      // }
+      // else {
+      //   var errorMessage = "Item added";
+      //   res.render('pages/menu.ejs');
+      // }
+      res.redirect('/menu');
+    }
+});
+
 app.post('/menu_remove', function (req, res) {
   var menuItemRemove = req.body.menuItemRemove; //temporary
   var menuDateRemove = req.body.menuDateRemove;

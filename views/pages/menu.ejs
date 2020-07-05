@@ -17,7 +17,7 @@
         <br>
          -->
         <div id="menu_add"> <!-- add form for food type-->
-            <h3>Add Menu Item</h3>
+            <h3>Add Food Menu Item</h3>
             <form method="POST" action="/menu_add">
                 <label for="menuItemAdd">Item</label>
                 <input required type="text" name="menuItemAdd" id="menuItemAdd" placeholder="Item">
@@ -32,6 +32,19 @@
                 <input required type="date" name="menuItemEndDate" id="menuItemEndDate">
 
                 <input type="submit" value="Add Menu Item">
+            </form> <!--add multiple simultaneous add options-->
+        </div>
+        <div id="menu_add"> <!-- add form for food type-->
+            <h3>Add Drink Menu Item</h3>
+            <form method="POST" action="/drink_menu_add">
+                <label for="drinkMenuItemAdd">Item</label>
+                <input required type="text" name="drinkMenuItemAdd" id="drinkMenuItemAdd" placeholder="Item">
+
+                <label for="drinkItemPrice">Price</label>
+                <input required type="number" step="0.05" min="0" name="drinkMenuItemPrice" id="drinkItemPrice" placeholder="0.00">
+            
+
+                <input type="submit" value="Add Drink Menu Item">
             </form> <!--add multiple simultaneous add options-->
         </div>
         <div id="menu_remove">
