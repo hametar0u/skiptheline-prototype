@@ -248,8 +248,11 @@ FRIDAY, APRIL 10, 2020
   } );
 
   function displayCart() {
+    document.getElementById("displayTable").remove();
     var div = document.getElementById("display_cart");
     var tbl = document.createElement("table");
+    table.setAttribute("id", "displayTable");
+    
     for (var i = 0; i< cart.item_amount; i++) {
       var tr = document.createElement("tr");
 
