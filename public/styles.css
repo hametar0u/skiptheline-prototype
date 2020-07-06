@@ -17,7 +17,8 @@ h1 {
     left:   0;
     margin: auto;
     font-family: 'Roboto', sans-serif;
-    background-color:white;color:#11BFC7;
+    background-color:white;
+    color:#11BFC7;
     position:fixed;
     margin-bottom:20px;
     text-align:center;
