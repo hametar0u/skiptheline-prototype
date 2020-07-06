@@ -14,18 +14,28 @@ MUDIT (MATT) JAIN
 SKIP THE LINE
 SUNDAY, APRIL 12, 2020
 -->
-
+  <style>
+    html {
+      font-family: 'Roboto', sans-serif;
+    } body {
+      background-color: #11BFC7;
+      /*background-image: linear-gradient(to bottom, #11BFC7, #47E2D6);*/
+    }
+  </style>
 </head>
     
 <body>
   <div class="container-fluid">
 
     <div class="header">
-        <h1 style="color:white;text-align:left;padding-left:10%">SKIP THE LINE</h1>
+        <h1 style="text-align:center;">SKIP THE LINE</h1>
     </div>
     
+
+    <div class='loginbox'>
+
     <br>
-    <h1> Confirmation </h1>
+    <h1> Confirm Order </h1>
     
     <% console.log("confirm order cart = " + JSON.stringify(cart_items)); %>
     <% var itemLength = parseInt(item_amount); %>
@@ -36,7 +46,7 @@ SUNDAY, APRIL 12, 2020
     <% } %>
     <br>
     <a href="#" class="btn" role="button">Pay Now</a>
-    
+    </div>
   </div>
 </body>
 
