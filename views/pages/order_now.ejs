@@ -191,15 +191,17 @@ FRIDAY, APRIL 10, 2020
     var menuItemName = document.getElementById('menuItemName' + i.toString()).textContent;
     var menuItemPrice = document.getElementById("menuItemPrice" + i.toString()).textContent;
     var menuItemQuantity = document.getElementById("menuItemQuantity" + i.toString()).value;
+    var menuItemDate = document.getElementById("dates").value;
     console.log("menu item name = " + menuItemName);
     console.log("menu item price = " + menuItemPrice);
     console.log("menu item quantity = " + menuItemQuantity);
-    
-    var itemObject = {"item":"", "price": 0, "quantity": 0};
+    console.log("menu item date = " + menuItemDate);
+
+    var itemObject = {"item":"", "price": 0, "quantity": 0, "date": ""};
     var existsFlag = false;
 
     for (var n = 0; n < cart.item_amount; n++) {
-      if (cart.cart_items[n].item == menuItemName) {
+      if (cart.cart_items[n].item == menuItemName && cart.cart_items[n].date == menuItemDate) {
         var itemQuantity = parseInt(cart.cart_items[n].quantity);
         itemQuantity += parseInt(menuItemQuantity);
         itemQuantity = itemQuantity.toString();
@@ -213,6 +215,7 @@ FRIDAY, APRIL 10, 2020
       itemObject.item = menuItemName;
       itemObject.price = menuItemPrice;
       itemObject.quantity = menuItemQuantity;
+      itemObject.date = menuItemDate;
 
       cart.cart_items[cart.item_amount] = itemObject;
       cart.item_amount++;
@@ -276,6 +279,10 @@ FRIDAY, APRIL 10, 2020
       var quantityText = document.createTextNode(cart.cart_items[i].quantity);
       tdQuantity.appendChild(quantityText);
     
+      var tdDate = document.createElement("td");
+      var dateText = document.createTextNode(cart.cart_items[i].date);
+      tdDate.appendChild(dateText);
+
       var tdButton = document.createElement("td");
       var button = document.createElement("button");
       button.setAttribute("onClick",`removeCartItem('${i}')`);
@@ -285,6 +292,7 @@ FRIDAY, APRIL 10, 2020
       tr.appendChild(tdItem);
       tr.appendChild(tdPrice);
       tr.appendChild(tdQuantity);
+      tr.appendChild(tdDate);
       tr.appendChild(tdButton);
 
       tbl.appendChild(tr);
