@@ -17,7 +17,7 @@ const oauth2Client = new OAuth2(
   "https://developers.google.com/oauthplayground" // Redirect URL
 );
 oauth2Client.setCredentials({
-  refresh_token: "1//04oiRrMshuSymCgYIARAAGAQSNwF-L9Irq1pOYb1adGXuXqqGTFRXZmULmvhJULhcEznqDSQdEZ4roNPXdtik-TKa4oSEhXpiggQ"
+  refresh_token: "1//04H93rjOmBNxoCgYIARAAGAQSNwF-L9Irv5L5gwrpsjeKViDr7Qml9UFtSPgh1vJYolnJSLEZZOIBmvsznrNj0yiBepHI39M4VZA"
 });
 const accessToken = oauth2Client.getAccessToken()
 const transporter = nodemailer.createTransport({
@@ -28,7 +28,7 @@ const transporter = nodemailer.createTransport({
     user: 'tonalddrump001@gmail.com',
     clientId: '808655872391-1modhjerhfk1elu3m2ctchmd7nv3uol3.apps.googleusercontent.com',
     clientSecret: 'fKuxmwQ-S5ccU1hswuENab2L',
-    refreshToken: '1//04oiRrMshuSymCgYIARAAGAQSNwF-L9Irq1pOYb1adGXuXqqGTFRXZmULmvhJULhcEznqDSQdEZ4roNPXdtik-TKa4oSEhXpiggQ',
+    refreshToken: '1//04H93rjOmBNxoCgYIARAAGAQSNwF-L9Irv5L5gwrpsjeKViDr7Qml9UFtSPgh1vJYolnJSLEZZOIBmvsznrNj0yiBepHI39M4VZA',
     accessToken: accessToken
 
   }
