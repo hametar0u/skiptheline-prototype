@@ -29,7 +29,7 @@ FRIDAY, APRIL 10, 2020
   <div class="container-fluid">
   
     <div class="header">
-        <h1 style="text-align:center;">SKIP THE LINE</h1>
+        <h1>SKIP THE LINE</h1>
     </div>
     
 <!-- NAVBAR -->
@@ -293,6 +293,7 @@ FRIDAY, APRIL 10, 2020
 
   function removeCartItem(i) {
     cart.cart_items.splice(parseInt(i),1);
+    cart.item_amount -= 1;
     displayCart()
   }
 
