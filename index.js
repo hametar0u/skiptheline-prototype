@@ -281,9 +281,32 @@ app.get('/confirm_order', (req,res) => {
   console.log(cart);
   console.log('app.get cart = ' + JSON.stringify(cart));
   res.render('pages/confirm_order.ejs', cart);
-  delete req.session.cart;
+  
   console.log("session cart = " + req.session.cart);
-})
+});
+
+app.get('/pay_now', (req,res) => {
+  const fs = require("fs");
+  const ejs = require("ejs");
+  var cart = req.session.cart;
+
+  const data = await ejs.renderFile(__dirname + "/views/pages/payment.ejs", { cart1: cart });
+
+  const mailOptions = {
+    from: 'tonalddrump001@gmail.com', // sender address
+    to: req.session.usr, // list of receivers
+    subject: 'Skip The Line Receipt', // Subject line
+    html: data
+  };
+
+  transporter.sendMail(mailOptions, function (err, info) {
+    if(err)
+      console.log(err)
+    else
+      console.log(info);
+  });
+  delete req.session.cart;
+});
 
 app.get('/pending_orders', checkAuth, function (req, res) {
   res.render('pages/pending_orders.ejs');
