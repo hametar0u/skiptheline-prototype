@@ -285,7 +285,7 @@ app.get('/confirm_order', (req,res) => {
   console.log("session cart = " + req.session.cart);
 });
 
-app.get('/pay_now', (req,res) => {
+app.get('/pay_now', async (req,res) => {
   const fs = require("fs");
   const ejs = require("ejs");
   var cart = req.session.cart;
