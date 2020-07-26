@@ -18,7 +18,9 @@ var transporter = nodemailer.createTransport(smtpTransport({
   auth: {
     xoauth2: xoauth2.createXOAuth2Generator({
       user: "harry.jing@skiptheline.digital", 
-      pass: "student" //ask
+      pass: "student", //ask\
+      clientID: "c05dc14fbb444739868a9c6f3531d0a4",
+      clientSecret: "dbe1f06957f346f7b213a0167719cd96"
     })
   }
 }));
