@@ -11,8 +11,9 @@ const jsdom = require("jsdom");
 const nodemailer = require("nodemailer");
 const xoauth2 = require("xoauth2");
 
+var smtpTransport = require('nodemailer-smtp-transport');
 
-var transporter = nodemailer.createTransport({
+var transporter = nodemailer.createTransport(smtpTransport({
   service: "Yandex",
   auth: {
     xoauth2: xoauth2.createXOAuth2Generator({
@@ -20,7 +21,7 @@ var transporter = nodemailer.createTransport({
       pass: "student" //ask
     })
   }
-});
+}));
 
 
 
