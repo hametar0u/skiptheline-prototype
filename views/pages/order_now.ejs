@@ -207,6 +207,7 @@ FRIDAY, APRIL 10, 2020
         itemQuantity = itemQuantity.toString();
         cart.cart_items[n].quantity = itemQuantity;
         existsFlag = true;
+        cart.total_cost = cart.total_cost + (itemObject.price * itemObject.quantity);
         break;
       }
     }
@@ -219,8 +220,8 @@ FRIDAY, APRIL 10, 2020
 
       cart.cart_items[cart.item_amount] = itemObject;
       cart.item_amount++;
+      cart.total_cost = cart.total_cost + (itemObject.price * itemObject.quantity);
     }
-    cart.total_cost = cart.total_cost + (itemObject.price * itemObject.quantity);
 
     console.log(itemObject);
     console.log(cart);
