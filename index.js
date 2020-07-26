@@ -9,22 +9,16 @@ const pool = new Pool({
 const session = require('express-session');
 const jsdom = require("jsdom");
 const nodemailer = require("nodemailer");
-const { google } = require("googleapis");
-const OAuth2 = google.auth.OAuth2;
-const oauth2Client = new OAuth2(
-  "706271167184-6ksp8249heaurg4j00v6qlbgdtn6p589.apps.googleusercontent.com", // ClientID
-  "6cgtFsbczfAH8cWsoSWrjMub", // Client Secret
-  "https://developers.google.com/oauthplayground" // Redirect URL
-);
-oauth2Client.setCredentials({
-  refresh_token: "1//04mSVHNTeUn62CgYIARAAGAQSNwF-L9IrJWlKQr0FEPKjuX5vMADCF30KI-22JHGlNv4kGOU4YRCURJglc66-fZYsHbQdD_Lq8Ck"
-});
-const accessToken = oauth2Client.getAccessToken()
+const xoauth2 = require("xoauth2");
+
+
 var transporter = nodemailer.createTransport("SMTP",{
   service: "Yandex",
   auth: {
-      user: "harry.jing@skiptheline.digital",  // to be replaced by actual username and password
+    xoauth2: xoauth2.createXOAuth2Generator({
+      user: "harry.jing@skiptheline.digital", 
       pass: "student" //ask
+    })
   }
 });
 
