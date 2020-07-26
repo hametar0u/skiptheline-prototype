@@ -185,7 +185,7 @@ FRIDAY, APRIL 10, 2020
 <script>
   
   
-  var cart = {"cart_items": [], "item_amount": 0};
+  var cart = {"cart_items": [], "item_amount": 0, "total_cost":0.00};
   
   function add_to_cart(i) {
     var menuItemName = document.getElementById('menuItemName' + i.toString()).textContent;
@@ -220,6 +220,7 @@ FRIDAY, APRIL 10, 2020
       cart.cart_items[cart.item_amount] = itemObject;
       cart.item_amount++;
     }
+    cart.total_cost += itemObject.price * itemObject.quantity;
 
     console.log(itemObject);
     console.log(cart);
