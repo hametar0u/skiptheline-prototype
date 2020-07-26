@@ -175,7 +175,7 @@ FRIDAY, APRIL 10, 2020
   </form>
 
   <!-- sidebar for displaying cart -->
-  <h1>Total: <%= math.round(cart.total_cost) %></h1>
+  <h1>Total: <%= cart.total_cost %></h1>
   <div id="display_cart">
 
   </div>
@@ -227,6 +227,7 @@ FRIDAY, APRIL 10, 2020
       cart.total_cost += cart.cart_items[n].price * cart.cart_items[n].quantity;
 
     }
+    cart.total_cost = cart.total_cost.toFixed(2);
 
     console.log(itemObject);
     console.log(cart);
