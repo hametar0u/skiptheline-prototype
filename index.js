@@ -12,7 +12,7 @@ const nodemailer = require("nodemailer");
 const xoauth2 = require("xoauth2");
 
 
-var transporter = nodemailer.createTransport("SMTP",{
+var transporter = nodemailer.createTransport({
   service: "Yandex",
   auth: {
     xoauth2: xoauth2.createXOAuth2Generator({
