@@ -20,17 +20,11 @@ oauth2Client.setCredentials({
   refresh_token: "1//04mSVHNTeUn62CgYIARAAGAQSNwF-L9IrJWlKQr0FEPKjuX5vMADCF30KI-22JHGlNv4kGOU4YRCURJglc66-fZYsHbQdD_Lq8Ck"
 });
 const accessToken = oauth2Client.getAccessToken()
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  secure: true,
+var transporter = nodemailer.createTransport("SMTP",{
+  service: "Yandex",
   auth: {
-    type: 'OAuth2',
-    user: 'tonalddrump001@gmail.com',
-    clientId: '706271167184-6ksp8249heaurg4j00v6qlbgdtn6p589.apps.googleusercontent.com',
-    clientSecret: '6cgtFsbczfAH8cWsoSWrjMub',
-    refreshToken: '1//04mSVHNTeUn62CgYIARAAGAQSNwF-L9IrJWlKQr0FEPKjuX5vMADCF30KI-22JHGlNv4kGOU4YRCURJglc66-fZYsHbQdD_Lq8Ck',
-    accessToken: accessToken
-
+      user: "harry.jing@skiptheline.digital",  // to be replaced by actual username and password
+      pass: "student" //ask
   }
 });
 
@@ -108,7 +102,7 @@ app.post('/createaccount', (req, res) => {
   var confcode = makeconfcode(6);
   
   const mailOptions = {
-    from: 'tonalddrump001@gmail.com', // sender address
+    from: 'harry.jing@skiptheline.digital', // sender address
     to: req.session.usr, // list of receivers
     subject: 'Skip The Line Confirmation Code', // Subject line
     html: `<p>Your confirmation code is: '${confcode}'</p>`// plain text body
