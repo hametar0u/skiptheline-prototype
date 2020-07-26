@@ -222,7 +222,7 @@ FRIDAY, APRIL 10, 2020
       cart.item_amount++;
 
     }
-
+    cart.total_cost = 0.00;
     for (var n = 0; n < cart.item_amount; n++) {
       cart.total_cost += cart.cart_items[n].price * cart.cart_items[n].quantity;
 
