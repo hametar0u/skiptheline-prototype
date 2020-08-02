@@ -10,6 +10,7 @@ const session = require('express-session');
 const jsdom = require("jsdom");
 const nodemailer = require("nodemailer");
 const sgTransport = require('nodemailer-sendgrid-transport');
+const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
 
 
@@ -272,28 +273,55 @@ app.get('/confirm_order', (req,res) => {
   console.log("session cart = " + req.session.cart);
 });
 
-app.get('/pay_now', async (req,res) => {
-  const fs = require("fs");
-  const ejs = require("ejs");
-  var cart = req.session.cart;
+// app.get('/pay_now', async (req,res) => {
+//   const fs = require("fs");
+//   const ejs = require("ejs");
+//   var cart = req.session.cart;
 
-  const data = await ejs.renderFile(__dirname + "/views/pages/payment.ejs", { cart1: cart });
+//   const data = await ejs.renderFile(__dirname + "/views/pages/payment.ejs", { cart1: cart });
 
-  const mailOptions = {
-    from: 'tonalddrump001@gmail.com', // sender address
-    to: req.session.usr, // list of receivers
-    subject: 'Skip The Line Receipt', // Subject line
-    html: data
-  };
+//   const mailOptions = {
+//     from: 'tonalddrump001@gmail.com', // sender address
+//     to: req.session.usr, // list of receivers
+//     subject: 'Skip The Line Receipt', // Subject line
+//     html: data
+//   };
 
-  transporter.sendMail(mailOptions, function (err, info) {
-    if(err)
-      console.log(err)
-    else
-      console.log(info);
+//   transporter.sendMail(mailOptions, function (err, info) {
+//     if(err)
+//       console.log(err)
+//     else
+//       console.log(info);
+//   });
+//   delete req.session.cart;
+// });
+
+ app.get('/pay_now', async (req,res) => {
+   res.redirect("/views/pages/checkout.html");
+ }
+
+var calculateOrderAmount = items => {
+  // Replace this constant with a calculation of the order's amount
+  // Calculate the order total on the server to prevent
+  // people from directly manipulating the amount on the client
+  return 1400;
+};
+
+app.post("/create-payment-intent", async (req, res) => {
+  const { items } = req.body;
+  // Create a PaymentIntent with the order amount and currency
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: calculateOrderAmount(items),
+    currency: "usd"
   });
-  delete req.session.cart;
+
+  res.send({
+    clientSecret: paymentIntent.client_secret
+  });
 });
+
+app.listen(4242, () => console.log('Node server listening on port 4242!'));
+
 
 app.get('/pending_orders', checkAuth, function (req, res) {
   res.render('pages/pending_orders.ejs');
