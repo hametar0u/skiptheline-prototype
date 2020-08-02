@@ -16,8 +16,8 @@ const sgTransport = require('nodemailer-sendgrid-transport');
 
 var options = {
   auth: {
-  api_user: 'kevinlu1248@gmail.com',
-  api_key: 'mrhob1ggay'
+    api_user: 'kevinlu1248@gmail.com',
+    api_key: 'mrhob1ggay'
   }
 }
 
@@ -95,7 +95,7 @@ app.post('/createaccount', (req, res) => {
   req.session.pwd = req.body.pwd;
   var confcode = makeconfcode(6);
   
-  const mailOptions = {
+  var mailOptions = {
     from: 'kevinlu1248@gmail.com', // sender address
     to: req.session.usr, // list of receivers
     subject: 'Skip The Line Confirmation Code', // Subject line
@@ -106,7 +106,7 @@ app.post('/createaccount', (req, res) => {
     if(err)
       console.log(err)
     else
-      console.log('Message sent: ' + info.response);
+      console.log('Message sent: ' + info);
   });
 
   req.session.confcode = confcode;
