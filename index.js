@@ -15,8 +15,8 @@ const sgTransport = require('nodemailer-sendgrid-transport');
 
 var options = {
   auth: {
-    api_user: ENV['SENDGRIDUSER'],
-    api_key: ENV['SENDGRIDPASS']
+    api_user: process.env.SENDGRIDUSER,
+    api_key: process.env.SENDGRIDPASS
   }
 }
 
