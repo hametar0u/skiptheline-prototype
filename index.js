@@ -298,7 +298,7 @@ app.get('/confirm_order', (req,res) => {
 
  app.get('/pay_now', async (req,res) => {
    res.redirect("/views/pages/checkout.html");
- }
+ });
 
 var calculateOrderAmount = items => {
   // Replace this constant with a calculation of the order's amount
