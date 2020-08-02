@@ -297,7 +297,7 @@ app.get('/confirm_order', (req,res) => {
 // });
 
  app.get('/pay_now', async (req,res) => {
-   res.redirect("/pages/checkout.html");
+   res.render("/pages/checkout.html");
  });
 
 var calculateOrderAmount = items => {
