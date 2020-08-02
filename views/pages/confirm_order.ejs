@@ -50,7 +50,10 @@ SUNDAY, APRIL 12, 2020
     <h4>Subtotal: <%= total_cost %></h4>
     
     <br>
-    <button onclick="history.back()">Go Back</button>
+    <form action="/order_now" method="GET">
+      <input type="submit" value="Go Back">
+    </form>
+  
     <a href="#" class="btn" role="button">Pay Now</a>
     </div>
   </div>
