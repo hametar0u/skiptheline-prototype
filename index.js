@@ -9,22 +9,19 @@ const pool = new Pool({
 const session = require('express-session');
 const jsdom = require("jsdom");
 const nodemailer = require("nodemailer");
-const xoauth2 = require("xoauth2");
+const sgTransport = require('nodemailer-sendgrid-transport');
+//const xoauth2 = require("xoauth2");
 
-var smtpTransport = require('nodemailer-smtp-transport');
 
-var transporter = nodemailer.createTransport(smtpTransport({
-  service: "Yandex",
+
+var options = {
   auth: {
-    xoauth2: xoauth2.createXOAuth2Generator({
-      user: "harry.jing@skiptheline.digital", 
-      pass: "student", //ask\
-      clientID: "c05dc14fbb444739868a9c6f3531d0a4",
-      clientSecret: "dbe1f06957f346f7b213a0167719cd96"
-    })
+  api_user: 'kevinlu1248@gmail.com',
+  api_key: 'mrhob1ggay'
   }
-}));
+}
 
+var transporter = nodemailer.createTransport(sgTransport(options));
 
 
 function makeid(length) {
@@ -99,7 +96,7 @@ app.post('/createaccount', (req, res) => {
   var confcode = makeconfcode(6);
   
   const mailOptions = {
-    from: 'harry.jing@skiptheline.digital', // sender address
+    from: 'kevinlu1248@gmail.com', // sender address
     to: req.session.usr, // list of receivers
     subject: 'Skip The Line Confirmation Code', // Subject line
     html: `<p>Your confirmation code is: '${confcode}'</p>`// plain text body
@@ -109,7 +106,7 @@ app.post('/createaccount', (req, res) => {
     if(err)
       console.log(err)
     else
-      console.log(info);
+      console.log('Message sent: ' + info.response);
   });
 
   req.session.confcode = confcode;
