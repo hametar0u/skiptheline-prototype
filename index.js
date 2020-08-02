@@ -10,14 +10,13 @@ const session = require('express-session');
 const jsdom = require("jsdom");
 const nodemailer = require("nodemailer");
 const sgTransport = require('nodemailer-sendgrid-transport');
-//const xoauth2 = require("xoauth2");
 
 
 
 var options = {
   auth: {
-    api_user: 'kevinlu1248@gmail.com',
-    api_key: 'mrhob1ggay'
+    api_user: ENV['SENDGRIDUSER'],
+    api_key: ENV['SENDGRIDPASS']
   }
 }
 
