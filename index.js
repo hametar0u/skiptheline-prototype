@@ -273,7 +273,7 @@ app.post('/confirm_order', (req,res) => {
       while (order_id in result) {
         order_id = makeconfcode(7);
       }
-      res.send(200);
+      console.log("confcode creation 200 OK");
     }
 
   });
@@ -282,7 +282,7 @@ app.post('/confirm_order', (req,res) => {
     str+=`('${order_id}','${cart_items[i].item}','${cart_items[i].price}','${cart_items[i].date}')`
   }
   str = str.slice(0,-1) + ';';
-  console.log(str);
+  console.log('order detail query',str);
   pool.query(str, (error,result) => {
     if(error) {
       console.log('/confirm_order error');
