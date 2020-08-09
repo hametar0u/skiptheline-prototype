@@ -282,7 +282,7 @@ app.post('/confirm_order', (req,res) => {
     str+=`('${order_id}','${cart_items[i].item}','${cart_items[i].price}','${cart_items[i].date}'),`
   }
   str = str.slice(0,-1) + ';';
-  console.log('order detail query',str);
+  console.log('order detail query:',str);
   pool.query(str, (error,result) => {
     if(error) {
       console.log('/confirm_order error');
@@ -293,7 +293,7 @@ app.post('/confirm_order', (req,res) => {
     }
   });
   console.log("index.js cart = " + JSON.stringify(cart));
-  res.render('pages/confirm_order.ejs', cart);
+  res.render('pages/confirm_order.ejs', JSON.parse(cart));
 });
 
 app.get('/confirm_order', (req,res) => {
