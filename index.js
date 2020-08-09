@@ -269,7 +269,7 @@ app.post('/confirm_order', (req,res) => {
       res.send(error);
     }
     else {
-      while (order_id in result) {
+      while (order_id in result || order_id[0]==0) {
         order_id = makeconfcode(7);
       }
       console.log("confcode creation 200 OK");
