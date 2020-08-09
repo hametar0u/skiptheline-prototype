@@ -260,7 +260,6 @@ app.post('/confirm_order', (req,res) => {
 
   var cart = JSON.parse(req.body.value);
   req.session.cart = cart;
-  cart = req.session.cart;
   var cart_items = cart.cart_items;
   var username = req.session.user_id;
   var orderIDQuery = 'SELECT order_id FROM order_details;';
@@ -293,7 +292,7 @@ app.post('/confirm_order', (req,res) => {
     }
   });
   console.log("index.js cart = " + JSON.stringify(cart));
-  res.render('pages/confirm_order.ejs', JSON.parse(cart));
+  res.render('pages/confirm_order.ejs', cart);
 });
 
 app.get('/confirm_order', (req,res) => {
