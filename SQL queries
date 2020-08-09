@@ -10,9 +10,9 @@ CREATE TABLE orders(
     complete BOOLEAN
 );
 CREATE TABLE order_details(
-    order_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    order_id INT NOT NULL,
     item VARCHAR(20),
-    price FLOAT,
+    price NUMERIC(5,2),
     date DATE
 );
 CREATE TABLE foodmenu(

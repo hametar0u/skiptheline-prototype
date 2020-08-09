@@ -25,13 +25,13 @@ var transporter = nodemailer.createTransport(sgTransport(options));
 
 
 function makeid(length) {
-   var result           = '';
-   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-   var charactersLength = characters.length;
-   for ( var i = 0; i < length; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-   }
-   return result;
+  var result           = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < length; i++ ) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
 }
 
 function makeconfcode(length) {
@@ -168,7 +168,7 @@ app.get('/orders', async (req, res) => {
 app.get('/order_details', async (req, res) => {
   try {
     const client = await pool.connect()
-    const result = await client.query('SELECT * FROM order_details');
+    const result = await client.query('SELECT * FROM order_details WHERE ;');
     const results = { 'results': (result) ? result.rows : null};
     res.render('pages/order_details', results );
     client.release();
@@ -266,6 +266,36 @@ app.post('/confirm_order', (req,res) => {
 
 app.get('/confirm_order', (req,res) => {
   var cart = req.session.cart;
+  var cart_items = cart.cart_items;
+  var username = req.session.user_id;
+  var orderIDQuery = 'SELECT order_id FROM order_details;';
+  var order_id = makeconfcode(7); //reusing code lmao
+  pool.query(orderIDQuery, (error,result) => {
+    if(error) {
+      res.send(error);
+    }
+    else {
+      while (order_id in result) {
+        order_id = makeconfcode(7);
+      }
+      res.send(200);
+    }
+
+  });
+  var str = "INSERT INTO order_details VALUES";
+  for (var i=0; i<cart.item_amount; i++) {
+    str+=`('${cart_items[i].item}','${cart_items[i].price}','${cart_items[i].date}')`
+  }
+  str = str.slice(0,-1) + ';';
+  console.log(str);
+  pool.query(str, (error,result) => {
+    if(error) {
+      res.send(error);
+    }
+    else {
+      res.send(200);
+    }
+  });
   console.log(cart);
   console.log('app.get cart = ' + JSON.stringify(cart));
   res.render('pages/confirm_order.ejs', cart);
