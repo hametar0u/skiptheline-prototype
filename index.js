@@ -296,7 +296,7 @@ app.post('/confirm_order', (req,res) => {
 });
 
 app.get('/confirm_order', (req,res) => {
-  
+  var cart = JSON.parse(req.body.value);
   console.log(cart);
   console.log('app.get cart = ' + JSON.stringify(cart));
   res.render('pages/confirm_order.ejs', cart);
