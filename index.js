@@ -285,6 +285,7 @@ app.post('/confirm_order', (req,res) => {
   console.log(str);
   pool.query(str, (error,result) => {
     if(error) {
+      console.log('/confirm_order error');
       res.send(error);
     }
     else {
