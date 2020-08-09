@@ -13,6 +13,7 @@ CREATE TABLE order_details(
     order_id INT NOT NULL,
     item VARCHAR(20),
     price NUMERIC(5,2),
+    quantity INT,
     date DATE
 );
 CREATE TABLE foodmenu(

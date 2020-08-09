@@ -278,7 +278,7 @@ app.post('/confirm_order', (req,res) => {
   });
   var str = "INSERT INTO order_details VALUES";
   for (var i=0; i<cart.item_amount; i++) {
-    str+=`('${order_id}','${cart_items[i].item}','${cart_items[i].price}','${cart_items[i].date}'),`
+    str+=`('${order_id}','${cart_items[i].item}','${cart_items[i].price}','${cart_items[i].quantity}','${cart_items[i].date}'),`
   }
   str = str.slice(0,-1) + ';';
   console.log('order detail query:',str);
