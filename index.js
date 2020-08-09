@@ -296,12 +296,10 @@ app.post('/confirm_order', (req,res) => {
 });
 
 app.get('/confirm_order', (req,res) => {
-  var cart = JSON.parse(req.body.value);
+  var cart = req.session.cart;
   console.log(cart);
   console.log('app.get cart = ' + JSON.stringify(cart));
   res.render('pages/confirm_order.ejs', cart);
-  
-  console.log("session cart = " + req.session.cart);
 });
 
 // app.get('/pay_now', async (req,res) => {
