@@ -288,7 +288,7 @@ app.post('/confirm_order', (req,res) => {
       res.send(error);
     }
     else {
-      res.send(200);
+      console.log('/confirm_order 200 OK');
     }
   });
   console.log("index.js cart = " + JSON.stringify(cart));
