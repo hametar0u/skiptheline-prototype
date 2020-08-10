@@ -296,7 +296,7 @@ app.post('/confirm_order', (req,res) => {
 
   var userID = -1;
   var userIdRetrieveQuery = `SELECT id FROM users WHERE "username" = '${username}';`;
-  console.log("retrieve ID query =",userIdRetrieveQuery);
+  console.log("retrieve ID query = ",userIdRetrieveQuery);
   pool.query(userIdRetrieveQuery, (error,result) => {
     if(error) {
       console.log('user id retrieve error');
