@@ -276,12 +276,14 @@ app.post('/confirm_order', (req,res) => {
     }
 
   });
+
   var str = "INSERT INTO order_details VALUES";
   for (var i=0; i<cart.item_amount; i++) {
     str+=`('${order_id}','${cart_items[i].item}','${cart_items[i].price}','${cart_items[i].quantity}','${cart_items[i].date}'),`
   }
   str = str.slice(0,-1) + ';';
   console.log('order detail query:',str);
+
   pool.query(str, (error,result) => {
     if(error) {
       console.log('/confirm_order error');
@@ -291,6 +293,32 @@ app.post('/confirm_order', (req,res) => {
       console.log('/confirm_order 200 OK');
     }
   });
+
+  var userID = -1;
+  var userIdRetrieveQuery = `SELECT id FROM users WHERE "username" = '${username}';`;
+  pool.query(userIdRetrieveQuery, (error,result) => {
+    if(error) {
+      console.log('user id retrieve error');
+      res.send(error);
+    }
+    else {
+      console.log('user id retrieve 200 OK');
+      userID = result;
+    }
+  });
+
+  var orderJoinQuery = `INSERT INTO orders VALUES('${userID}','${order_id}',0)`;
+  pool.query(orderJoinQuery, (error,result) => {
+    if(error) {
+      console.log('order join error');
+      res.send(error);
+    }
+    else {
+      console.log('order join 200 OK');
+    }
+  });
+
+
   console.log("index.js cart = " + JSON.stringify(cart));
   res.render('pages/confirm_order.ejs', cart);
 });
