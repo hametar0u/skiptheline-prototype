@@ -257,7 +257,7 @@ app.post('/date_select', async (req,res) => {
 });
 
 app.post('/confirm_order', (req,res) => {
-
+  console.log('req.body.value = ',req.body.value);
   var cart = JSON.parse(req.body.value);
   req.session.cart = JSON.parse(req.body.value);
   var cart_items = cart.cart_items;
