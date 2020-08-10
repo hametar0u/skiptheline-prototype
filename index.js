@@ -294,7 +294,6 @@ app.post('/confirm_order', (req,res) => {
     }
   });
 
-  var userID = -1;
   var userIdRetrieveQuery = `SELECT id FROM users WHERE "username" = '${username}';`;
   console.log("retrieve ID query = ",userIdRetrieveQuery);
   pool.query(userIdRetrieveQuery, (error,result) => {
@@ -304,21 +303,21 @@ app.post('/confirm_order', (req,res) => {
     }
     else {
       console.log('user id retrieve 200 OK, result = ',result.rows[0].id);
-      userID = result.rows[0].id;
+      var orderJoinQuery = `INSERT INTO orders("users_id", "order_id", "complete") VALUES('${result.rows[0].id}','${order_id}','0');`;
+      console.log("order join query = ",orderJoinQuery);
+      pool.query(orderJoinQuery, (error,result) => {
+        if(error) {
+          console.log('order join error = ',error);
+          //res.send(error);
+        }
+        else {
+          console.log('order join 200 OK');
+        }
+      });
     }
   });
 
-  var orderJoinQuery = `INSERT INTO orders("users_id", "order_id", "complete") VALUES('${userID}','${order_id}','0');`;
-  console.log("order join query = ",orderJoinQuery);
-  pool.query(orderJoinQuery, (error,result) => {
-    if(error) {
-      console.log('order join error = ',error);
-      //res.send(error);
-    }
-    else {
-      console.log('order join 200 OK');
-    }
-  });
+  
 
 
   // console.log("index.js cart = " + JSON.stringify(cart));
