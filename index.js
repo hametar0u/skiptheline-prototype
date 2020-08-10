@@ -312,8 +312,8 @@ app.post('/confirm_order', (req,res) => {
   console.log("order join query = ",orderJoinQuery);
   pool.query(orderJoinQuery, (error,result) => {
     if(error) {
-      console.log('order join error');
-      res.send(error);
+      console.log('order join error = ',error);
+      //res.send(error);
     }
     else {
       console.log('order join 200 OK');
