@@ -308,7 +308,7 @@ app.post('/confirm_order', (req,res) => {
     }
   });
 
-  var orderJoinQuery = `INSERT INTO orders VALUES('${userID}','${order_id}','0');`;
+  var orderJoinQuery = `INSERT INTO orders("users_id", "order_id", "completed") VALUES('${userID}','${order_id}','0');`;
   console.log("order join query = ",orderJoinQuery);
   pool.query(orderJoinQuery, (error,result) => {
     if(error) {
