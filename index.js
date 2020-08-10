@@ -303,8 +303,8 @@ app.post('/confirm_order', (req,res) => {
       res.send(error);
     }
     else {
-      console.log('user id retrieve 200 OK, result = ',result[0]);
-      userID = result[0];
+      console.log('user id retrieve 200 OK, result = ',result.rows[0].users_id);
+      userID = result.rows[0].users_id;
     }
   });
 
