@@ -263,7 +263,12 @@ app.post('/date_select', async (req,res) => {
 app.post('/confirm_order', (req,res) => {
   console.log('req.body.cart_items = ',req.body.cart_items);
   var cart_items = req.body.cart_items;
-  req.session.cart = req.body.cart_items;
+  req.session.cart = {
+    "cart_items": req.body.cart_items,
+    "item_amount": req.body.item_amount,
+    "total_cost": req.body.total_cost
+  };
+
   req.session.save();
   console.log("req.session.cart = ",req.session.cart);
   var username = req.session.username;
