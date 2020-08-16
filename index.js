@@ -327,7 +327,7 @@ app.post('/confirm_order', (req,res) => {
 
 
   // console.log("index.js cart = " + JSON.stringify(cart));
-  // res.render('pages/confirm_order.ejs', cart);
+  res.render('pages/confirm_order.ejs', cart);
 });
 
 app.get('/confirm_order', (req,res) => {
