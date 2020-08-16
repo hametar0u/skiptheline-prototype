@@ -7,6 +7,7 @@ const pool = new Pool({
     ssl: true
                       });
 const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
 const jsdom = require("jsdom");
 const nodemailer = require("nodemailer");
 const sgTransport = require('nodemailer-sendgrid-transport');
