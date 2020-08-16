@@ -257,10 +257,9 @@ app.post('/date_select', async (req,res) => {
 });
 
 app.post('/confirm_order', (req,res) => {
-  console.log('req.body.value = ',req.body.value);
-  var cart = JSON.parse(req.body.value);
-  req.session.cart = JSON.parse(req.body.value);
-  var cart_items = cart.cart_items;
+  console.log('req.body.value = ',req.body.cart_items);
+  var cart_items = JSON.parse(req.body.cart_items);
+  req.session.cart = JSON.parse(req.body.cart_items);
   var username = req.session.username;
   var orderIDQuery = 'SELECT order_id FROM order_details;';
   var order_id = makeconfcode(7); //reusing code lmao
@@ -278,7 +277,7 @@ app.post('/confirm_order', (req,res) => {
   });
 
   var str = "INSERT INTO order_details VALUES";
-  for (var i=0; i<cart.item_amount; i++) {
+  for (var i=0; i<req.body.item_amount; i++) {
     str+=`('${order_id}','${cart_items[i].item}','${cart_items[i].price}','${cart_items[i].quantity}','${cart_items[i].date}'),`
   }
   str = str.slice(0,-1) + ';';
@@ -328,7 +327,7 @@ app.get('/confirm_order', (req,res) => {
   var cart = req.session.cart;
   console.log('cart = ',cart);
   console.log('app.get cart = ' + JSON.stringify(cart));
-  //res.render('pages/confirm_order.ejs', cart);
+  res.render('pages/confirm_order.ejs', cart);
 });
 
 // app.get('/pay_now', async (req,res) => {

@@ -239,14 +239,12 @@ FRIDAY, APRIL 10, 2020
   }
 
   function sendData() {
-    var cart_items = {
-      value: document.getElementById("cart_items").value
-    }
+    var cart_items = document.getElementById("cart_items").value;
     console.log("cart_items = ",cart_items);
     var xhr = new window.XMLHttpRequest();
     xhr.open('POST', '/confirm_order', true);
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    xhr.send(JSON.stringify(cart_items));
+    xhr.send(cart_items);
   }
  
   // Access the form element...
