@@ -327,7 +327,7 @@ app.post('/confirm_order', (req,res) => {
 
 app.get('/confirm_order', async (req,res) => {
   //console.log("req.session.cart in app.get = " , req.session.cart);
-  var cart = req.session.cart;
+  var cart = await req.session.cart;
   console.log('cart = ' , cart);
   res.render('pages/confirm_order.ejs', cart);
 });
