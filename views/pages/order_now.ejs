@@ -242,6 +242,7 @@ FRIDAY, APRIL 10, 2020
     var cart_items = {
       value: document.getElementById("cart_items").value
     }
+    console.log("cart_items = ",cart_items);
     var xhr = new window.XMLHttpRequest();
     xhr.open('POST', '/confirm_order', true);
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
