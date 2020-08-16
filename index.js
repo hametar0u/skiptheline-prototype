@@ -7,8 +7,6 @@ const pool = new Pool({
     ssl: true
                       });
 const session = require('express-session');
-const RedisStore = require('connect-redis')(session);
-const jsdom = require("jsdom");
 const nodemailer = require("nodemailer");
 const sgTransport = require('nodemailer-sendgrid-transport');
 const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
@@ -65,9 +63,9 @@ app.use(express.json());
 
 app.use(session({
   resave: true,
-  saveUninitilized: true,
+  saveUninitialized: false,
   secret:"skiptheline",
-  store: new RedisStore()
+  cookie: {maxAge: 600000}
   //user_id: ""
 }));
 
@@ -324,17 +322,13 @@ app.post('/confirm_order', (req,res) => {
     }
   });
 
-  
-
-
-  // console.log("index.js cart = " + JSON.stringify(cart));
   res.render('pages/confirm_order.ejs', cart);
 });
 
 app.get('/confirm_order', (req,res) => {
-  console.log("req.session.cart in app.get = ",req.session.cart);
+  console.log("req.session.cart in app.get = " , req.session.cart);
   var cart = req.session.cart;
-  console.log('cart = ',cart);
+  console.log('cart = ' , cart);
   console.log('app.get cart = ' + JSON.stringify(cart));
   res.render('pages/confirm_order.ejs', cart);
 });
@@ -474,8 +468,8 @@ app.post('/menu_remove', function (req, res) {
 
 
 app.post('/logout', function (req, res) {
-  delete req.session.user_id;
-  console.log('user id: '+req.session.user_id)
+  req.session.destroy()
+  console.log('user id: ' + req.session.user_id)
   res.redirect('login.html');
 });
 
