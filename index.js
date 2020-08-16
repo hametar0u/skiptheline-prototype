@@ -258,8 +258,8 @@ app.post('/date_select', async (req,res) => {
 
 app.post('/confirm_order', (req,res) => {
   console.log('req.body.value = ',req.body.cart_items);
-  var cart_items = JSON.parse(req.body.cart_items);
-  req.session.cart = JSON.parse(req.body.cart_items);
+  var cart_items = req.body.cart_items;
+  req.session.cart = req.body.cart_items;
   var username = req.session.username;
   var orderIDQuery = 'SELECT order_id FROM order_details;';
   var order_id = makeconfcode(7); //reusing code lmao
