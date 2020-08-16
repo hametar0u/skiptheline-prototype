@@ -330,7 +330,7 @@ app.get('/confirm_order', (req,res) => {
   var cart = req.session.cart;
   console.log('cart = ',cart);
   console.log('app.get cart = ' + JSON.stringify(cart));
-  //res.render('pages/confirm_order.ejs', cart);
+  res.render('pages/confirm_order.ejs', cart);
 });
 
 // app.get('/pay_now', async (req,res) => {
