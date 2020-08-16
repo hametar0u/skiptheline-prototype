@@ -261,16 +261,15 @@ app.post('/date_select', async (req,res) => {
 });
 
 app.post('/confirm_order', (req,res) => {
-  console.log('req.body.cart_items = ',req.body.cart_items);
   var cart_items = req.body.cart_items;
   req.session.cart = {
     "cart_items": req.body.cart_items,
     "item_amount": req.body.item_amount,
     "total_cost": req.body.total_cost
   };
-
   req.session.save();
   console.log("req.session.cart = ",req.session.cart);
+
   var username = req.session.username;
   var orderIDQuery = 'SELECT order_id FROM order_details;';
   var order_id = makeconfcode(7); //reusing code lmao
@@ -284,7 +283,6 @@ app.post('/confirm_order', (req,res) => {
       }
       console.log("confcode creation 200 OK");
     }
-
   });
 
   var str = "INSERT INTO order_details VALUES";
@@ -292,8 +290,7 @@ app.post('/confirm_order', (req,res) => {
     str+=`('${order_id}','${cart_items[i].item}','${cart_items[i].price}','${cart_items[i].quantity}','${cart_items[i].date}'),`
   }
   str = str.slice(0,-1) + ';';
-  console.log('order detail query:',str);
-
+  //console.log('order detail query:',str);
   pool.query(str, (error,result) => {
     if(error) {
       console.log('/confirm_order error');
@@ -305,7 +302,7 @@ app.post('/confirm_order', (req,res) => {
   });
 
   var userIdRetrieveQuery = `SELECT id FROM users WHERE "username" = '${username}';`;
-  console.log("retrieve ID query = ",userIdRetrieveQuery);
+  //console.log("retrieve ID query = ",userIdRetrieveQuery);
   pool.query(userIdRetrieveQuery, (error,result) => {
     if(error) {
       console.log('user id retrieve error');
@@ -314,7 +311,7 @@ app.post('/confirm_order', (req,res) => {
     else {
       console.log('user id retrieve 200 OK, result = ',result.rows[0].id);
       var orderJoinQuery = `INSERT INTO orders("users_id", "order_id", "complete") VALUES('${result.rows[0].id}','${order_id}','0');`;
-      console.log("order join query = ",orderJoinQuery);
+      //console.log("order join query = ",orderJoinQuery);
       pool.query(orderJoinQuery, (error,result) => {
         if(error) {
           console.log('order join error = ',error);
@@ -326,15 +323,12 @@ app.post('/confirm_order', (req,res) => {
       });
     }
   });
-
-  //res.redirect('/confirm_order');
 });
 
 app.get('/confirm_order', async (req,res) => {
-  console.log("req.session.cart in app.get = " , req.session.cart);
+  //console.log("req.session.cart in app.get = " , req.session.cart);
   var cart = req.session.cart;
   console.log('cart = ' , cart);
-  console.log('app.get cart = ' + JSON.stringify(cart));
   res.render('pages/confirm_order.ejs', cart);
 });
 
