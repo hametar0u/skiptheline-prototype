@@ -258,8 +258,8 @@ app.post('/date_select', async (req,res) => {
 
 app.post('/confirm_order', (req,res) => {
   console.log('req.body.cart_items = ',req.body.cart_items);
-  var cart_items = req.body.cart_items[0];
-  req.session.cart = req.body.cart_items;
+  var cart_items = req.body.cart_items;
+  req.session.cart = req.body.cart_items[0];
   console.log("req.session.cart = ",req.session.cart);
   var username = req.session.username;
   var orderIDQuery = 'SELECT order_id FROM order_details;';
