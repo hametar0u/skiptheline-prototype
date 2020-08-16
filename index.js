@@ -63,9 +63,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use(session({
-    secret:"skiptheline"
-    //user_id: ""
-  }));
+  resave: true,
+  saveUninitilized: true,
+  secret:"skiptheline",
+  store: new RedisStore()
+  //user_id: ""
+}));
+
+
 if(process.env.NODE_ENV === 'production') {
   app.use((req, res, next) => {
     if (req.header('x-forwarded-proto') !== 'https')

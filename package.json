@@ -21,6 +21,7 @@
     "nodemailer-smtp-transport": "^2.7.4",
     "passport": "^0.4.1",
     "pg": "^7.18.2",
+    "redis": "^3.0.2",
     "stripe": "^8.81.0",
     "xoauth2": "^1.2.0"
   },
