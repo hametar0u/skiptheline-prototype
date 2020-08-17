@@ -467,9 +467,16 @@ app.post('/menu_remove', function (req, res) {
 
 
 app.post('/logout', function (req, res) {
-  req.session.destroy()
-  console.log('user id: ' + req.session.user_id)
-  res.redirect('login.html');
+  req.session.destroy();
+  if (req.session.user_id){
+    console.log("deleting session failed, deleting session again");
+    req.session.destroy();
+  }
+  else{
+    res.redirect('login.html');
+  }
+  
+  
 });
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
