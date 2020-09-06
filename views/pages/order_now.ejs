@@ -170,7 +170,7 @@ FRIDAY, APRIL 10, 2020
 
   </div>    
   <form id="confirmOrderForm">
-    <input id="cart_items" name="cart_items" type="hidden" value=''>
+    <!-- <input id="cart_items" name="cart_items" type="hidden" value=''> -->
     <input type="submit" value="Confirm Order">
   </form>
 
@@ -239,13 +239,12 @@ FRIDAY, APRIL 10, 2020
     // console.log(itemObject);
     // console.log(cart);
 
-    document.getElementById("cart_items").value = JSON.stringify(cart);
     //update cart after someone adds stuff to it
     displayCart();
   }
 
   function sendData() {
-    var cart_items = document.getElementById("cart_items").value;
+    var cart_items = JSON.stringify(cart);
     console.log("cart_items = ",cart_items);
     var xhr = new window.XMLHttpRequest();
     xhr.open('POST', '/confirm_order', true);
