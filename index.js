@@ -9,6 +9,7 @@ const pool = new Pool({
 const session = require('express-session');
 const nodemailer = require("nodemailer");
 const sgTransport = require('nodemailer-sendgrid-transport');
+const { isNullOrUndefined } = require('util');
 const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
 
@@ -329,7 +330,12 @@ app.get('/confirm_order', async (req,res) => {
   //console.log("req.session.cart in app.get = " , req.session.cart);
   var cart = await req.session.cart;
   console.log('cart = ' , cart);
-  res.render('pages/confirm_order.ejs', cart);
+  if (cart.isNullOrUndefined()){
+    res.redirect('/order_now');
+  }
+  else{
+    res.render('pages/confirm_order.ejs', cart);
+  }
 });
 
 // app.get('/pay_now', async (req,res) => {
