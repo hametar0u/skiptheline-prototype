@@ -200,28 +200,31 @@ FRIDAY, APRIL 10, 2020
     var itemObject = {"item":"", "price": 0, "quantity": 0, "date": ""};
     var existsFlag = false;
 
-    for (var n = 0; n < cart.item_amount; n++) {
-      if (cart.cart_items[n].item == menuItemName && cart.cart_items[n].date == menuItemDate) {
-        var itemQuantity = parseInt(cart.cart_items[n].quantity);
-        itemQuantity += parseInt(menuItemQuantity);
-        itemQuantity = itemQuantity.toString();
-        cart.cart_items[n].quantity = itemQuantity;
-        existsFlag = true;
+    if (menuItemQuantity !=0) {
+      for (var n = 0; n < cart.item_amount; n++) {
+        if (cart.cart_items[n].item == menuItemName && cart.cart_items[n].date == menuItemDate) {
+          var itemQuantity = parseInt(cart.cart_items[n].quantity);
+          itemQuantity += parseInt(menuItemQuantity);
+          itemQuantity = itemQuantity.toString();
+          cart.cart_items[n].quantity = itemQuantity;
+          existsFlag = true;
 
-        break;
+          break;
+        }
+      }
+  
+      if (existsFlag == false) {
+        itemObject.item = menuItemName;
+        itemObject.price = menuItemPrice;
+        itemObject.quantity = menuItemQuantity;
+        itemObject.date = menuItemDate;
+
+        cart.cart_items[cart.item_amount] = itemObject;
+        cart.item_amount++;
+
       }
     }
 
-    if (existsFlag == false) {
-      itemObject.item = menuItemName;
-      itemObject.price = menuItemPrice;
-      itemObject.quantity = menuItemQuantity;
-      itemObject.date = menuItemDate;
-
-      cart.cart_items[cart.item_amount] = itemObject;
-      cart.item_amount++;
-
-    }
     cart.total_cost = 0.00;
     for (var n = 0; n < cart.item_amount; n++) {
       cart.total_cost += cart.cart_items[n].price * cart.cart_items[n].quantity;
