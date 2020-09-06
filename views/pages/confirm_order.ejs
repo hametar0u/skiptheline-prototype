@@ -1,64 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <!--HEADER-->
-    <% include ../partials/header.ejs %>
-    
-    <title> Confirm Order - Skip The Line </title>
-    
-    <!-- ADD FONTS-->
-    
-<!--INFO:
-MUDIT (MATT) JAIN
-SKIP THE LINE
-SUNDAY, APRIL 12, 2020
--->
-	<!--
-  <style>
-    html {
-      font-family: 'Roboto', sans-serif;
-    } body {
-      background-color: #11BFC7;
-      /*background-image: linear-gradient(to bottom, #11BFC7, #47E2D6);*/
-    }
-  </style>
-	-->
-
-</head>
-    
-<body>
-  <div class="container-fluid">
-
-    <div class="header">
-        <h1>SKIP THE LINE</h1>
-    </div>
-
-
-    <div class='loginbox'>
-
-    <br>
-    <h1> Confirm Order </h1>
-    
-    <% console.log("confirm order cart = " + JSON.stringify(cart_items)); %>
-    <% var itemLength = parseInt(item_amount); %>
-
-    <% for(var i = 0; i < itemLength; i++) { %>
+  <head>
+      <!--HEADER-->
+      <% include ../partials/header.ejs %>
       
-      <li><%= cart_items[i].item %> – <%= cart_items[i].price %> – <%= cart_items[i].quantity %> – <%= cart_items[i].date %></li>
-    <% } %>
-    <h4>Subtotal: <%= total_cost %></h4>
-    
-    <br>
-    <form action="/order_now" method="GET">
-      <input type="submit" value="Go Back">
-    </form>
-    <form action="/pay_now" method="GET" method="GET">
-      <input type="submit" value="Pay Now">
-    </form>
+      <title> Confirm Order - Skip The Line </title>
+      
+      <!-- ADD FONTS-->
+      
+  <!--INFO:
+  MUDIT (MATT) JAIN
+  SKIP THE LINE
+  SUNDAY, APRIL 12, 2020
+  -->
+    <!--
+    <style>
+      html {
+        font-family: 'Roboto', sans-serif;
+      } body {
+        background-color: #11BFC7;
+        /*background-image: linear-gradient(to bottom, #11BFC7, #47E2D6);*/
+      }
+    </style>
+    -->
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+      
+  <body>
+    <div class="container-fluid">
 
+      <div class="header">
+          <h1>SKIP THE LINE</h1>
+      </div>
+
+
+      <div class='loginbox'>
+
+      <br>
+      <h1> Confirm Order </h1>
+      
+      <% console.log("confirm order cart = " + JSON.stringify(cart_items)); %>
+      <% var itemLength = parseInt(item_amount); %>
+
+      <% for(var i = 0; i < itemLength; i++) { %>
+        
+        <li><%= cart_items[i].item %> – <%= cart_items[i].price %> – <%= cart_items[i].quantity %> – <%= cart_items[i].date %></li>
+      <% } %>
+      <h4>Subtotal: <%= total_cost %></h4>
+      
+      <br>
+      <form action="/order_now" method="GET">
+        <input type="submit" value="Go Back">
+      </form>
+
+      <button value="Pay Now">
+
+      
+
+      </div>
     </div>
-  </div>
-</body>
+  </body>
+  
+  <script type="text/javascript">
+    // Create an instance of the Stripe object with your publishable API key
+    var stripe = Stripe('pk_test_mKcGC6Cx3PUXSKEWFSOL9chX00ysQ8DqVX');
+    var checkoutButton = document.getElementById('checkout-button');
 
+    checkoutButton.addEventListener('click', function() {
+      // Create a new Checkout Session using the server-side endpoint you
+      // created in step 3.
+      fetch('/create-checkout-session', {
+        method: 'POST',
+      })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(session) {
+        return stripe.redirectToCheckout({ sessionId: session.id });
+      })
+      .then(function(result) {
+        // If `redirectToCheckout` fails due to a browser or network
+        // error, you should display the localized error message to your
+        // customer using `error.message`.
+        if (result.error) {
+          alert(result.error.message);
+        }
+      })
+      .catch(function(error) {
+        console.error('Error:', error);
+      });
+    });
+  </script>
 </html>

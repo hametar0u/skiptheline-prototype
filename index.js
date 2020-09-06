@@ -381,7 +381,28 @@ var calculateOrderAmount = items => {
 // });
 
 // app.listen(4242, () => console.log('Node server listening on port 4242!'));
-0
+app.post("/create-checkout-session", async (req, res) => {
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: [
+      {
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: "T-shirt",
+          },
+          unit_amount: 2000,
+        },
+        quantity: 1,
+      },
+    ],
+    mode: "payment",
+    success_url: "https://example.com/success",
+    cancel_url: "https://example.com/cancel",
+  });
+
+  res.json({ id: session.id });
+});
 
 app.get('/pending_orders', checkAuth, function (req, res) {
   res.render('pages/pending_orders.ejs');
