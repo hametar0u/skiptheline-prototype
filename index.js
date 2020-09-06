@@ -403,7 +403,7 @@ app.post("/create-checkout-session", async (req, res) => {
       },
     ],
     mode: "payment",
-    success_url: "https://example.com/success",
+    success_url: "https://skipthelinebeta.herokuapp.com/order_success.html",
     cancel_url: "https://example.com/cancel",
   });
 
