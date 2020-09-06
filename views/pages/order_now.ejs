@@ -94,7 +94,7 @@ FRIDAY, APRIL 10, 2020
                   <!-- <form method="POST" action="/add_to_cart">
                     <input type="submit" value="Add">
                   </form> -->
-                  <input type="number" step="1" min="0" name="menuItemQuantity" id="<%= 'menuItemQuantity' + j.toString() %>" placeholder="0">
+                  <input type="number" step="1" min="0" name="menuItemQuantity" id="<%= 'menuItemQuantity' + j.toString() %>" value="0">
                   <button onclick="add_to_cart(<%= j %>)" >Add to Cart</button>
                   <% j++; %>
                 </div>
@@ -151,7 +151,7 @@ FRIDAY, APRIL 10, 2020
                 <a class="close" href="#">&times;</a>
                 <div class="content">
 
-                  <input type="number" step="1" min="0" name="menuItemQuantity" id="<%= 'menuItemQuantity' + i.toString() %>" placeholder="0">
+                  <input type="number" step="1" min="0" name="menuItemQuantity" id="<%= 'menuItemQuantity' + i.toString() %>" value="0">
                   <button onclick="add_to_cart(<%= i %>)">Add to Cart</button>
                 </div>
               </div>

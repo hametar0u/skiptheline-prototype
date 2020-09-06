@@ -366,6 +366,7 @@ var calculateOrderAmount = items => {
   return 1400;
 };
 
+//just noticed that by sending the query upon pressing the pay now button, if the client doens't complete the payment transaction, the order still gets logged into the database
 app.post("/create-payment-intent", async (req, res) => {
   const { items } = req.body;
   // Create a PaymentIntent with the order amount and currency

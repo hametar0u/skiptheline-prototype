@@ -27,3 +27,4 @@ CREATE TABLE drinkmenu(
     price FLOAT
 );
 CREATE EXTENSION pgcrypto;
+
