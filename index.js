@@ -393,13 +393,13 @@ app.post("/create-checkout-session", async (req, res) => {
     line_items: [
       {
         price_data: {
-          currency: "usd",
+          currency: "cad",
           product_data: {
-            name: "T-shirt",
+            name: "Hamburger",
           },
-          unit_amount: 2000,
+          unit_amount: 595,
         },
-        quantity: 1,
+        quantity: 5,
       },
     ],
     mode: "payment",
