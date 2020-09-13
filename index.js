@@ -388,20 +388,24 @@ var calculateOrderAmount = items => {
 
 // app.listen(4242, () => console.log('Node server listening on port 4242!'));
 app.post("/create-checkout-session", async (req, res) => {
+  var cart = req.session.cart;
+  var cart_items = cart.cart_items;
+  var line_item_array = [];
+  for (var i=0; i<cart.item_amount; i++) {
+    line_item_array.append({
+      price_data: {
+        currency: "cad",
+        product_data: {
+          name: cart_items[i].item,
+        },
+        unit_amount: cart_items[i].price,
+      },
+      quantity: cart_items[i].quantity,
+    });
+  }
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
-    line_items: [
-      {
-        price_data: {
-          currency: "cad",
-          product_data: {
-            name: "Hamburger",
-          },
-          unit_amount: 595,
-        },
-        quantity: 5,
-      },
-    ],
+    line_items: line_item_array,
     mode: "payment",
     success_url: "https://skipthelinebeta.herokuapp.com/order_success.html",
     cancel_url: "https://example.com/cancel",
