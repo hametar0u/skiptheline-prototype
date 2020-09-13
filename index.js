@@ -137,7 +137,7 @@ app.post('/confirmation', (req, res) => {
       }
     });
     
-    var createAccountQuery = `INSERT INTO users VALUES('${user_id}', '${usr}', crypt('${pwd}', gen_salt('bf'))) WHERE NOT EXISTS(SELECT 1 FROM users WHERE username = '${usr}');`;
+    var createAccountQuery = `INSERT INTO users VALUES('${user_id}', '${usr}', crypt('${pwd}', gen_salt('bf')) WHERE NOT EXISTS(SELECT 1 FROM users WHERE username = '${usr}'));`;
     pool.query(createAccountQuery, (error, result) => {
 
       if (error) {
