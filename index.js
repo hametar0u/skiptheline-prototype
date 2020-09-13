@@ -123,8 +123,23 @@ app.post('/confirmation', (req, res) => {
   if (codeconf == req.session.confcode) {
     var usr = req.session.usr;
     var pwd = req.session.pwd;
-    var createAccountQuery = `INSERT INTO users(username, password) SELECT '${usr}', crypt('${pwd}', gen_salt('bf')) WHERE NOT EXISTS(SELECT 1 FROM users WHERE username = '${usr}');`;
+    var user_id = makeconfcode(7);
+    var select_query = "SELECT id FROM users;"
+    pool.query(select_query, (error, result) => {
+      if(error) {
+        res.send(error);
+      }
+      else {
+        while (user_id in result || user_id[0]==0) {
+          user_id = makeconfcode(7);
+        }
+        console.log("confcode creation 200 OK");
+      }
+    });
+    
+    var createAccountQuery = `INSERT INTO users VALUES('${user_id}', '${usr}', crypt('${pwd}', gen_salt('bf'))) WHERE NOT EXISTS(SELECT 1 FROM users WHERE username = '${usr}');`;
     pool.query(createAccountQuery, (error, result) => {
+
       if (error) {
         res.send(error);
       }
