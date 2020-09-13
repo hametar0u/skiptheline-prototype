@@ -154,13 +154,7 @@ app.post('/confirmation', (req, res) => {
         res.send(error);
       }
       else {
-        if (result.rowCount === 0) {
-          console.log("account already exists");
-          res.redirect("login.html");
-        }
-        else {
-          res.render("pages/create_account_success.ejs");
-        }
+        res.render("pages/create_account_success.ejs");
       }
         
     });
