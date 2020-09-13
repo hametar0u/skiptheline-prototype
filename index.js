@@ -398,7 +398,7 @@ app.post("/create-checkout-session", async (req, res) => {
         product_data: {
           name: cart_items[i].item,
         },
-        unit_amount: cart_items[i].price,
+        unit_amount: cart_items[i].price*100,
       },
       quantity: cart_items[i].quantity,
     });
