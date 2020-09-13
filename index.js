@@ -408,7 +408,7 @@ app.post("/create-checkout-session", async (req, res) => {
     line_items: line_item_array,
     mode: "payment",
     success_url: "https://skipthelinebeta.herokuapp.com/order_success.html",
-    cancel_url: "https://example.com/cancel",
+    cancel_url: "https://skipthelinebeta.herokuapp.com/order_now",
   });
 
   res.json({ id: session.id });
