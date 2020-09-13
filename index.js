@@ -434,7 +434,7 @@ app.post("/create-checkout-session", async (req, res) => {
 });
 
 app.get('/pending_orders', checkAuth, function (req, res) {
-  order_query = `SELECT order_id,item,price,quantity,date FROM order_details NATURAL JOIN orders NATURAL JOIN users WHERE orders.complete = '0' AND users.username = '${req.session.loginUsername}' GROUP BY order_id ORDER BY date;`;
+  order_query = `SELECT order_id,date,item,price,quantity FROM order_details NATURAL JOIN orders NATURAL JOIN users WHERE orders.complete = '0' AND users.username = '${req.session.loginUsername}' GROUP BY order_id ORDER BY date;`;
   pool.query(order_query, (error, result) => {
     if (error) {
       console.log(error);
