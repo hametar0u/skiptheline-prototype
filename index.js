@@ -392,7 +392,7 @@ app.post("/create-checkout-session", async (req, res) => {
   var cart_items = cart.cart_items;
   var line_item_array = [];
   for (var i=0; i<cart.item_amount; i++) {
-    line_item_array.append({
+    line_item_array.push({
       price_data: {
         currency: "cad",
         product_data: {
