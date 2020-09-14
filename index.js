@@ -441,7 +441,7 @@ app.get('/pending_orders', checkAuth, function (req, res) {
       res.send(error);
     }
     else {
-      console.log(result);
+      console.log(result.rows);
       res.render('pages/pending_orders.ejs',result);
     }
   });
