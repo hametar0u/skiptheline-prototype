@@ -450,7 +450,17 @@ app.get('/pending_orders', checkAuth, function (req, res) {
 });
 
 app.get('/order_history', checkAuth, function (req, res) {
-  res.render('pages/order_history.ejs');
+  order_query = `SELECT user_id,order_id,date,item,price,quantity FROM order_details NATURAL JOIN orders NATURAL JOIN users WHERE orders.complete = '1' AND users.username = '${req.session.username}' ORDER BY date;`;
+  pool.query(order_query, (error, result) => {
+    if (error) {
+      console.log(error);
+      res.send(error);
+    }
+    else {
+      console.log(result.rows);
+      res.render('pages/order_history.ejs',result);
+    }
+  });
 });
 
 app.post('/menu_add', function (req, res) {
