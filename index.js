@@ -3,14 +3,15 @@ const path = require('path')
 const PORT = process.env.PORT || 5000
 const { Pool } = require('pg');
 var LOCAL_FLAG = true;
+var pool;
 if (LOCAL_FLAG) {
-  const pool = new Pool({
+  pool = new Pool({
     connectionString: 'postgres://postgres:skiptheline@localhost:5432',
     ssl: true
                       });
 }
 else {
-  const pool = new Pool({
+  pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: true
                       });
