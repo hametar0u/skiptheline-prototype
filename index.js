@@ -6,7 +6,7 @@ var LOCAL_FLAG = true;
 var pool;
 if (LOCAL_FLAG) {
   pool = new Pool({
-    connectionString: 'postgres://postgres:skiptheline@localhost:5432/bigsad',
+    connectionString: 'postgres://postgres:skiptheline@localhost:5432/postgres',
     ssl: true
                       });
 }
