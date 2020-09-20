@@ -2,10 +2,20 @@ const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5000
 const { Pool } = require('pg');
-const pool = new Pool({
+var LOCAL_FLAG = true;
+if (LOCAL_FLAG) {
+  const pool = new Pool({
+    connectionString: 'postgres://postgres:skiptheline@localhost:5432',
+    ssl: true
+                      });
+}
+else {
+  const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: true
                       });
+}
+
 const session = require('express-session');
 const nodemailer = require("nodemailer");
 const sgTransport = require('nodemailer-sendgrid-transport');
