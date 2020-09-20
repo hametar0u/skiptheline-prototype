@@ -2,20 +2,22 @@ const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5000
 const { Pool } = require('pg');
-var LOCAL_FLAG = true;
-var pool;
-if (LOCAL_FLAG) {
-  pool = new Pool({
-    connectionString: 'postgres://postgres:skiptheline@localhost:5432/postgres',
-    ssl: true
-                      });
-}
-else {
-  pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: true
-                      });
-}
+
+/*
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true
+});
+*/
+
+const pool = new Pool ({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'postgres',
+  password: 'skiptheline',
+  port: 5432
+});
+
 
 const session = require('express-session');
 const nodemailer = require("nodemailer");
