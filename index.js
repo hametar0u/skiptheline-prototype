@@ -2,10 +2,10 @@ const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5000
 const { Pool } = require('pg');
-
+var pool;
 var LOCAL_DEV_FLAG = false;
 if (LOCAL_DEV_FLAG){
-  const pool = new Pool ({
+  pool = new Pool ({
     user: 'postgres',
     host: 'localhost',
     database: 'postgres',
@@ -14,7 +14,7 @@ if (LOCAL_DEV_FLAG){
   });
 }
 else{
-  const pool = new Pool({
+  pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: true
   });
