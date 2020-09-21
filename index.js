@@ -17,23 +17,29 @@ const pool = new Pool ({
   password: 'skiptheline',
   port: 5432
 });
-
+ 
 
 const session = require('express-session');
 const nodemailer = require("nodemailer");
 const sgTransport = require('nodemailer-sendgrid-transport');
 const { isNullOrUndefined } = require('util');
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const stripe = require("stripe")('sk_test_51G8FYDCBPdoEPo2u1Oyqie0LaQVXVSVhTvP0DckvF8P3WpKz2HVSzJeJrTD3dEwA9BHFT1OQRIEutDBn8qqhegio00H5t5Um5o');
+//const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-
-
+var options = {
+  auth: {
+    api_user: 'kevinlu1248@gmail.com',
+    api_key: 'mrhob1ggay'
+  } 
+}
+/*
 var options = {
   auth: {
     api_user: process.env.SENDGRIDUSER,
     api_key: process.env.SENDGRIDPASS
   }
 }
-
+*/
 var transporter = nodemailer.createTransport(sgTransport(options));
 
 
@@ -145,9 +151,11 @@ app.post('/confirmation', (req, res) => {
       else {
         var id_array = [];
         var username_array = [];
+        console.log(result[i]);
         for (var i = 0; i<result.rowCount; i++) {
-          id_array.push(result[i][0]);
-          username_array.push(result[i][1]);
+          console.log(result.rows[i]);
+          id_array.push(result.rows[i][0]);
+          username_array.push(result.rows[i][1]);
         }
         while (user_id in id_array || user_id[0]==0) {
           user_id = makeconfcode(7);
@@ -302,8 +310,65 @@ app.post('/confirm_order', (req,res) => {
     "total_cost": req.body.total_cost
   };
   req.session.save();
-  console.log("req.session.cart = ",req.session.cart);
+  console.log("req.session.cart = ",JSON.stringify(req.session.cart));
+});
 
+app.get('/confirm_order_load', (req,res) => {
+  //console.log("req.session.cart in app.get = " , req.session.cart);
+  var cart = req.session.cart;
+  var failCount = 0;
+  while ((isNullOrUndefined(cart)) || (failCount < 20)){
+    cart = req.session.cart;
+    console.log(cart);
+    failCount += 1;
+  }
+    
+  console.log('cart = ' , cart);
+  if (isNullOrUndefined(cart)){
+    res.redirect('/order_now');
+  }
+  else{
+    res.render('pages/confirm_order.ejs', cart);
+  }
+});
+
+var calculateOrderAmount = items => {
+  // Replace this constant with a calculation of the order's amount
+  // Calculate the order total on the server to prevent
+  // people from directly manipulating the amount on the client
+  return 1400;
+};
+
+
+app.post("/create-checkout-session", async (req, res) => {
+  var cart = req.session.cart;
+  var cart_items = cart.cart_items;
+  var line_item_array = [];
+  for (var i=0; i<cart.item_amount; i++) {
+    line_item_array.push({
+      price_data: {
+        currency: "cad",
+        product_data: {
+          name: cart_items[i].item,
+        },
+        unit_amount: cart_items[i].price*100,
+      },
+      quantity: cart_items[i].quantity,
+    });
+  }
+  console.log(line_item_array);
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: line_item_array,
+    mode: "payment",
+    success_url: "https://skipthelinebeta.herokuapp.com/order_success",
+    cancel_url: "https://skipthelinebeta.herokuapp.com/order_now",
+  });
+
+  res.json({ id: session.id });
+});
+
+app.get('/order_success', (req,res) => {
   var username = req.session.username;
   var orderIDQuery = 'SELECT order_id FROM order_details;';
   var order_id = makeconfcode(7); //reusing code lmao
@@ -327,11 +392,11 @@ app.post('/confirm_order', (req,res) => {
   //console.log('order detail query:',str);
   pool.query(str, (error,result) => {
     if(error) {
-      console.log('/confirm_order error');
+      console.log('/order_success error');
       res.send(error);
     }
     else {
-      console.log('/confirm_order 200 OK');
+      console.log('/order_success 200 OK');
     }
   });
 
@@ -357,95 +422,9 @@ app.post('/confirm_order', (req,res) => {
       });
     }
   });
+  res.redirect('/order_success.html');
 });
 
-app.get('/confirm_order', async (req,res) => {
-  //console.log("req.session.cart in app.get = " , req.session.cart);
-  var cart = await req.session.cart;
-  console.log('cart = ' , cart);
-  if (isNullOrUndefined(cart)){
-    res.redirect('/order_now');
-  }
-  else{
-    res.render('pages/confirm_order.ejs', cart);
-  }
-});
-
-// app.get('/pay_now', async (req,res) => {
-//   const fs = require("fs");
-//   const ejs = require("ejs");
-//   var cart = req.session.cart;
-
-//   const data = await ejs.renderFile(__dirname + "/views/pages/payment.ejs", { cart1: cart });
-
-//   const mailOptions = {
-//     from: 'tonalddrump001@gmail.com', // sender address
-//     to: req.session.usr, // list of receivers
-//     subject: 'Skip The Line Receipt', // Subject line
-//     html: data
-//   };
-
-//   transporter.sendMail(mailOptions, function (err, info) {
-//     if(err)
-//       console.log(err)
-//     else
-//       console.log(info);
-//   });
-//   delete req.session.cart;
-// });
-
-//  app.get('/pay_now', async (req,res) => {
-//    res.render("pages/checkout.ejs");
-//  });
-
-var calculateOrderAmount = items => {
-  // Replace this constant with a calculation of the order's amount
-  // Calculate the order total on the server to prevent
-  // people from directly manipulating the amount on the client
-  return 1400;
-};
-
-//just noticed that by sending the query upon pressing the pay now button, if the client doens't complete the payment transaction, the order still gets logged into the database
-// app.post("/create-payment-intent", async (req, res) => {
-//   const { items } = req.body;
-//   // Create a PaymentIntent with the order amount and currency
-//   const paymentIntent = await stripe.paymentIntents.create({
-//     amount: calculateOrderAmount(items),
-//     currency: "usd"
-//   });
-
-//   res.send({
-//     clientSecret: paymentIntent.client_secret
-//   });
-// });
-
-// app.listen(4242, () => console.log('Node server listening on port 4242!'));
-app.post("/create-checkout-session", async (req, res) => {
-  var cart = req.session.cart;
-  var cart_items = cart.cart_items;
-  var line_item_array = [];
-  for (var i=0; i<cart.item_amount; i++) {
-    line_item_array.push({
-      price_data: {
-        currency: "cad",
-        product_data: {
-          name: cart_items[i].item,
-        },
-        unit_amount: cart_items[i].price*100,
-      },
-      quantity: cart_items[i].quantity,
-    });
-  }
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
-    line_items: line_item_array,
-    mode: "payment",
-    success_url: "https://skipthelinebeta.herokuapp.com/order_success.html",
-    cancel_url: "https://skipthelinebeta.herokuapp.com/order_now",
-  });
-
-  res.json({ id: session.id });
-});
 
 app.get('/pending_orders', checkAuth, function (req, res) {
   order_query = `SELECT user_id,order_id,date,item,price,quantity FROM order_details NATURAL JOIN orders NATURAL JOIN users WHERE orders.complete = '0' AND users.username = '${req.session.username}' ORDER BY date;`;
@@ -461,6 +440,8 @@ app.get('/pending_orders', checkAuth, function (req, res) {
   });
   
 });
+
+
 
 app.get('/order_history', checkAuth, function (req, res) {
   order_query = `SELECT user_id,order_id,date,item,price,quantity FROM order_details NATURAL JOIN orders NATURAL JOIN users WHERE orders.complete = '1' AND users.username = '${req.session.username}' ORDER BY date;`;

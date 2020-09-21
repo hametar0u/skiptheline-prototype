@@ -67,7 +67,16 @@ FRIDAY, APRIL 10, 2020
     <h6>Showing results for </h6>
     
     <br>
-
+    <form id="confirmOrderForm">
+      <!-- <input id="cart_items" name="cart_items" type="hidden" value=''> -->
+      <input type="submit" value="Confirm Order">
+    </form>
+  
+    <!-- sidebar for displaying cart -->
+    <h1 id="totalCost"></h1>
+    <div id="display_cart">
+  
+    </div>
     <div class='loginbox' style='width: 90vw;margin-top: 30px;'>
     <h2 style="text-align: center;">Food</h2>
 
@@ -169,16 +178,7 @@ FRIDAY, APRIL 10, 2020
     <!-- Add view cart function here: -->
 
   </div>    
-  <form id="confirmOrderForm">
-    <!-- <input id="cart_items" name="cart_items" type="hidden" value=''> -->
-    <input type="submit" value="Confirm Order">
-  </form>
-
-  <!-- sidebar for displaying cart -->
-  <h1 id="totalCost"></h1>
-  <div id="display_cart">
-
-  </div>
+  
 
 </body>
 
@@ -244,12 +244,12 @@ FRIDAY, APRIL 10, 2020
   }
 
   function sendData() {
-    var cart_items = JSON.stringify(cart);
+    var cart_items = cart;
     console.log("cart_items = ",cart_items);
     var xhr = new window.XMLHttpRequest();
     xhr.open('POST', '/confirm_order', true);
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    xhr.send(cart_items);
+    xhr.send(JSON.stringify(cart_items));
   }
  
   // Access the form element...
@@ -264,7 +264,7 @@ FRIDAY, APRIL 10, 2020
     else {
       sendData();
       console.log("order sent");
-      window.location.replace(window.location.origin+"/confirm_order");
+      window.location.replace(window.location.origin+"/confirm_order_load");
     }
     
   } );
