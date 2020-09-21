@@ -3,43 +3,46 @@ const path = require('path')
 const PORT = process.env.PORT || 5000
 const { Pool } = require('pg');
 
-/*
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true
-});
-*/
-
-const pool = new Pool ({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'postgres',
-  password: 'skiptheline',
-  port: 5432
-});
- 
+var LOCAL_DEV_FLAG = false;
+if (LOCAL_DEV_FLAG){
+  const pool = new Pool ({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'postgres',
+    password: 'skiptheline',
+    port: 5432
+  });
+}
+else{
+  const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
+  });
+}
 
 const session = require('express-session');
 const nodemailer = require("nodemailer");
 const sgTransport = require('nodemailer-sendgrid-transport');
 const { isNullOrUndefined } = require('util');
-const stripe = require("stripe")('sk_test_51G8FYDCBPdoEPo2u1Oyqie0LaQVXVSVhTvP0DckvF8P3WpKz2HVSzJeJrTD3dEwA9BHFT1OQRIEutDBn8qqhegio00H5t5Um5o');
-//const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-
-var options = {
-  auth: {
-    api_user: 'kevinlu1248@gmail.com',
-    api_key: 'mrhob1ggay'
-  } 
-}
-/*
-var options = {
-  auth: {
-    api_user: process.env.SENDGRIDUSER,
-    api_key: process.env.SENDGRIDPASS
+if (LOCAL_DEV_FLAG){
+  const stripe = require("stripe")('sk_test_51G8FYDCBPdoEPo2u1Oyqie0LaQVXVSVhTvP0DckvF8P3WpKz2HVSzJeJrTD3dEwA9BHFT1OQRIEutDBn8qqhegio00H5t5Um5o');
+  var options = {
+    auth: {
+      api_user: 'kevinlu1248@gmail.com',
+      api_key: 'mrhob1ggay'
+    } 
   }
 }
-*/
+else{
+  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+  var options = {
+    auth: {
+      api_user: process.env.SENDGRIDUSER,
+      api_key: process.env.SENDGRIDPASS
+    }
+  }
+}
+
 var transporter = nodemailer.createTransport(sgTransport(options));
 
 
