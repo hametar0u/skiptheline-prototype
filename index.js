@@ -320,7 +320,7 @@ app.get('/confirm_order_load', (req,res) => {
   //console.log("req.session.cart in app.get = " , req.session.cart);
   var cart = req.session.cart;
   var failCount = 0;
-  while (isNullOrUndefined(cart){
+  while (isNullOrUndefined(cart)) {
     if (failCount > 20){
       break;
     }
