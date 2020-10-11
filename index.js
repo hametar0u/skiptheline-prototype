@@ -3,7 +3,7 @@ const path = require('path')
 const PORT = process.env.PORT || 5000
 const { Pool } = require('pg');
 var pool;
-var LOCAL_DEV_FLAG = false;
+var LOCAL_DEV_FLAG = true;
 if (LOCAL_DEV_FLAG){
   pool = new Pool ({
     user: 'postgres',
@@ -24,8 +24,12 @@ const session = require('express-session');
 const nodemailer = require("nodemailer");
 const sgTransport = require('nodemailer-sendgrid-transport');
 const { isNullOrUndefined } = require('util');
+const fs = require('fs');
+const { callbackPromise } = require('nodemailer/lib/shared');
+
+var stripe;
 if (LOCAL_DEV_FLAG){
-  const stripe = require("stripe")('sk_test_51G8FYDCBPdoEPo2u1Oyqie0LaQVXVSVhTvP0DckvF8P3WpKz2HVSzJeJrTD3dEwA9BHFT1OQRIEutDBn8qqhegio00H5t5Um5o');
+  stripe = require("stripe")('sk_test_51G8FYDCBPdoEPo2u1Oyqie0LaQVXVSVhTvP0DckvF8P3WpKz2HVSzJeJrTD3dEwA9BHFT1OQRIEutDBn8qqhegio00H5t5Um5o');
   var options = {
     auth: {
       api_user: 'kevinlu1248@gmail.com',
@@ -34,7 +38,7 @@ if (LOCAL_DEV_FLAG){
   }
 }
 else{
-  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+  stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
   var options = {
     auth: {
       api_user: process.env.SENDGRIDUSER,
@@ -45,7 +49,7 @@ else{
 
 var transporter = nodemailer.createTransport(sgTransport(options));
 
-
+ 
 function makeid(length) {
   var result           = '';
   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -139,7 +143,7 @@ app.post('/createaccount', (req, res) => {
   req.session.confcode = confcode;
   res.render("pages/confirmation_code.ejs");
 });
-
+ 
 app.post('/confirmation', (req, res) => {
   var codeconf = req.body.code;
   if (codeconf == req.session.confcode) {
@@ -263,26 +267,28 @@ app.post('/login',  (req, res) => {
         console.log("login username - ", req.session.username)
         res.redirect("/order_now");
           //tell user email/password is wrong -> redirect to another page/go back to the beginning
-      }
+      } 
     }
   })
-});
+}); 
 
 app.get('/order_now', checkAuth, async (req, res) => {
+  //req.session.cart = {};
+  console.log("order now session cart ",req.session.cart);
   try {
     const client = await pool.connect()
     const foodResult = await client.query(`SELECT item,price FROM foodmenu;`);
     const drinkResult = await client.query(`SELECT item,price FROM drinkmenu;`);
     const foodResults = { 'fRows': (foodResult) ? foodResult.rows : null};
     const drinkResults = { 'dRows': (drinkResult) ? drinkResult.rows : null};
-    res.render('pages/order_now.ejs', {row1: foodResults, row2: drinkResults} );
+    res.render('pages/order_now.ejs', {row1: foodResults, row2: drinkResults, row3: req.session.cart} );
     client.release();
   } catch (err) {
     console.error(err);
     res.send("Error " + err);
-  }
+  } 
   
-});
+}); 
 
 app.post('/date_select', async (req,res) => {
 
@@ -306,35 +312,44 @@ app.post('/date_select', async (req,res) => {
 });
 
 app.post('/confirm_order', (req,res) => {
+  req.session.cart = {};
   var cart_items = req.body.cart_items;
   req.session.cart = {
     "cart_items": req.body.cart_items,
     "item_amount": req.body.item_amount,
     "total_cost": req.body.total_cost
   };
+  console.log("req.session.cart = ",JSON.stringify(req.session.cart)); //this command doesn't go off
+  fs.writeFile('logs.txt',JSON.stringify(req.session.cart),'utf8',callbackPromise); //I think this sequence and the subsequent command went off once and the session is saved to that thing
   req.session.save();
-  console.log("req.session.cart = ",JSON.stringify(req.session.cart));
 });
 
-app.get('/confirm_order_load', (req,res) => {
-  //console.log("req.session.cart in app.get = " , req.session.cart);
-  var cart = req.session.cart;
+app.get('/confirm_order_load', async(req,res,next) => {
+  try {
+    var cart = await req.session.cart;
+    console.log("req.session.cart in app.get = " , cart);
+  }
+  catch (err) {
+    console.log(err);
+    return next(err);
+  }
   var failCount = 0;
   while (isNullOrUndefined(cart)) {
     if (failCount > 20){
+      console.log("loop cart:", cart);
       break;
     }
     cart = req.session.cart;
-    console.log(cart);
     failCount += 1;
   }
     
-  console.log('cart = ' , cart);
+  console.log('cart (index.js) = ' , cart);
   if (isNullOrUndefined(cart)){
     res.redirect('/order_now');
   }
   else{
     res.render('pages/confirm_order.ejs', cart);
+    //res.send(cart); 
   }
 });
 
@@ -344,7 +359,6 @@ var calculateOrderAmount = items => {
   // people from directly manipulating the amount on the client
   return 1400;
 };
-
 
 app.post("/create-checkout-session", async (req, res) => {
   var cart = req.session.cart;
@@ -405,7 +419,7 @@ app.get('/order_success', (req,res) => {
       console.log('/order_success 200 OK');
     }
   });
-
+ 
   var userIdRetrieveQuery = `SELECT id FROM users WHERE "username" = '${username}';`;
   //console.log("retrieve ID query = ",userIdRetrieveQuery);
   pool.query(userIdRetrieveQuery, (error,result) => {
@@ -524,7 +538,7 @@ app.post('/drink_menu_add', function (req,res) {
     }
   });
 });
-
+  
 app.post('/menu_remove', function (req, res) {
   var menuItemRemove = req.body.menuItemRemove; //temporary
   var menuDateRemove = req.body.menuDateRemove;
@@ -538,7 +552,6 @@ app.post('/menu_remove', function (req, res) {
     }
   });
 });
-
 
 app.post('/logout', function (req, res) {
   req.session.destroy();

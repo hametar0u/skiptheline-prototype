@@ -1,325 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <!--HEADER-->
-    <% include ../partials/header.ejs %>
-</head>
-
-<!--INFO:
-MUDIT (MATT) JAIN
-SKIP THE LINE
-FRIDAY, APRIL 10, 2020
--->   
-<script>
-  function select_date() {
-    var temp1 = new Date();
-    var array = [];
-    for (var n=0;n==4;n++) {
-      array.push(temp1);
-      temp1.setDate(temp1.getDate() + 1);
-    }
-    
-    return array;
-  }
-</script>
-
-<body style="align-content: center; align-items: center;">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../scripts/scripts.js" type="text/javascript"></script>
+    <title>Order Now</title>
+  </head>
   
-  <div class="container-fluid">
-  
-    <div class="header">
-        <h1>SKIP THE LINE</h1>
-    </div>
-    
-<!-- NAVBAR -->
-    <% include ../partials/nav.ejs %>
-    
-    <br>
-    <h2 style="text-align: center">What date are you ordering for?</h2>
-    
-<!-- DATE TABLE -->
-    <br>
-    <form action="/date_select" method="POST" id="date_select">
-      <select name="dates" id="dates" form="date_select">
-        <%const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };%>
-        <%var array = [];%>
-        <%for (var n=0;n<5;n++) {%>
-          <%var temp1 = new Date();%>
-          <%console.log("temp1: ", temp1);%>
-          <%console.log("n: ", n);%>
-          <%array.push(temp1);%>
-          <%temp1.setDate(temp1.getDate() + n);%>
-        <%}%>
-       
-        <%console.log("array: ", array);%>
-        <% array.forEach((r) => { %>
-          <option value="<%=r.toLocaleDateString()%>"><%=r.toLocaleDateString(undefined, options)%></option>
-          
-
+  <body>
+    <h4>Food Items</h4>
+    <table>
+      <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Amount</th>
+      </tr>
+      <% var i = 1; %>
+      <% row1.fRows.forEach((r) => { %>
+        <tr>
+          <td><%=r.item%></td>
+          <td id="<%=r.item%>_price"><%=r.price%></td>
+          <td><input id="<%=r.item%>_quantity" type="number" step="1" min=0 value=0></td>
+          <td><button onclick="addToCart(<%=r.item%>)"></button></td>
+          <!-- attach addToCart as an event listener -->
+        </tr>
+        <% i++; %>
         <% }); %>
-      </select>
-      <input type="submit" value="submit" onclick="displayCart()">
-    </form>
-    <br>
+    </table>
     
-    
-    <h6>Showing results for </h6>
-    
-    <br>
-    <form id="confirmOrderForm">
-      <!-- <input id="cart_items" name="cart_items" type="hidden" value=''> -->
-      <input type="submit" value="Confirm Order">
-    </form>
-  
-    <!-- sidebar for displaying cart -->
-    <h1 id="totalCost"></h1>
-    <div id="display_cart">
-  
-    </div>
-    <div class='loginbox' style='width: 90vw;margin-top: 30px;'>
-    <h2 style="text-align: center;">Food</h2>
-
-<!-- FOOD OPTIONS -->
-    <div class="row"> 
-      <% var j = 100; %>
-      <% row1.fRows.forEach((r)=> { %>
-
-      <div class="col">
-        <div class="card" style="width:1/3fr">
-          <div class="card-header"><%= r.item %></div>
-          <img class="card-img-top" src="COOKIE.png">
-          <div class="card-body"><%= r.price %></div>
-          <div class="card-footer">
-            <!--quantity + add to cart-->  
-            <a class="button" href="<%= '#quantityPopup' + j.toString() %>">Add to cart</a>
-
-            <div id="<%= 'quantityPopup' + j.toString() %>" class="overlay">
-              <div class="popup">
-                <h2 name="menuItemName" id="<%= 'menuItemName' + j.toString() %>" ><%= r.item %></h2>
-                <h2 name="menuItemPrice" id="<%= 'menuItemPrice' + j.toString() %>"><%= r.price %></h2>
-                <a class="close" href="#">&times;</a>
-                <div class="content">
-                  <!-- <form method="POST" action="/add_to_cart">
-                    <input type="submit" value="Add">
-                  </form> -->
-                  <input type="number" step="1" min="0" name="menuItemQuantity" id="<%= 'menuItemQuantity' + j.toString() %>" value="0">
-                  <button onclick="add_to_cart(<%= j %>)" >Add to Cart</button>
-                  <% j++; %>
-                </div>
-              </div>
-            </div>
-           </div>
-          </div>
-        </div>
-      <% }); %>
-      </div>
-
-      <!-- <div class="col">
-        <div class="card" style="width:">
-          <div class="card-header">
-            
-          </div>
-          <img class="card-img-top" src="COOKIE.png">
-          <div class="card-body">$$$</div>
-          <div class="card-footer">Put buttons here</div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="card" style="width:">
-          <div class="card-header">Item name</div>
-          <img class="card-img-top" src="COOKIE.png">
-          <div class="card-body">$$$</div>
-          <div class="card-footer">Put buttons here</div>
-        </div>
-      </div>-->
-
-    </div> 
-    
-    <br>
-  <div class='loginbox' style='margin-top: 30px;width: 90vw'>
-    <h2 style="text-align: center;">Drinks</h2>
-    <div class="row"> 
-      <% var i = 0; %>
-      <% row2.dRows.forEach((r)=> { %>
-
-      <div class="col">
-        <div class="card" style="width:1/3fr">
-          <div class="card-header"><%= r.item %></div>
-          <img class="card-img-top" src="COOKIE.png">
-          <div class="card-body"><%= r.price %></div>
-          <div class="card-footer">
-            <!--quantity + add to cart-->  
-            <a class="button" href="<%= '#quantityPopup' + i.toString() %>">Add to cart</a>
-
-            <div id="<%= 'quantityPopup' + i.toString() %>" class="overlay">
-              <div class="popup">
-                <h2 name="menuItemName" id="<%= 'menuItemName' + i.toString() %>" ><%= r.item %></h2>
-                <h2 name="menuItemPrice" id="<%= 'menuItemPrice' + i.toString() %>"><%= r.price %></h2>
-                <a class="close" href="#">&times;</a>
-                <div class="content">
-
-                  <input type="number" step="1" min="0" name="menuItemQuantity" id="<%= 'menuItemQuantity' + i.toString() %>" value="0">
-                  <button onclick="add_to_cart(<%= i %>)">Add to Cart</button>
-                </div>
-              </div>
-            </div>
-           </div>
-          </div>
-        </div>
+    <h4>Drink Items</h4>
+    <table>
+      <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Amount</th>
+      </tr>
+      
+      <% row2.dRows.forEach((r) => { %>
+        <tr>
+        <td><%=r.item%></td>
+        <td><%=r.price%></td>
+        <td><input id="item_quantity<%=i%>" type="number" step="1" min=0 value=0></td>
+      </tr>
       <% i++; %>
       <% }); %>
-      </div>
-    </div>  
-
-    <br>
-    <!-- <a href="pages/confirm_order" class="btn" role="button">Continue</a> -->
-    <!-- Add view cart function here: -->
-
-  </div>    
-  
-
-</body>
-
-<script>
-  
-  
-  var cart = {"cart_items": [], "item_amount": 0, "total_cost":0.00};
-  
-  function add_to_cart(i) {
-    var menuItemName = document.getElementById('menuItemName' + i.toString()).textContent;
-    var menuItemPrice = document.getElementById("menuItemPrice" + i.toString()).textContent;
-    var menuItemQuantity = document.getElementById("menuItemQuantity" + i.toString()).value;
-    var menuItemDate = document.getElementById("dates").value;
-    console.log("menu item name = " + menuItemName);
-    console.log("menu item price = " + menuItemPrice);
-    console.log("menu item quantity = " + menuItemQuantity);
-    console.log("menu item date = " + menuItemDate);
-
-    var itemObject = {"item":"", "price": 0, "quantity": 0, "date": ""};
-    var existsFlag = false;
-
-    if (menuItemQuantity !=0) {
-      for (var n = 0; n < cart.item_amount; n++) {
-        if (cart.cart_items[n].item == menuItemName && cart.cart_items[n].date == menuItemDate) {
-          var itemQuantity = parseInt(cart.cart_items[n].quantity);
-          itemQuantity += parseInt(menuItemQuantity);
-          itemQuantity = itemQuantity.toString();
-          cart.cart_items[n].quantity = itemQuantity;
-          existsFlag = true;
-
-          break;
-        }
-      }
-  
-      if (existsFlag == false) {
-        itemObject.item = menuItemName;
-        itemObject.price = menuItemPrice;
-        itemObject.quantity = menuItemQuantity;
-        itemObject.date = menuItemDate;
-
-        cart.cart_items[cart.item_amount] = itemObject;
-        cart.item_amount++;
-
-      }
-    }
-    else{
-      window.alert("Please provide a quantity.")
-    }
-
-    cart.total_cost = 0.00;
-    for (var n = 0; n < cart.item_amount; n++) {
-      cart.total_cost += cart.cart_items[n].price * cart.cart_items[n].quantity;
-
-    }
-    cart.total_cost = cart.total_cost.toFixed(2);
-    document.getElementById("totalCost").innerHTML = `Total: ${cart.total_cost}`; 
-
-    // console.log(itemObject);
-    // console.log(cart);
-
-    //update cart after someone adds stuff to it
-    displayCart();
-  }
-
-  function sendData() {
-    var cart_items = cart;
-    console.log("cart_items = ",cart_items);
-    var xhr = new window.XMLHttpRequest();
-    xhr.open('POST', '/confirm_order', true);
-    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    xhr.send(JSON.stringify(cart_items));
-  }
- 
-  // Access the form element...
-  const form = document.getElementById( "confirmOrderForm" );
-
-  // ...and take over its submit event.
-  form.addEventListener( "submit", function ( event ) {
-    event.preventDefault();
-    if (cart.item_amount == 0) {
-      alert("There are no items in the cart!");
-    }
-    else {
-      sendData();
-      console.log("order sent");
-      window.location.replace(window.location.origin+"/confirm_order_load");
-    }
-    
-  } );
-
-  function displayCart() {
-    if (document.getElementById("displayTable") != null) {
-      document.getElementById("displayTable").remove();
-    }
-    var div = document.getElementById("display_cart");
-    var tbl = document.createElement("table");
-    tbl.setAttribute("id", "displayTable");
-
-    for (var i = 0; i< cart.item_amount; i++) {
-      var tr = document.createElement("tr");
-
-      var tdItem = document.createElement("td");
-      var itemText = document.createTextNode(cart.cart_items[i].item);
-      tdItem.appendChild(itemText);
-
-      var tdPrice = document.createElement("td");
-      var priceText = document.createTextNode(cart.cart_items[i].price);
-      tdPrice.appendChild(priceText);
-      
-      var tdQuantity = document.createElement("td");
-      var quantityText = document.createTextNode(cart.cart_items[i].quantity);
-      tdQuantity.appendChild(quantityText);
-    
-      var tdDate = document.createElement("td");
-      var dateText = document.createTextNode(cart.cart_items[i].date);
-      tdDate.appendChild(dateText);
-
-      var tdButton = document.createElement("td");
-      var button = document.createElement("button");
-      button.setAttribute("onClick",`removeCartItem('${i}')`);
-      button.textContent = "Remove";
-      tdButton.appendChild(button);
-
-      tr.appendChild(tdItem);
-      tr.appendChild(tdPrice);
-      tr.appendChild(tdQuantity);
-      tr.appendChild(tdDate);
-      tr.appendChild(tdButton);
-
-      tbl.appendChild(tr);
-    }
-    div.appendChild(tbl);
-  }
-
-  function removeCartItem(i) {
-    cart.cart_items.splice(parseInt(i),1);
-    cart.item_amount -= 1;
-    displayCart()
-  }
-
-</script>
-
-</html>
-
+    </table>
+  </body>
+  </html>

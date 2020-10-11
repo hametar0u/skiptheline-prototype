@@ -29,7 +29,7 @@ FRIDAY, APRIL 10, 2020
   <div class="container-fluid">
   
     <div class="header">
-        <h1 style="text-align:center;">SKIP THE LINE</h1>
+        <h1>SKIP THE LINE</h1>
     </div>
     
 <!-- NAVBAR -->
@@ -46,20 +46,20 @@ FRIDAY, APRIL 10, 2020
         <%var array = [];%>
         <%for (var n=0;n<5;n++) {%>
           <%var temp1 = new Date();%>
-          <%console.log("temp1: ", temp1);%>
-          <%console.log("n: ", n);%>
+          <!-- <%console.log("temp1: ", temp1);%>
+          <%console.log("n: ", n);%> -->
           <%array.push(temp1);%>
           <%temp1.setDate(temp1.getDate() + n);%>
         <%}%>
        
-        <%console.log("array: ", array);%>
+        <!-- <%console.log("array: ", array);%> -->
         <% array.forEach((r) => { %>
           <option value="<%=r.toLocaleDateString()%>"><%=r.toLocaleDateString(undefined, options)%></option>
           
 
         <% }); %>
       </select>
-      <input type="submit" value="submit">
+      <input type="submit" value="submit" onclick="displayCart()">
     </form>
     <br>
     
@@ -67,7 +67,16 @@ FRIDAY, APRIL 10, 2020
     <h6>Showing results for </h6>
     
     <br>
-
+    <form id="confirmOrderForm">
+      <!-- <input id="cart_items" name="cart_items" type="hidden" value=''> -->
+      <input type="submit" value="Confirm Order">
+    </form>
+  
+    <!-- sidebar for displaying cart -->
+    <h1 id="totalCost"></h1>
+    <div id="display_cart">
+  
+    </div>
     <div class='loginbox' style='width: 90vw;margin-top: 30px;'>
     <h2 style="text-align: center;">Food</h2>
 
@@ -94,7 +103,7 @@ FRIDAY, APRIL 10, 2020
                   <!-- <form method="POST" action="/add_to_cart">
                     <input type="submit" value="Add">
                   </form> -->
-                  <input type="number" step="1" min="0" name="menuItemQuantity" id="<%= 'menuItemQuantity' + j.toString() %>" placeholder="0">
+                  <input type="number" step="1" min="0" name="menuItemQuantity" id="<%= 'menuItemQuantity' + j.toString() %>" value="0">
                   <button onclick="add_to_cart(<%= j %>)" >Add to Cart</button>
                   <% j++; %>
                 </div>
@@ -151,7 +160,7 @@ FRIDAY, APRIL 10, 2020
                 <a class="close" href="#">&times;</a>
                 <div class="content">
 
-                  <input type="number" step="1" min="0" name="menuItemQuantity" id="<%= 'menuItemQuantity' + i.toString() %>" placeholder="0">
+                  <input type="number" step="1" min="0" name="menuItemQuantity" id="<%= 'menuItemQuantity' + i.toString() %>" value="0">
                   <button onclick="add_to_cart(<%= i %>)">Add to Cart</button>
                 </div>
               </div>
@@ -159,6 +168,7 @@ FRIDAY, APRIL 10, 2020
            </div>
           </div>
         </div>
+      <% i++; %>
       <% }); %>
       </div>
     </div>  
@@ -168,76 +178,88 @@ FRIDAY, APRIL 10, 2020
     <!-- Add view cart function here: -->
 
   </div>    
-  <form id="confirmOrderForm">
-    <input id="cart_items" name="cart_items" type="hidden" value=''>
-    <input type="submit" value="Confirm Order">
-  </form>
-
-  <!-- sidebar for displaying cart -->
-  <div id="display_cart">
-
-
-  </div>
+  
 
 </body>
 
-<script>
-  
-  
-  var cart = {"cart_items": [], "item_amount": 0};
-  
+<script type="text/javascript">
+  var cart = <%-JSON.stringify(row3)%>
+  console.log(cart)
+  if (typeof cart === 'undefined') {
+    cart = {"cart_items": [], "item_amount": 0, "total_cost":0.00};
+  }
+  console.log(cart);
+  //var cart = {"cart_items": [], "item_amount": 0, "total_cost":0.00};
+
   function add_to_cart(i) {
     var menuItemName = document.getElementById('menuItemName' + i.toString()).textContent;
     var menuItemPrice = document.getElementById("menuItemPrice" + i.toString()).textContent;
     var menuItemQuantity = document.getElementById("menuItemQuantity" + i.toString()).value;
+    var menuItemDate = document.getElementById("dates").value;
     console.log("menu item name = " + menuItemName);
     console.log("menu item price = " + menuItemPrice);
     console.log("menu item quantity = " + menuItemQuantity);
-    
-    var itemObject = {"item":"", "price": 0, "quantity": 0};
+    console.log("menu item date = " + menuItemDate);
+  
+    var itemObject = {"item":"", "price": 0, "quantity": 0, "date": ""};
     var existsFlag = false;
-
-    for (var n = 0; n < cart.item_amount; n++) {
-      if (cart.cart_items[n].item == menuItemName) {
-        var itemQuantity = parseInt(cart.cart_items[n].quantity);
-        itemQuantity += parseInt(menuItemQuantity);
-        itemQuantity = itemQuantity.toString();
-        cart.cart_items[n].quantity = itemQuantity;
-        existsFlag = true;
-        break;
+  
+    if (menuItemQuantity !=0) {
+      for (var n = 0; n < cart.item_amount; n++) {
+        if (cart.cart_items[n].item == menuItemName && cart.cart_items[n].date == menuItemDate) {
+          var itemQuantity = parseInt(cart.cart_items[n].quantity);
+          itemQuantity += parseInt(menuItemQuantity);
+          itemQuantity = itemQuantity.toString();
+          cart.cart_items[n].quantity = itemQuantity;
+          existsFlag = true;
+  
+          break;
+        }
+      }
+  
+      if (existsFlag == false) {
+        itemObject.item = menuItemName;
+        itemObject.price = menuItemPrice;
+        itemObject.quantity = menuItemQuantity;
+        itemObject.date = menuItemDate;
+  
+        cart.cart_items[cart.item_amount] = itemObject;
+        cart.item_amount++;
+  
       }
     }
-
-    if (existsFlag == false) {
-      itemObject.item = menuItemName;
-      itemObject.price = menuItemPrice;
-      itemObject.quantity = menuItemQuantity;
-
-      cart.cart_items[cart.item_amount] = itemObject;
-      cart.item_amount++;
+    else{
+      window.alert("Please provide a quantity.")
     }
-
-    console.log(itemObject);
-    console.log(cart);
-
-    document.getElementById("cart_items").value = JSON.stringify(cart);
+  
+    cart.total_cost = 0.00;
+    for (var n = 0; n < cart.item_amount; n++) {
+      cart.total_cost += cart.cart_items[n].price * cart.cart_items[n].quantity;
+  
+    }
+    cart.total_cost = cart.total_cost.toFixed(2);
+    document.getElementById("totalCost").innerHTML = `Total: ${cart.total_cost}`; 
+  
+    // console.log(itemObject);
+    // console.log(cart);
+  
     //update cart after someone adds stuff to it
     displayCart();
   }
-
+  
   function sendData() {
-    var cart_items = {
-      value: document.getElementById("cart_items").value
-    }
+    var cart_items = cart;
+    console.log("cart_items = ",cart_items);
+    //fs.writeFile('logs.txt',cart_items,'utf8',callback);
     var xhr = new window.XMLHttpRequest();
     xhr.open('POST', '/confirm_order', true);
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     xhr.send(JSON.stringify(cart_items));
   }
- 
+  
   // Access the form element...
   const form = document.getElementById( "confirmOrderForm" );
-
+  
   // ...and take over its submit event.
   form.addEventListener( "submit", function ( event ) {
     event.preventDefault();
@@ -247,11 +269,11 @@ FRIDAY, APRIL 10, 2020
     else {
       sendData();
       console.log("order sent");
-      window.location.replace(window.location.origin+"/confirm_order");
+      window.location.replace(window.location.origin+"/confirm_order_load");
     }
     
   } );
-
+  
   function displayCart() {
     if (document.getElementById("displayTable") != null) {
       document.getElementById("displayTable").remove();
@@ -259,14 +281,14 @@ FRIDAY, APRIL 10, 2020
     var div = document.getElementById("display_cart");
     var tbl = document.createElement("table");
     tbl.setAttribute("id", "displayTable");
-
+  
     for (var i = 0; i< cart.item_amount; i++) {
       var tr = document.createElement("tr");
-
+  
       var tdItem = document.createElement("td");
       var itemText = document.createTextNode(cart.cart_items[i].item);
       tdItem.appendChild(itemText);
-
+  
       var tdPrice = document.createElement("td");
       var priceText = document.createTextNode(cart.cart_items[i].price);
       tdPrice.appendChild(priceText);
@@ -275,27 +297,36 @@ FRIDAY, APRIL 10, 2020
       var quantityText = document.createTextNode(cart.cart_items[i].quantity);
       tdQuantity.appendChild(quantityText);
     
+      var tdDate = document.createElement("td");
+      var dateText = document.createTextNode(cart.cart_items[i].date);
+      tdDate.appendChild(dateText);
+  
       var tdButton = document.createElement("td");
       var button = document.createElement("button");
       button.setAttribute("onClick",`removeCartItem('${i}')`);
       button.textContent = "Remove";
       tdButton.appendChild(button);
-
+  
       tr.appendChild(tdItem);
       tr.appendChild(tdPrice);
       tr.appendChild(tdQuantity);
+      tr.appendChild(tdDate);
       tr.appendChild(tdButton);
-
+  
       tbl.appendChild(tr);
     }
     div.appendChild(tbl);
   }
-
+  
   function removeCartItem(i) {
     cart.cart_items.splice(parseInt(i),1);
+    cart.item_amount -= 1;
     displayCart()
   }
 
+  window.onload = (event) => {
+    displayCart()
+  };
 </script>
 
 </html>
