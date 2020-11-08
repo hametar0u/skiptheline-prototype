@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../scripts/scripts.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/public/scripts/scripts.js"></script>
     <title>Order Now</title>
   </head>
   
@@ -21,7 +21,7 @@
           <td><%=r.item%></td>
           <td id="<%=r.item%>_price"><%=r.price%></td>
           <td><input id="<%=r.item%>_quantity" type="number" step="1" min=0 value=0></td>
-          <td><button onclick="addToCart(<%=r.item%>)"></button></td>
+          <td><button id=<%=r.item%>">Add to Cart</button></td>
           <!-- attach addToCart as an event listener -->
         </tr>
         <% i++; %>

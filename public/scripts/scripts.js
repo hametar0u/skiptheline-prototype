@@ -88,3 +88,11 @@ var cart = {
         return;
     }
 };
+
+var buttons = document.getElementsByTagName('button');
+
+Array.from(buttons).forEach((button) => {
+    console.log(button)
+});
+
+//button.addEventListener("click", addToCart(button.id));

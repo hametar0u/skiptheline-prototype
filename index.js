@@ -20,6 +20,7 @@ else{
   });
 }
 
+//const scripts = require('./scripts');
 const session = require('express-session');
 const nodemailer = require("nodemailer");
 const sgTransport = require('nodemailer-sendgrid-transport');
@@ -84,6 +85,7 @@ async function checkAuth(req, res, next) {
 var app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
