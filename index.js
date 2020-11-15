@@ -82,13 +82,139 @@ async function checkAuth(req, res, next) {
   }
 }
 
+//cart class
+class Cart{
+  item_amount = 0;
+  total_price = 0;
+  items = [];
+  
+  constructor(item_amount, total_price, items){
+    this.item_amount = item_amount;
+    this.total_price = total_price;
+    this.items = items;          //item = {name, price, amount}
+    this.pricelist = {};
+  }
+
+  getDBPrices(callback){
+    var getpricequery = `SELECT item, price FROM foodmenu;`;
+    pool.query(getpricequery, (error,result) => {
+      if (error) {
+        return callback(error);
+      }
+      else {
+        var results = {'rows': result.rows };
+        //console.log(results);
+        callback(null, results);
+      }
+    });
+  }
+
+  insertPrice(item, price){
+    this.pricelist[item] = price;
+    return this.pricelist; //TODO remove this in prod
+  }
+
+  showPrice(){
+    return this.pricelist;
+  }
+
+  updateAmountAndPrice(){
+      total = 0;
+      cart_items = this.items
+      for (var i = 0; i < this.items.length; i++){
+          total += (cart_items[i].price * cart_items[i].amount);
+      }
+      this.total_price = total;
+      this.item_amount = this.items.length;
+      return;
+  }
+
+  getItems(){
+      return this.items;
+  }
+
+  loadItems(items){
+      this.items = items;
+      return;
+  }
+
+  hasItem(name){
+      if (this.items === undefined){
+          return -1;
+      }
+
+      for (var i = 0; i < this.items.length; i++){
+          if (name == this.items[i].name){
+              return i;
+          }
+      }
+      return -1;
+  }
+
+  updateItem(item){
+      var i = this.hasItem(item.name);
+      this.items[i].amount = item.amount;
+      return;
+  }
+
+  addItem(item){
+      if (this.hasItem(item.name) === -1){
+          this.items.push({
+              name: item.name,
+              price: item.price,
+              amount: item.amount
+          });
+          this.item_amount += 1;
+      }
+      else {
+          this.updateItem(item);
+      }
+      this.updateAmountAndPrice();
+      req.session.cart = {'item_amount': item_amount, 'total_price': total_price, 'items': items}
+      return;
+  }
+
+  clearItems(){
+      this.items = [];
+      this.total = 0;
+      this.item_amount = 0;
+      return;
+  }
+};
+
+var cart = new Cart();
+
+// getDBPrices runs first
+cart.getDBPrices(function(err, result){
+  //=== code inside getDBPrices ===//
+  // var getpricequery = `SELECT item, price FROM foodmenu;`;
+  //   pool.query(getpricequery, (error,result) => {
+  //     if (error) {
+  //       return callback(error);
+  //     }
+  //     else {
+  //       var results = {'rows': result.rows };
+  //       //console.log(results);
+  //       callback(null, results);
+  //     }
+  // });
+  //query finishes, this runs third
+  for (var i = 0; i<result.rows.length; i++) {  
+    var list = cart.insertPrice(result.rows[i].item, result.rows[i].price)
+  }
+  console.log(list)
+});
+
+//this console.log runs second
+console.log(cart.showPrice())
+
 var app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(express.json()); 
 
 app.use(session({
   resave: true,
@@ -314,7 +440,7 @@ app.post('/date_select', async (req,res) => {
 });
 
 app.post('/confirm_order', (req,res) => {
-  req.session.cart = {};
+  req.session.cart = {}; //modify
   var cart_items = req.body.cart_items;
   req.session.cart = {
     "cart_items": req.body.cart_items,

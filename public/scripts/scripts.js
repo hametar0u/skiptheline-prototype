@@ -78,7 +78,7 @@ var cart = {
             this.updateItem(item);
         }
         this.updateAmountAndPrice();
-        storage.saveCart(this.items)
+        storage.saveCart(this.items) //TODO change this to req.session
         return;
     },
     clearItems: function(){
