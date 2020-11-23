@@ -1,3 +1,6 @@
+//Next week: do the same thing to drinks
+//Next week: display cart
+
 const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5000
@@ -26,7 +29,7 @@ const nodemailer = require("nodemailer");
 const sgTransport = require('nodemailer-sendgrid-transport');
 const { isNullOrUndefined } = require('util');
 const fs = require('fs');
-const { callbackPromise } = require('nodemailer/lib/shared');
+const { callbackPromise } = require('nodemailer/lib/shared'); 
 
 var stripe;
 if (LOCAL_DEV_FLAG){
@@ -84,14 +87,14 @@ async function checkAuth(req, res, next) {
 
 //cart class
 class Cart{
-  item_amount = 0;
-  total_price = 0;
-  items = [];
+  //item_amount = 0;
+  //total_price = 0;
+  //items = [];
   
-  constructor(item_amount, total_price, items){
-    this.item_amount = item_amount;
-    this.total_price = total_price;
-    this.items = items;          //item = {name, price, amount}
+  constructor(){
+    this.item_amount = 0;
+    this.total_price = 0;
+    this.items = [];          //item = {name, price, amount}
     this.pricelist = {};
   }
 
@@ -119,8 +122,8 @@ class Cart{
   }
 
   updateAmountAndPrice(){
-      total = 0;
-      cart_items = this.items
+      var total = 0;
+      var cart_items = this.items
       for (var i = 0; i < this.items.length; i++){
           total += (cart_items[i].price * cart_items[i].amount);
       }
@@ -170,7 +173,6 @@ class Cart{
           this.updateItem(item);
       }
       this.updateAmountAndPrice();
-      req.session.cart = {'item_amount': item_amount, 'total_price': total_price, 'items': items}
       return;
   }
 
@@ -185,36 +187,36 @@ class Cart{
 var cart = new Cart();
 
 // getDBPrices runs first
-cart.getDBPrices(function(err, result){
-  //=== code inside getDBPrices ===//
-  // var getpricequery = `SELECT item, price FROM foodmenu;`;
-  //   pool.query(getpricequery, (error,result) => {
-  //     if (error) {
-  //       return callback(error);
-  //     }
-  //     else {
-  //       var results = {'rows': result.rows };
-  //       //console.log(results);
-  //       callback(null, results);
-  //     }
-  // });
-  //query finishes, this runs third
-  for (var i = 0; i<result.rows.length; i++) {  
-    var list = cart.insertPrice(result.rows[i].item, result.rows[i].price)
-  }
-  console.log(list)
-});
+// cart.getDBPrices(function(err, result){
+//   //=== code inside getDBPrices ===//
+//   // var getpricequery = `SELECT item, price FROM foodmenu;`;
+//   //   pool.query(getpricequery, (error,result) => {
+//   //     if (error) {
+//   //       return callback(error);
+//   //     }
+//   //     else {
+//   //       var results = {'rows': result.rows };
+//   //       //console.log(results);
+//   //       callback(null, results);
+//   //     }
+//   // });
+//   //query finishes, this runs third
+//   for (var i = 0; i<result.rows.length; i++) {  
+//     var list = cart.insertPrice(result.rows[i].item, result.rows[i].price)
+//   }
+//   //console.log(list)
+// });
 
 //this console.log runs second
-console.log(cart.showPrice())
+//console.log(cart.showPrice())
 
 var app = express();
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/public', express.static(path.join(__dirname, 'public')));
+//app.use('/public', express.static(path.join(__dirname, 'public')));
 
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json()); 
 
 app.use(session({
   resave: true,
@@ -243,7 +245,7 @@ app.get('/login', (req, res) => res.redirect('login.html'));
 
 app.get('/my_secret_page', checkAuth, function (req, res) {
   res.send('if you are viewing this page it means you are logged in');
-});
+}); 
 
 app.get('/signup', (req, res) => res.redirect('sign_up.html'));
 
@@ -402,6 +404,16 @@ app.post('/login',  (req, res) => {
 
 app.get('/order_now', checkAuth, async (req, res) => {
   //req.session.cart = {};
+  if (req.session.pricelist == undefined || req.session.pricelist == []) {
+    cart.getDBPrices(function(err, result){
+      for (var i = 0; i<result.rows.length; i++) {  
+        var list = cart.insertPrice(result.rows[i].item, result.rows[i].price)
+      }
+      console.log("price list = ", list)
+      req.session.pricelist = list;
+    });
+  }
+  console.log("req.session.pricelist = ", req.session.pricelist)
   console.log("order now session cart ",req.session.cart);
   try {
     const client = await pool.connect()
@@ -418,7 +430,7 @@ app.get('/order_now', checkAuth, async (req, res) => {
   
 }); 
 
-app.post('/date_select', async (req,res) => {
+app.post('/date_select', async (req,res) => { //RENOVATION NEEDED
 
   
   
@@ -437,6 +449,22 @@ app.post('/date_select', async (req,res) => {
     console.error(err);
     res.send("Error " + err);
   }
+});
+
+app.post('/add_to_cart', (req,res) => {
+  
+  var item_name = req.body.item_name;
+  var item_quantity = req.body.item_quantity; 
+  var item_price = req.session.pricelist[`${item_name}`];
+  console.log("item_price = ", item_price);
+  console.log("item_name = ",item_name);
+  console.log("item_quantity = ",item_quantity);
+
+  var item_object = {'name': item_name, 'price': item_price, 'amount': item_quantity};
+  cart.addItem(item_object);
+  req.session.cart = cart.getItems();
+
+  res.redirect("/order_now");
 });
 
 app.post('/confirm_order', (req,res) => {
