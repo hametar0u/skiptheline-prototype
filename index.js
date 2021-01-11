@@ -1,5 +1,4 @@
-//Next week: do the same thing to drinks
-//Next week: display cart
+//Next week: add price to req.session.cart for drinks and display price as well + calculate subtotal
 
 const express = require('express')
 const path = require('path')
@@ -156,7 +155,7 @@ class Cart{
 
   updateItem(item){
       var i = this.hasItem(item.name);
-      this.items[i].amount = item.amount;
+      this.items[i].amount += item.amount;
       return;
   }
 
@@ -411,9 +410,9 @@ app.get('/order_now', checkAuth, async (req, res) => {
       }
       console.log("price list = ", list)
       req.session.pricelist = list;
-    });
+    });  
   }
-  console.log("req.session.pricelist = ", req.session.pricelist)
+  console.log("req.session.pricelist = ", req.session.pricelist);
   console.log("order now session cart ",req.session.cart);
   try {
     const client = await pool.connect()
@@ -421,12 +420,13 @@ app.get('/order_now', checkAuth, async (req, res) => {
     const drinkResult = await client.query(`SELECT item,price FROM drinkmenu;`);
     const foodResults = { 'fRows': (foodResult) ? foodResult.rows : null};
     const drinkResults = { 'dRows': (drinkResult) ? drinkResult.rows : null};
-    res.render('pages/order_now.ejs', {row1: foodResults, row2: drinkResults, row3: req.session.cart} );
+    const cart = { 'cartrow': req.session.cart };
+    res.render('pages/order_now.ejs', {row1: foodResults, row2: drinkResults, row3: cart} );
     client.release();
   } catch (err) {
     console.error(err);
     res.send("Error " + err);
-  } 
+  }
   
 }); 
 
@@ -454,7 +454,7 @@ app.post('/date_select', async (req,res) => { //RENOVATION NEEDED
 app.post('/add_to_cart', (req,res) => {
   
   var item_name = req.body.item_name;
-  var item_quantity = req.body.item_quantity; 
+  var item_quantity = parseInt(req.body.item_quantity); 
   var item_price = req.session.pricelist[`${item_name}`];
   console.log("item_price = ", item_price);
   console.log("item_name = ",item_name);

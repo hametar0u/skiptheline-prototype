@@ -10,7 +10,6 @@
   <body>
     <h4>Food Items</h4>
     <div id="food_items">
-      <% var i = 1; %>
       <% row1.fRows.forEach((r) => { %>
       <div class="item_card">
         <h5><%=r.item%> - <%=r.price%></h5>
@@ -22,26 +21,29 @@
         </form>
       </div>
       
-      <% i++; %>
       <% }); %>
     </div>
     
     <h4>Drink Items</h4>
-    <table>
-      <tr>
-        <th>Item</th>
-        <th>Price</th>
-        <th>Amount</th>
-      </tr>
-      
-      <% row2.dRows.forEach((r) => { %>
-        <tr>
-        <td><%=r.item%></td>
-        <td><%=r.price%></td>
-        <td><input id="item_quantity<%=i%>" type="number" step="1" min=0 value=0></td>
-      </tr>
-      <% i++; %>
+    
+    <% row2.dRows.forEach((r) => { %>
+      <div class="item_card">
+        <h5><%=r.item%> - <%=r.price%></h5>
+        <form action="/add_to_cart" method="POST">
+          <input type="hidden" value="<%=r.item%>" name="item_name" id="item_name">
+          <label for="item_quantity">Amount</label>
+          <input name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
+          <input id="item_submit" type="submit" value="Add To Cart">
+        </form>
+      </div>
+
+    <% }); %>
+ 
+    <h4>Cart</h4>
+    <% if(row3.cartrow != undefined) {%>
+      <% row3.cartrow.forEach(function(r) { %>
+        <h5><%= r.name %> - <%= r.amount %></h5>
       <% }); %>
-    </table>
+    <% } %>
   </body>
   </html>

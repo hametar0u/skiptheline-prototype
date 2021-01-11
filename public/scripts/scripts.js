@@ -1,3 +1,8 @@
+
+
+
+
+//old code
 var addToCart = function(item_name){
     var price = document.getElementById(`${item_name}_price`).value;
     var amount = document.getElementById(`${item_name}_quantity`).value;
