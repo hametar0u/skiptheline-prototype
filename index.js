@@ -1,3 +1,7 @@
+//Next week
+//redirect to error page if error/ redirect to login if not logged in
+//logging system for completed orders
+//
 
 
 const express = require('express')
@@ -5,7 +9,7 @@ const path = require('path')
 const PORT = process.env.PORT || 5000
 const { Pool } = require('pg');
 var pool;
-var LOCAL_DEV_FLAG = true;
+var LOCAL_DEV_FLAG = false;
 if (LOCAL_DEV_FLAG){
   pool = new Pool ({
     user: 'postgres',
@@ -502,48 +506,68 @@ app.post('/add_to_cart', (req,res) => {
   //price should have been added on this step to req.session.cart
   res.redirect("/order_now");
 });
+ 
+app.get('/confirm_order', (req,res) => {
+  var cart = req.session.cart; 
+  var subtotal = 0;
+  for (var i=0; i<cart.length; i++) {
+    subtotal += cart[i].price*cart[i].amount;
+  }
+  subtotal = Math.round((subtotal + Number.EPSILON) * 100) / 100
+  console.log('subtotal = ', subtotal);
 
-app.post('/confirm_order', (req,res) => {
-  req.session.cart = {}; //modify
-  var cart_items = req.body.cart_items;
-  req.session.cart = {
-    "cart_items": req.body.cart_items,
-    "item_amount": req.body.item_amount,
-    "total_cost": req.body.total_cost
-  };
-  console.log("req.session.cart = ",JSON.stringify(req.session.cart)); //this command doesn't go off
-  fs.writeFile('logs.txt',JSON.stringify(req.session.cart),'utf8',callbackPromise); //I think this sequence and the subsequent command went off once and the session is saved to that thing
-  req.session.save();
+
+
+  res.render("pages/confirm_order.ejs", {'cart': cart,'subtotal': subtotal});
 });
 
-app.get('/confirm_order_load', async(req,res,next) => {
-  try {
-    var cart = await req.session.cart;
-    console.log("req.session.cart in app.get = " , cart);
-  }
-  catch (err) {
-    console.log(err);
-    return next(err);
-  }
-  var failCount = 0;
-  while (isNullOrUndefined(cart)) {
-    if (failCount > 20){
-      console.log("loop cart:", cart);
-      break;
-    }
-    cart = req.session.cart;
-    failCount += 1;
-  }
+ 
+
+
+
+
+
+// app.post('/confirm_order', (req,res) => {
+//   req.session.cart = {}; //modify
+//   var cart_items = req.body.cart_items;
+//   req.session.cart = {
+//     "cart_items": req.body.cart_items,
+//     "item_amount": req.body.item_amount,
+//     "total_cost": req.body.total_cost
+//   };
+//   console.log("req.session.cart = ",JSON.stringify(req.session.cart)); //this command doesn't go off
+//   fs.writeFile('logs.txt',JSON.stringify(req.session.cart),'utf8',callbackPromise); //I think this sequence and the subsequent command went off once and the session is saved to that thing
+//   req.session.save();
+// });
+
+// app.get('/confirm_order_load', async(req,res,next) => {
+//   try {
+//     var cart = await req.session.cart;
+//     console.log("req.session.cart in app.get = " , cart);
+//   }
+//   catch (err) {
+//     console.log(err);
+//     return next(err);
+//   }
+//   var failCount = 0;
+//   while (isNullOrUndefined(cart)) {
+//     if (failCount > 20){
+//       console.log("loop cart:", cart);
+//       break;
+//     }
+//     cart = req.session.cart;
+//     failCount += 1;
+//   }
     
-  console.log('cart (index.js) = ' , cart);
-  if (isNullOrUndefined(cart)){
-    res.redirect('/order_now');
-  }
-  else{
-    res.render('pages/confirm_order.ejs', cart);
-    //res.send(cart); 
-  }
-});
+//   console.log('cart (index.js) = ' , cart);
+//   if (isNullOrUndefined(cart)){
+//     res.redirect('/order_now');
+//   }
+//   else{
+//     res.render('pages/confirm_order.ejs', cart);
+//     //res.send(cart); 
+//   }
+// });
 
 var calculateOrderAmount = items => {
   // Replace this constant with a calculation of the order's amount
@@ -553,19 +577,18 @@ var calculateOrderAmount = items => {
 };
 
 app.post("/create-checkout-session", async (req, res) => {
-  var cart = req.session.cart;
-  var cart_items = cart.cart_items;
+  var cart = req.session.cart; 
   var line_item_array = [];
-  for (var i=0; i<cart.item_amount; i++) {
+  for (var i=0; i<cart.length; i++) {
     line_item_array.push({
       price_data: {
         currency: "cad",
         product_data: {
-          name: cart_items[i].item,
+          name: cart[i].name,
         },
-        unit_amount: cart_items[i].price*100,
+        unit_amount: cart[i].price*100,
       },
-      quantity: cart_items[i].quantity,
+      quantity: cart[i].amount,
     });
   }
   console.log(line_item_array);

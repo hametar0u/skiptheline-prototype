@@ -46,7 +46,14 @@
         <h5><%= r.name %> - <%= r.price %> - <%= r.amount %></h5>
         <%subtotal += r.price*r.amount%>
       <% }); %>
+      
+      <% subtotal = Math.round((subtotal + Number.EPSILON) * 100) / 100; %>
       <h4>Subtotal: <%= subtotal %></h4>
     <% } %>
+
+  <form action="confirm_order" method="GET">
+    <input type="submit" value="Confirm Order">
+  </form>
+
   </body>
   </html>

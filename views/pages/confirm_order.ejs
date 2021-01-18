@@ -40,14 +40,13 @@
       <br>
       <h1> Confirm Order </h1>
       
-      <% console.log("confirm order cart = " + JSON.stringify(cart_items)); %>
-      <% var itemLength = parseInt(item_amount); %>
+      <% console.log("confirm order cart = ", cart); %>
 
-      <% for(var i = 0; i < itemLength; i++) { %>
+      <% for(var i = 0; i < cart.length; i++) { %>
         
-        <li><%= cart_items[i].item %> – <%= cart_items[i].price %> – <%= cart_items[i].quantity %> – <%= cart_items[i].date %></li>
+        <li><%= cart[i].name %> – <%= cart[i].price %> – <%= cart[i].amount %></li>
       <% } %>
-      <h4>Subtotal: <%= total_cost %></h4>
+      <h4>Subtotal: <%= subtotal %></h4>
       
       <br>
       <form action="/order_now" method="GET">
