@@ -1,4 +1,6 @@
-//Next week: add price to req.session.cart for drinks and display price as well + calculate subtotal
+//Next week: add drink prices to pricelist --complete
+// add prices to req.session.cart ---pricelist is updated too slowly not sure how to fix
+// and display price as well + calculate subtotal
 
 const express = require('express')
 const path = require('path')
@@ -97,7 +99,7 @@ class Cart{
     this.pricelist = {};
   }
 
-  getDBPrices(callback){
+  getDBfoodprices(callback){
     var getpricequery = `SELECT item, price FROM foodmenu;`;
     pool.query(getpricequery, (error,result) => {
       if (error) {
@@ -110,12 +112,30 @@ class Cart{
       }
     });
   }
+  getDBdrinkprices(callback){
+    var getpricequery = `SELECT item, price FROM drinkmenu;`;
+    pool.query(getpricequery, (error,result) => {
+      if (error) {
+        return callback(error);
+      }
+      else {
+        var results = {'rows': result.rows };
+        //console.log(results);
+        callback(null, results);
+      }
+    });
+  }
 
-  insertPrice(item, price){
+  insertfoodprice(item, price){
     this.pricelist[item] = price;
     return this.pricelist; //TODO remove this in prod
   }
 
+  insertdrinkprice(item, price){
+    this.pricelist[item] = price;
+    return this.pricelist; //TODO remove this in prod
+  }
+  
   showPrice(){
     return this.pricelist;
   }
@@ -185,9 +205,9 @@ class Cart{
 
 var cart = new Cart();
 
-// getDBPrices runs first
-// cart.getDBPrices(function(err, result){
-//   //=== code inside getDBPrices ===//
+// getDBfoodprices runs first
+// cart.getDBfoodprices(function(err, result){
+//   //=== code inside getDBfoodprices ===//
 //   // var getpricequery = `SELECT item, price FROM foodmenu;`;
 //   //   pool.query(getpricequery, (error,result) => {
 //   //     if (error) {
@@ -201,7 +221,7 @@ var cart = new Cart();
 //   // });
 //   //query finishes, this runs third
 //   for (var i = 0; i<result.rows.length; i++) {  
-//     var list = cart.insertPrice(result.rows[i].item, result.rows[i].price)
+//     var list = cart.insertfoodprice(result.rows[i].item, result.rows[i].price)
 //   }
 //   //console.log(list)
 // });
@@ -403,16 +423,32 @@ app.post('/login',  (req, res) => {
 
 app.get('/order_now', checkAuth, async (req, res) => {
   //req.session.cart = {};
+  //req.session.pricelist is empty every time on the first refresh, which makes price down there in item_object undefined, so it doesn't
+  //get inserted into req.session.cart
+  //if I throw this if statement into a while I believe I can get it to work. however, I'm not sure if it would crash the hell out of my server so
   if (req.session.pricelist == undefined || req.session.pricelist == []) {
-    cart.getDBPrices(function(err, result){
+    cart.getDBfoodprices(function(err, result){
       for (var i = 0; i<result.rows.length; i++) {  
-        var list = cart.insertPrice(result.rows[i].item, result.rows[i].price)
+        var list = cart.insertfoodprice(result.rows[i].item, result.rows[i].price);
+        //console.log("price list 1 = ", list);
+        req.session.pricelist = [];
+        req.session.pricelist.push(list);
+        console.log("req.session.pricelist in food if statement = ", req.session.pricelist);
       }
-      console.log("price list = ", list)
-      req.session.pricelist = list;
-    });  
+    }); 
+    cart.getDBdrinkprices(function(err, result){
+      for (var i = 0; i<result.rows.length; i++) {   
+        var list = cart.insertdrinkprice(result.rows[i].item, result.rows[i].price);
+        //console.log("price list 2 = ", list);
+        req.session.pricelist.push(list);
+        console.log("req.session.pricelist in drink if statement = ", req.session.pricelist);
+      }
+     });
+  
   }
+  //req.session.pricelist = {...req.session.pricelist1, ...req.session.pricelist2};
   console.log("req.session.pricelist = ", req.session.pricelist);
+  //console.log("req.session.pricelist = ", req.session.pricelist);
   console.log("order now session cart ",req.session.cart);
   try {
     const client = await pool.connect()
@@ -461,9 +497,10 @@ app.post('/add_to_cart', (req,res) => {
   console.log("item_quantity = ",item_quantity);
 
   var item_object = {'name': item_name, 'price': item_price, 'amount': item_quantity};
+  console.log('item object = ', item_object);
   cart.addItem(item_object);
   req.session.cart = cart.getItems();
-
+  //price should have been added on this step to req.session.cart
   res.redirect("/order_now");
 });
 
