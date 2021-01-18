@@ -1,6 +1,4 @@
-//Next week: add drink prices to pricelist --complete
-// add prices to req.session.cart ---pricelist is updated too slowly not sure how to fix
-// and display price as well + calculate subtotal
+
 
 const express = require('express')
 const path = require('path')
@@ -126,14 +124,18 @@ class Cart{
     });
   }
 
-  insertfoodprice(item, price){
+  insertPrice(item, price){
     this.pricelist[item] = price;
-    return this.pricelist; //TODO remove this in prod
-  }
-
-  insertdrinkprice(item, price){
-    this.pricelist[item] = price;
-    return this.pricelist; //TODO remove this in prod
+    if (this.pricelist[item] == price) {
+      return 0;
+    }
+    else if (this.pricelist[item] != price) {
+      this.pricelist[item] = price;
+      return 0;
+    }
+    else {
+      return -1;
+    }
   }
   
   showPrice(){
@@ -422,34 +424,31 @@ app.post('/login',  (req, res) => {
 }); 
 
 app.get('/order_now', checkAuth, async (req, res) => {
-  //req.session.cart = {};
-  //req.session.pricelist is empty every time on the first refresh, which makes price down there in item_object undefined, so it doesn't
-  //get inserted into req.session.cart
-  //if I throw this if statement into a while I believe I can get it to work. however, I'm not sure if it would crash the hell out of my server so
-  if (req.session.pricelist == undefined || req.session.pricelist == []) {
-    cart.getDBfoodprices(function(err, result){
-      for (var i = 0; i<result.rows.length; i++) {  
-        var list = cart.insertfoodprice(result.rows[i].item, result.rows[i].price);
-        //console.log("price list 1 = ", list);
-        req.session.pricelist = [];
-        req.session.pricelist.push(list);
-        console.log("req.session.pricelist in food if statement = ", req.session.pricelist);
-      }
-    }); 
-    cart.getDBdrinkprices(function(err, result){
-      for (var i = 0; i<result.rows.length; i++) {   
-        var list = cart.insertdrinkprice(result.rows[i].item, result.rows[i].price);
-        //console.log("price list 2 = ", list);
-        req.session.pricelist.push(list);
-        console.log("req.session.pricelist in drink if statement = ", req.session.pricelist);
-      }
-     });
-  
+  if (req.session.pricelist == undefined) {
+    req.session.pricelist = [];
   }
-  //req.session.pricelist = {...req.session.pricelist1, ...req.session.pricelist2};
+
+  cart.getDBfoodprices(function(err, result){
+    for (var i = 0; i<result.rows.length; i++) {  
+      var insertPriceCheck = cart.insertPrice(result.rows[i].item, result.rows[i].price);
+      // only update pricelist if the menu updates to reduece overhang
+      console.log('insertPriceCheck in food = ', insertPriceCheck);
+    }
+    var list = cart.showPrice();
+    req.session.pricelist = list;
+  }); 
+  cart.getDBdrinkprices(function(err, result){
+    for (var i = 0; i<result.rows.length; i++) {   
+      var insertPriceCheck = cart.insertPrice(result.rows[i].item, result.rows[i].price);
+      // only update pricelist if the menu updates to reduece overhang
+      console.log('insertPriceCheck in drink = ', insertPriceCheck);
+    }
+    var list = cart.showPrice();
+    req.session.pricelist = list;
+  });
   console.log("req.session.pricelist = ", req.session.pricelist);
-  //console.log("req.session.pricelist = ", req.session.pricelist);
   console.log("order now session cart ",req.session.cart);
+
   try {
     const client = await pool.connect()
     const foodResult = await client.query(`SELECT item,price FROM foodmenu;`);
@@ -488,7 +487,7 @@ app.post('/date_select', async (req,res) => { //RENOVATION NEEDED
 });
 
 app.post('/add_to_cart', (req,res) => {
-  
+
   var item_name = req.body.item_name;
   var item_quantity = parseInt(req.body.item_quantity); 
   var item_price = req.session.pricelist[`${item_name}`];

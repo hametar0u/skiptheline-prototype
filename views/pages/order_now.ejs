@@ -41,9 +41,12 @@
  
     <h4>Cart</h4>
     <% if(row3.cartrow != undefined) {%>
+      <% var subtotal = 0; %>
       <% row3.cartrow.forEach(function(r) { %>
-        <h5><%= r.name %> - <%= r.amount %></h5>
+        <h5><%= r.name %> - <%= r.price %> - <%= r.amount %></h5>
+        <%subtotal += r.price*r.amount%>
       <% }); %>
+      <h4>Subtotal: <%= subtotal %></h4>
     <% } %>
   </body>
   </html>
