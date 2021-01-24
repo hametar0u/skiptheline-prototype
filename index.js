@@ -186,6 +186,10 @@ class Cart{
   }
 
   addItem(item){
+      if (isNaN(item.amount) || item.amount == 0) {
+        return;
+      }
+
       if (this.hasItem(item.name) === -1){
           this.items.push({
               name: item.name,
@@ -305,7 +309,8 @@ app.post('/confirmation', (req, res) => {
     var usr = req.session.usr;
     var pwd = req.session.pwd;
     var user_id = makeconfcode(7);
-    var select_query = "SELECT id,username FROM users;"
+    var select_query = "SELECT user_id,username FROM users;"
+    console.log ("start of pool query");
     pool.query(select_query, (error, result) => {
       if(error) {
         res.send(error);
@@ -319,6 +324,8 @@ app.post('/confirmation', (req, res) => {
           id_array.push(result.rows[i][0]);
           username_array.push(result.rows[i][1]);
         }
+        console.log("id_array = ",id_array);
+        console.log("username_array = ",username_array);
         while (user_id in id_array || user_id[0]==0) {
           user_id = makeconfcode(7);
         }
@@ -329,8 +336,9 @@ app.post('/confirmation', (req, res) => {
         console.log("confcode creation 200 OK");
       }
     });
+    console.log("pool query complete");
     
-    var createAccountQuery = `INSERT INTO users VALUES('${user_id}', '${usr}', crypt('${pwd}', gen_salt('bf')));`;
+    var createAccountQuery = `INSERT INTO users(user_id, username, password) VALUES('${user_id}', '${usr}', crypt('${pwd}', gen_salt('bf')));`;
     pool.query(createAccountQuery, (error, result) => {
 
       if (error) {
@@ -341,6 +349,7 @@ app.post('/confirmation', (req, res) => {
       }
         
     });
+    console.log("create account query complete");
     //go to SQL table and change boolean to 1
   }
 });
@@ -492,8 +501,8 @@ app.post('/date_select', async (req,res) => { //RENOVATION NEEDED
 
 app.post('/add_to_cart', (req,res) => {
 
-  var item_name = req.body.item_name;
-  var item_quantity = parseInt(req.body.item_quantity); 
+  var item_name = req.body.item_name; 
+  var item_quantity = (parseInt(req.body.item_quantity));
   var item_price = req.session.pricelist[`${item_name}`];
   console.log("item_price = ", item_price);
   console.log("item_name = ",item_name);
@@ -521,53 +530,6 @@ app.get('/confirm_order', (req,res) => {
   res.render("pages/confirm_order.ejs", {'cart': cart,'subtotal': subtotal});
 });
 
- 
-
-
-
-
-
-// app.post('/confirm_order', (req,res) => {
-//   req.session.cart = {}; //modify
-//   var cart_items = req.body.cart_items;
-//   req.session.cart = {
-//     "cart_items": req.body.cart_items,
-//     "item_amount": req.body.item_amount,
-//     "total_cost": req.body.total_cost
-//   };
-//   console.log("req.session.cart = ",JSON.stringify(req.session.cart)); //this command doesn't go off
-//   fs.writeFile('logs.txt',JSON.stringify(req.session.cart),'utf8',callbackPromise); //I think this sequence and the subsequent command went off once and the session is saved to that thing
-//   req.session.save();
-// });
-
-// app.get('/confirm_order_load', async(req,res,next) => {
-//   try {
-//     var cart = await req.session.cart;
-//     console.log("req.session.cart in app.get = " , cart);
-//   }
-//   catch (err) {
-//     console.log(err);
-//     return next(err);
-//   }
-//   var failCount = 0;
-//   while (isNullOrUndefined(cart)) {
-//     if (failCount > 20){
-//       console.log("loop cart:", cart);
-//       break;
-//     }
-//     cart = req.session.cart;
-//     failCount += 1;
-//   }
-    
-//   console.log('cart (index.js) = ' , cart);
-//   if (isNullOrUndefined(cart)){
-//     res.redirect('/order_now');
-//   }
-//   else{
-//     res.render('pages/confirm_order.ejs', cart);
-//     //res.send(cart); 
-//   }
-// });
 
 var calculateOrderAmount = items => {
   // Replace this constant with a calculation of the order's amount
@@ -592,21 +554,33 @@ app.post("/create-checkout-session", async (req, res) => {
     });
   }
   console.log(line_item_array);
+  
+  var success_url = "https://skipthelinebeta.herokuapp.com/order_success";
+  var cancel_url = "https://skipthelinebeta.herokuapp.com/order_now";
+
+  if (LOCAL_DEV_FLAG) {
+    success_url = "http://localhost:5000/order_success";
+    cancel_url = "http://localhost:5000/order_now";
+  }
+
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: line_item_array,
     mode: "payment",
-    success_url: "https://skipthelinebeta.herokuapp.com/order_success",
-    cancel_url: "https://skipthelinebeta.herokuapp.com/order_now",
+    success_url: success_url,
+    cancel_url: cancel_url
   });
 
   res.json({ id: session.id });
 });
 
+//https://stripe.com/docs/testing for card information
+
 app.get('/order_success', (req,res) => {
   var username = req.session.username;
   var orderIDQuery = 'SELECT order_id FROM order_details;';
   var order_id = makeconfcode(7); //reusing code lmao
+  console.log("pool.query start");
   pool.query(orderIDQuery, (error,result) => {
     if(error) {
       res.send(error);
@@ -618,12 +592,18 @@ app.get('/order_success', (req,res) => {
       console.log("confcode creation 200 OK");
     }
   });
+  console.log(" orderIDquery over");
 
   var str = "INSERT INTO order_details VALUES";
-  for (var i=0; i<req.body.item_amount; i++) {
-    str+=`('${order_id}','${cart_items[i].item}','${cart_items[i].price}','${cart_items[i].quantity}','${cart_items[i].date}'),`
-  }
+  // for (var i=0; i<req.body.item_amount; i++) {
+  //   str+=`('${order_id}','${cart_items[i].item}','${cart_items[i].price}','${cart_items[i].quantity}','${cart_items[i].date}'),`
+  // }
+  req.session.cart.forEach(cart_element => {
+    str+=`('${order_id}','${cart_element.name}','${cart_element.price}','${cart_element.amount}'),`
+  });
   str = str.slice(0,-1) + ';';
+
+  
   //console.log('order detail query:',str);
   pool.query(str, (error,result) => {
     if(error) {
@@ -634,17 +614,18 @@ app.get('/order_success', (req,res) => {
       console.log('/order_success 200 OK');
     }
   });
- 
-  var userIdRetrieveQuery = `SELECT id FROM users WHERE "username" = '${username}';`;
+  console.log("insert somethign query complete");
+
+  var userIdRetrieveQuery = `SELECT user_id FROM users WHERE "username" = '${username}';`;
   //console.log("retrieve ID query = ",userIdRetrieveQuery);
   pool.query(userIdRetrieveQuery, (error,result) => {
     if(error) {
-      console.log('user id retrieve error');
-      res.send(error);
+      console.log('user id retrieve error = ',error);
+      //res.send(error);
     }
     else {
-      console.log('user id retrieve 200 OK, result = ',result.rows[0].id);
-      var orderJoinQuery = `INSERT INTO orders("users_id", "order_id", "complete") VALUES('${result.rows[0].id}','${order_id}','0');`;
+      console.log('user id retrieve 200 OK, result = ',result.rows[0].user_id);
+      var orderJoinQuery = `INSERT INTO orders("users_id", "order_id", "complete") VALUES('${result.rows[0].user_id}','${order_id}','0');`;
       //console.log("order join query = ",orderJoinQuery);
       pool.query(orderJoinQuery, (error,result) => {
         if(error) {
@@ -657,7 +638,13 @@ app.get('/order_success', (req,res) => {
       });
     }
   });
-  res.redirect('/order_success.html');
+  console.log("userIDretrievequery complete");
+  if (LOCAL_DEV_FLAG) {
+    res.redirect('/order_success_local.html');
+  }
+  else{
+    res.redirect('/order_success.html');
+  }
 });
 
 
@@ -669,7 +656,7 @@ app.get('/pending_orders', checkAuth, function (req, res) {
       res.send(error);
     }
     else {
-      console.log(result.rows);
+      console.log("result.rows = ",result.rows);
       res.render('pages/pending_orders.ejs',result);
     }
   });
