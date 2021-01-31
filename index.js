@@ -1,7 +1,16 @@
 //Next week
-//redirect to error page if error/ redirect to login if not logged in
-//logging system for completed orders
-//
+//wipe local database and add actual food + drink items
+//receipt from stripe API
+//result.rows is empty
+//problems:
+//1. The provided authorization grant is invalid, expired, or revoked
+    //at Request._callback (/Users/bigsad/Desktop/skipthelinedatabasething/skiptheline-master/node_modules/sendgrid/lib/sendgrid.js:88:25)
+//2. I clowned and made another sendgrid API key with the same name and I can't tell which one was the original one.
+
+//Pending:
+//hook front end to back end
+//dashboard for completing orders --complete
+//add date function
 
 
 const express = require('express')
@@ -19,7 +28,7 @@ if (LOCAL_DEV_FLAG){
     port: 5432
   });
 }
-else{
+else{ 
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: true
@@ -322,7 +331,7 @@ app.post('/confirmation', (req, res) => {
         for (var i = 0; i<result.rowCount; i++) {
           console.log(result.rows[i]);
           id_array.push(result.rows[i][0]);
-          username_array.push(result.rows[i][1]);
+          username_array.push(result.rows[i][1]); 
         }
         console.log("id_array = ",id_array);
         console.log("username_array = ",username_array);
@@ -415,6 +424,7 @@ app.post('/login',  (req, res) => {
   var loginQuery = `select * from users where users.username = '${loginUsername}' AND password = crypt('${loginPassword}', password)`;
   pool.query(loginQuery, (error, result) => {
     if (error){
+      console.log(error);
       res.send(error);
     }
     else {
@@ -578,6 +588,7 @@ app.post("/create-checkout-session", async (req, res) => {
 
 app.get('/order_success', (req,res) => {
   var username = req.session.username;
+  console.log("order success username = ", username);
   var orderIDQuery = 'SELECT order_id FROM order_details;';
   var order_id = makeconfcode(7); //reusing code lmao
   console.log("pool.query start");
@@ -595,9 +606,6 @@ app.get('/order_success', (req,res) => {
   console.log(" orderIDquery over");
 
   var str = "INSERT INTO order_details VALUES";
-  // for (var i=0; i<req.body.item_amount; i++) {
-  //   str+=`('${order_id}','${cart_items[i].item}','${cart_items[i].price}','${cart_items[i].quantity}','${cart_items[i].date}'),`
-  // }
   req.session.cart.forEach(cart_element => {
     str+=`('${order_id}','${cart_element.name}','${cart_element.price}','${cart_element.amount}'),`
   });
@@ -624,7 +632,7 @@ app.get('/order_success', (req,res) => {
       //res.send(error);
     }
     else {
-      console.log('user id retrieve 200 OK, result = ',result.rows[0].user_id);
+      console.log('user id retrieve 200 OK, result = ',result.rows);
       var orderJoinQuery = `INSERT INTO orders("users_id", "order_id", "complete") VALUES('${result.rows[0].user_id}','${order_id}','0');`;
       //console.log("order join query = ",orderJoinQuery);
       pool.query(orderJoinQuery, (error,result) => {
@@ -675,6 +683,35 @@ app.get('/order_history', checkAuth, function (req, res) {
     else {
       console.log(result.rows);
       res.render('pages/order_history.ejs',result);
+    }
+  });
+});
+
+app.get('/order_management', function (req, res) {
+  order_query = `SELECT users_id,order_id,date,item,price,quantity FROM orders NATURAL JOIN order_details WHERE orders.complete = '0' ORDER BY date, users_id;`;
+  pool.query(order_query, (error, result) => {
+    if (error) {
+      console.log(error);
+      res.send(error);
+    }
+    else {
+      console.log("result.rows order management = ",result.rows);
+      res.render('pages/order_management.ejs',result);
+    }
+  });
+});
+
+app.post('/fulfill_order', function (req, res) {
+  var order_id = req.body.order_id;
+  var fulfill_order_query = `UPDATE orders SET complete = '1' WHERE order_id = '${order_id}';`;
+  pool.query(fulfill_order_query, (error, result) => {
+    if (error) {
+      console.log(error);
+      res.send(error);
+    }
+    else {
+      console.log(result.rows);
+      res.redirect('/order_management');
     }
   });
 });
@@ -761,5 +798,3 @@ app.post('/logout', function (req, res) {
 });
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
-
-//commnet

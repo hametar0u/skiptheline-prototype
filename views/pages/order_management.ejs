@@ -1,0 +1,23 @@
+<html>
+    <header>
+
+    </header>
+    <body>
+        <!-- 
+            workflow:
+            1. display all pending orders
+            2. have something that can check the order off
+            3. send data back to server
+         -->
+         <% rows.forEach((r) => { %>
+            <div class="item_card">
+              <h5><%= r.order_id %> - <%= r.item %> - <%= r.price %> – <%= r.quantity%> – <%= r.date %></h5>
+              <form action="/fulfill_order" method="POST">
+                <input type="hidden" value="<%=r.order_id%>" name="order_id" id="order_id">
+                <input id="item_submit" type="submit" value="Complete Order">
+              </form>
+            </div>
+            <!-- there should only be one button per order -->
+          <% }); %>
+    </body>
+</html>
