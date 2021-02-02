@@ -1,16 +1,18 @@
 //Next week
-//wipe local database and add actual food + drink items
-//receipt from stripe API
-//result.rows is empty
+//add date function
+//add page in between login and order now 
+//select date on order now
+//check whether the date selected is within the bounds of startdate and enddate
+//cart item order sort by date
+
 //problems:
-//1. The provided authorization grant is invalid, expired, or revoked
-    //at Request._callback (/Users/bigsad/Desktop/skipthelinedatabasething/skiptheline-master/node_modules/sendgrid/lib/sendgrid.js:88:25)
-//2. I clowned and made another sendgrid API key with the same name and I can't tell which one was the original one.
+//stripe receipt email not sending through
 
 //Pending:
 //hook front end to back end
-//dashboard for completing orders --complete
-//add date function
+//personal order key system; wipe the entries of days that already pass
+//clear cart when going back to order now after a successful order
+//keyframes and animate to make this crap bougie
 
 
 const express = require('express')
@@ -18,7 +20,7 @@ const path = require('path')
 const PORT = process.env.PORT || 5000
 const { Pool } = require('pg');
 var pool;
-var LOCAL_DEV_FLAG = false;
+var LOCAL_DEV_FLAG = true;
 if (LOCAL_DEV_FLAG){
   pool = new Pool ({
     user: 'postgres',
@@ -578,7 +580,8 @@ app.post("/create-checkout-session", async (req, res) => {
     line_items: line_item_array,
     mode: "payment",
     success_url: success_url,
-    cancel_url: cancel_url
+    cancel_url: cancel_url,
+    customer_email: req.session.username
   });
 
   res.json({ id: session.id });
@@ -603,6 +606,11 @@ app.get('/order_success', (req,res) => {
       console.log("confcode creation 200 OK");
     }
   });
+  //personal order key = last 3 digits of order_id
+  //if it finds a duplicate of personal order key or the order is complete 
+  //add an a
+
+
   console.log(" orderIDquery over");
 
   var str = "INSERT INTO order_details VALUES";
@@ -633,7 +641,7 @@ app.get('/order_success', (req,res) => {
     }
     else {
       console.log('user id retrieve 200 OK, result = ',result.rows);
-      var orderJoinQuery = `INSERT INTO orders("users_id", "order_id", "complete") VALUES('${result.rows[0].user_id}','${order_id}','0');`;
+      var orderJoinQuery = `INSERT INTO orders("user_id", "order_id", "complete") VALUES('${result.rows[0].user_id}','${order_id}','0');`;
       //console.log("order join query = ",orderJoinQuery);
       pool.query(orderJoinQuery, (error,result) => {
         if(error) {
@@ -688,7 +696,7 @@ app.get('/order_history', checkAuth, function (req, res) {
 });
 
 app.get('/order_management', function (req, res) {
-  order_query = `SELECT users_id,order_id,date,item,price,quantity FROM orders NATURAL JOIN order_details WHERE orders.complete = '0' ORDER BY date, users_id;`;
+  order_query = `SELECT user_id,order_id,date,item,price,quantity FROM orders NATURAL JOIN order_details WHERE orders.complete = '0' ORDER BY date, user_id;`;
   pool.query(order_query, (error, result) => {
     if (error) {
       console.log(error);
