@@ -39,9 +39,10 @@
 
       <br>
       <h1> Confirm Order </h1>
-      
-      <% console.log("confirm order cart = ", cart); %>
+      <h3>Ordering for: <%= date %></h3>
 
+      <% console.log("confirm order cart = ", cart); %>
+      <h5>Item - Price - Amount</h5>
       <% for(var i = 0; i < cart.length; i++) { %>
         
         <li><%= cart[i].name %> – <%= cart[i].price %> – <%= cart[i].amount %></li>

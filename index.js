@@ -1,8 +1,9 @@
 //Next week
-//add date function
-//add page in between login and order now 
-//select date on order now
-//check whether the date selected is within the bounds of startdate and enddate
+// NOTES: date function is pretty much finished
+// IMPROVEMENTS:
+// make the date format readable
+// don't really know what to do about the workflow post-checkout
+// pay_now crashes if i reset localhost and I'm still on that page but idk if that's something customers will experienc in prod
 //cart item order sort by date
 
 //problems:
@@ -17,7 +18,7 @@
 
 const express = require('express')
 const path = require('path')
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5000 
 const { Pool } = require('pg');
 var pool;
 var LOCAL_DEV_FLAG = false;
@@ -205,7 +206,8 @@ class Cart{
           this.items.push({
               name: item.name,
               price: item.price,
-              amount: item.amount
+              amount: item.amount,
+              date: item.date
           });
           this.item_amount += 1;
       }
@@ -441,7 +443,7 @@ app.post('/login',  (req, res) => {
         req.session.user_id = makeid(10);
         req.session.username = loginUsername;
         console.log("login username - ", req.session.username)
-        res.redirect("/order_now");
+        res.redirect("/date_select");
           //tell user email/password is wrong -> redirect to another page/go back to the beginning
       } 
     }
@@ -449,10 +451,80 @@ app.post('/login',  (req, res) => {
 }); 
 
 app.get('/order_now', checkAuth, async (req, res) => {
+  // if (req.session.pricelist == undefined) {
+  //   req.session.pricelist = [];
+  // }
+
+  // cart.getDBfoodprices(function(err, result){
+  //   for (var i = 0; i<result.rows.length; i++) {  
+  //     var insertPriceCheck = cart.insertPrice(result.rows[i].item, result.rows[i].price);
+  //     // only update pricelist if the menu updates to reduece overhang
+  //     console.log('insertPriceCheck in food = ', insertPriceCheck);
+  //   }
+  //   var list = cart.showPrice();
+  //   req.session.pricelist = list;
+  // }); 
+  // cart.getDBdrinkprices(function(err, result){
+  //   for (var i = 0; i<result.rows.length; i++) {   
+  //     var insertPriceCheck = cart.insertPrice(result.rows[i].item, result.rows[i].price);
+  //     // only update pricelist if the menu updates to reduece overhang
+  //     console.log('insertPriceCheck in drink = ', insertPriceCheck);
+  //   }
+  //   var list = cart.showPrice();
+  //   req.session.pricelist = list;
+  // });
+  // console.log("req.session.pricelist = ", req.session.pricelist);
+  // console.log("order now session cart ",req.session.cart);
+
+  var chosenDate = req.session.chosenDate;
+  var dateObject = {'chosenDate': chosenDate};
+    
+  try {
+    const client = await pool.connect()
+    const foodResult = await client.query(`SELECT item,price FROM foodmenu WHERE '${chosenDate}' >= foodmenu.startdate AND '${chosenDate}' <= foodmenu.enddate;`);
+    const drinkResult = await client.query(`SELECT item,price FROM drinkmenu;`);
+    const foodResults = { 'fRows': (foodResult) ? foodResult.rows : null};
+    const drinkResults = { 'dRows': (drinkResult) ? drinkResult.rows : null};
+    const cart = { 'cartrow': req.session.cart };
+    console.log("cart in date select post = ", cart);
+    res.render('pages/order_now.ejs', {row3: dateObject, row1: foodResults, row2: drinkResults, row4: cart} );
+    client.release();
+  } 
+  catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+  
+}); 
+ 
+app.get('/date_select', (req,res) => {
+  function select_date() {
+    var count = 0; 
+    var today = new Date;
+    var array = []; 
+
+    while ( count<7 ) {
+      today.setDate(today.getDate() + 1); 
+      //console.log("today = ", today);
+      if (today.getDay() != 0 && today.getDay() != 6) {// Skip weekends
+        array.push(new Date(today)); 
+        count++;
+        //console.log("array = ", array);
+      }
+    }
+    //console.log("array = ", array);
+    return array;
+  } 
+  var array_object = {"row": select_date()};
+  //console.log("array_object = ", array_object);
+  res.render("pages/date_select.ejs", array_object);
+});
+
+app.post('/date_select', async (req,res) => { //put this shit in order now
+  //pricelist stuff
   if (req.session.pricelist == undefined) {
     req.session.pricelist = [];
   }
-
   cart.getDBfoodprices(function(err, result){
     for (var i = 0; i<result.rows.length; i++) {  
       var insertPriceCheck = cart.insertPrice(result.rows[i].item, result.rows[i].price);
@@ -472,55 +544,43 @@ app.get('/order_now', checkAuth, async (req, res) => {
     req.session.pricelist = list;
   });
   console.log("req.session.pricelist = ", req.session.pricelist);
-  console.log("order now session cart ",req.session.cart);
-
-  try {
-    const client = await pool.connect()
-    const foodResult = await client.query(`SELECT item,price FROM foodmenu;`);
-    const drinkResult = await client.query(`SELECT item,price FROM drinkmenu;`);
-    const foodResults = { 'fRows': (foodResult) ? foodResult.rows : null};
-    const drinkResults = { 'dRows': (drinkResult) ? drinkResult.rows : null};
-    const cart = { 'cartrow': req.session.cart };
-    res.render('pages/order_now.ejs', {row1: foodResults, row2: drinkResults, row3: cart} );
-    client.release();
-  } catch (err) {
-    console.error(err);
-    res.send("Error " + err);
-  }
-  
-}); 
-
-app.post('/date_select', async (req,res) => { //RENOVATION NEEDED
-
-  
-  
-  try {
-    var chosenDate = new Date(req.body.dates);
+  console.log("line 540 session cart ",req.session.cart);
+  //date stuff
+    var chosenDate = new Date(req.body.selectDate);
     chosenDate = chosenDate.toISOString();
     var dateObject = {'chosenDate': chosenDate};
+    req.session.chosenDate = chosenDate;
+    
+  try {
     const client = await pool.connect()
     const foodResult = await client.query(`SELECT item,price FROM foodmenu WHERE '${chosenDate}' >= foodmenu.startdate AND '${chosenDate}' <= foodmenu.enddate;`);
     const drinkResult = await client.query(`SELECT item,price FROM drinkmenu;`);
     const foodResults = { 'fRows': (foodResult) ? foodResult.rows : null};
     const drinkResults = { 'dRows': (drinkResult) ? drinkResult.rows : null};
-    res.render('pages/order_now.ejs', {row3: dateObject, row1: foodResults, row2: drinkResults} );
+    const cart = { 'cartrow': req.session.cart };
+    console.log("cart in date select post = ", cart);
+    res.render('pages/order_now.ejs', {row3: dateObject, row1: foodResults, row2: drinkResults, row4: cart} );
     client.release();
-  } catch (err) {
+  } 
+  catch (err) {
     console.error(err);
     res.send("Error " + err);
   }
 });
 
 app.post('/add_to_cart', (req,res) => {
-
-  var item_name = req.body.item_name; 
+  var item_name = req.body.item_name;
   var item_quantity = (parseInt(req.body.item_quantity));
+  console.log(req.session.pricelist);
   var item_price = req.session.pricelist[`${item_name}`];
-  console.log("item_price = ", item_price);
+  var item_date = req.session.chosenDate;
+
+  console.log("item_price = ", item_price); 
   console.log("item_name = ",item_name);
   console.log("item_quantity = ",item_quantity);
+  console.log("item_date = ",item_date);
 
-  var item_object = {'name': item_name, 'price': item_price, 'amount': item_quantity};
+  var item_object = {'name': item_name, 'price': item_price, 'amount': item_quantity, 'date': item_date};
   console.log('item object = ', item_object);
   cart.addItem(item_object);
   req.session.cart = cart.getItems();
@@ -531,6 +591,8 @@ app.post('/add_to_cart', (req,res) => {
 app.get('/confirm_order', (req,res) => {
   var cart = req.session.cart; 
   var subtotal = 0;
+  var chosenDate = req.session.chosenDate;
+
   for (var i=0; i<cart.length; i++) {
     subtotal += cart[i].price*cart[i].amount;
   }
@@ -539,8 +601,8 @@ app.get('/confirm_order', (req,res) => {
 
 
 
-  res.render("pages/confirm_order.ejs", {'cart': cart,'subtotal': subtotal});
-});
+  res.render("pages/confirm_order.ejs", {'cart': cart,'subtotal': subtotal, 'date': chosenDate});
+}); 
 
 
 var calculateOrderAmount = items => {
@@ -548,7 +610,7 @@ var calculateOrderAmount = items => {
   // Calculate the order total on the server to prevent
   // people from directly manipulating the amount on the client
   return 1400;
-};
+}; //is this obsolete?
 
 app.post("/create-checkout-session", async (req, res) => {
   var cart = req.session.cart; 
@@ -572,7 +634,7 @@ app.post("/create-checkout-session", async (req, res) => {
 
   if (LOCAL_DEV_FLAG) {
     success_url = "http://localhost:5000/order_success";
-    cancel_url = "http://localhost:5000/order_now";
+    cancel_url = "http://localhost:5000/date_select";
   }
 
   const session = await stripe.checkout.sessions.create({
@@ -615,7 +677,7 @@ app.get('/order_success', (req,res) => {
 
   var str = "INSERT INTO order_details VALUES";
   req.session.cart.forEach(cart_element => {
-    str+=`('${order_id}','${cart_element.name}','${cart_element.price}','${cart_element.amount}'),`
+    str+=`('${order_id}','${cart_element.name}','${cart_element.price}','${cart_element.amount}','${cart_element.date}'),`
   });
   str = str.slice(0,-1) + ';';
 

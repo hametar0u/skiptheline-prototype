@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       
+    </head>
+    <body>
+        <!-- workflow
+        1. what date are you choosing (dropdown?) -- complete
+        2. send the information back to server -- invalid time value
+        3. in order now server should only display menu items that lie within that range
+        -->
+        <h4>What Date are you Ordering For?</h4>
+        <form action="/date_select" method="POST">
+        <select name="selectDate" id="selectDate" name="selectDate">
+          <% row.forEach((r) => { %>
+          <option value="<%=r.toLocaleDateString()%>"><%=r.toLocaleDateString()%></option>
+          <% }); %>
+        </select>
+        <input type="submit" value="submit">
+      </form>
+        
+      
+    </body>
+</html>

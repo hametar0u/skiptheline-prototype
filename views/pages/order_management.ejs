@@ -1,14 +1,18 @@
+<!DOCTYPE html>
 <html>
-    <header>
-
-    </header>
-    <body>
+    <head>
+      <form action="/order_now" method="GET">
+        <input type="submit" value="back to order now">
+      </form>
+    </head>
+    <body> 
         <!-- 
             workflow:
             1. display all pending orders
             2. have something that can check the order off
             3. send data back to server
          -->
+         <h5>Order ID - Item - Price - Amount - Date</h5>
          <% rows.forEach((r) => { %>
             <div class="item_card">
               <h5><%= r.order_id %> - <%= r.item %> - <%= r.price %> – <%= r.quantity%> – <%= r.date %></h5>
