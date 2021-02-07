@@ -21,7 +21,7 @@ const path = require('path')
 const PORT = process.env.PORT || 5000 
 const { Pool } = require('pg');
 var pool;
-var LOCAL_DEV_FLAG = false;
+var LOCAL_DEV_FLAG = true;
 if (LOCAL_DEV_FLAG){
   pool = new Pool ({
     user: 'postgres',
@@ -451,31 +451,6 @@ app.post('/login',  (req, res) => {
 }); 
 
 app.get('/order_now', checkAuth, async (req, res) => {
-  // if (req.session.pricelist == undefined) {
-  //   req.session.pricelist = [];
-  // }
-
-  // cart.getDBfoodprices(function(err, result){
-  //   for (var i = 0; i<result.rows.length; i++) {  
-  //     var insertPriceCheck = cart.insertPrice(result.rows[i].item, result.rows[i].price);
-  //     // only update pricelist if the menu updates to reduece overhang
-  //     console.log('insertPriceCheck in food = ', insertPriceCheck);
-  //   }
-  //   var list = cart.showPrice();
-  //   req.session.pricelist = list;
-  // }); 
-  // cart.getDBdrinkprices(function(err, result){
-  //   for (var i = 0; i<result.rows.length; i++) {   
-  //     var insertPriceCheck = cart.insertPrice(result.rows[i].item, result.rows[i].price);
-  //     // only update pricelist if the menu updates to reduece overhang
-  //     console.log('insertPriceCheck in drink = ', insertPriceCheck);
-  //   }
-  //   var list = cart.showPrice();
-  //   req.session.pricelist = list;
-  // });
-  // console.log("req.session.pricelist = ", req.session.pricelist);
-  // console.log("order now session cart ",req.session.cart);
-
   var chosenDate = req.session.chosenDate;
   var dateObject = {'chosenDate': chosenDate};
     
@@ -584,7 +559,6 @@ app.post('/add_to_cart', (req,res) => {
   console.log('item object = ', item_object);
   cart.addItem(item_object);
   req.session.cart = cart.getItems();
-  //price should have been added on this step to req.session.cart
   res.redirect("/order_now");
 });
  
