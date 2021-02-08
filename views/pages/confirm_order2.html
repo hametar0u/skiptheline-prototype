@@ -11,6 +11,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script defer src="../../node_modules/swup/dist/swup.min.js"></script>  
+  <script defer src="../../test.js"></script>
   
   <title> Confirm Order - Skip The Line </title>
   <link rel="stylesheet" href="..\..\public\styles.css">
@@ -31,25 +33,27 @@
   <div class="container-fluid">
 
     <div class="header">
-    <h1 style="text-align:center;">SKIP THE LINE</h1>
+      <main id="swup" class="transition-fade">
+        <h1 style="text-align:center;">SKIP THE LINE</h1>
+      </main>
     </div>
     
     <div class='loginbox'>
-  
+      <main id="swup" class="transition-wipe">
     
     
-    <br>
-    <h1> Confirm Order </h1>
-    <!-- item – price – quantity -->
-    <h3 style='color: #11BFC7;'>Items:</h3>
-    <li>It's everyday bro – aa – aa</li>
-    <li>It's everyday bro</li>
-    <li>It's everyday bro</li>
-    <li>I SAID IT'S EVERYDAY BROOOOOOO!!!!</li><br>
-    <p>
-      <a href="#" class="btn" role="button">Pay Now</a>
-    </p>
-    
+      <br>
+      <h1> Confirm Order </h1>
+      <!-- item – price – quantity -->
+      <h3 style='color: #11BFC7;'>Items:</h3>
+      <li>It's everyday bro – aa – aa</li>
+      <li>It's everyday bro</li>
+      <li>It's everyday bro</li>
+      <li>I SAID IT'S EVERYDAY BROOOOOOO!!!!</li><br>
+      <p>
+        <a href="#" class="btn" role="button">Pay Now</a>
+      </p>
+    </main>
   </div>
 
   </div>

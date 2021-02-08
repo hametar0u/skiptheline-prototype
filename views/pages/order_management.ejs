@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+      <% include ../partials/header.ejs %>
       <form action="/order_now" method="GET">
         <input type="submit" value="back to order now">
       </form>
@@ -12,7 +13,10 @@
             2. have something that can check the order off
             3. send data back to server
          -->
-         <h5>Order ID - Item - Price - Amount - Date</h5>
+        <main id="swup" class="transition-fade">
+          <h5>Order ID - Item - Price - Amount - Date</h5>
+        </main>
+        <main id="swup" class="transition-wipe">
          <% rows.forEach((r) => { %>
             <div class="item_card">
               <h5><%= r.order_id %> - <%= r.item %> - <%= r.price %> – <%= r.quantity%> – <%= r.date %></h5>
@@ -23,5 +27,6 @@
             </div>
             <!-- there should only be one button per order -->
           <% }); %>
+        </main>
     </body>
 </html>

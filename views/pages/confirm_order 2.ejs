@@ -31,24 +31,27 @@ SUNDAY, APRIL 12, 2020
   <div class="container-fluid">
   	
     <div class="header">
+      <main id="swup" class="transition-fade">
         <h1 style="text-align:center;">SKIP THE LINE</h1>
+      </main>
     </div>
     
 
     <div class='loginbox'>
+      <main id="swup" class="transition-wipe">
+        <br>
+        <h1> Confirm Order </h1>
+        
+        <% console.log("confirm order cart = " + JSON.stringify(cart_items)); %>
+        <% var itemLength = parseInt(item_amount); %>
 
-    <br>
-    <h1> Confirm Order </h1>
-    
-    <% console.log("confirm order cart = " + JSON.stringify(cart_items)); %>
-    <% var itemLength = parseInt(item_amount); %>
-
-    <% for(var i = 0; i < itemLength; i++) { %>
-      
-      <li><%= cart_items[i].item %> – <%= cart_items[i].price %> – <%= cart_items[i].quantity %></li>
-    <% } %>
-    <br>
-    <a href="#" class="btn" role="button">Pay Now</a>
+        <% for(var i = 0; i < itemLength; i++) { %>
+          
+          <li><%= cart_items[i].item %> – <%= cart_items[i].price %> – <%= cart_items[i].quantity %></li>
+        <% } %>
+        <br>
+        <a href="#" class="btn" role="button">Pay Now</a>
+      </main>
     </div>
   </div>
 </body>

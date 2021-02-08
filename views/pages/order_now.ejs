@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <% include ../partials/header.ejs %>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="/public/scripts/scripts.js"></script>
@@ -8,70 +9,73 @@
   </head>
   
   <body>
-    <form action="/order_history" method="GET">
-      <input type="submit" value="order history">
-    </form>
-    <form action="/order_management" method="GET">
-      <input type="submit" value="order management">
-    </form>
-    <form action="/date_select" method="GET">
-      <input type="submit" value="date select">
-    </form>
+    <main id="swup" class="transition-fade">
+      <form action="/order_history" method="GET">
+        <input type="submit" value="order history">
+      </form>
+      <form action="/order_management" method="GET">
+        <input type="submit" value="order management">
+      </form>
+      <form action="/date_select" method="GET">
+        <input type="submit" value="date select">
+      </form>
 
-    <h3>Showing Results for: <%= row3.chosenDate %></h3>
+      <h3>Showing Results for: <%= row3.chosenDate %></h3>
 
-    <h4>Food Items</h4>
-    <div id="food_items">
-      <% row1.fRows.forEach((r) => { %>
-      <div class="item_card">
-        <h5><%=r.item%> - <%=r.price%></h5>
-        <form action="/add_to_cart" method="POST">
-          <input type="hidden" value="<%=r.item%>" name="item_name" id="item_name">       
-          <label for="item_quantity">Amount</label>
-          <input name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
-          <input id="item_submit" type="submit" value="Add To Cart">
-        </form>
+      <h4>Food Items</h4>
+    </main>
+    <main id="swup" class="transition-wipe">
+      <div id="food_items">
+        <% row1.fRows.forEach((r) => { %>
+        <div class="item_card">
+          <h5><%=r.item%> - <%=r.price%></h5>
+          <form action="/add_to_cart" method="POST">
+            <input type="hidden" value="<%=r.item%>" name="item_name" id="item_name">       
+            <label for="item_quantity">Amount</label>
+            <input name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
+            <input id="item_submit" type="submit" value="Add To Cart">
+          </form>
+        </div>
+        
+        <% }); %>
       </div>
       
-      <% }); %>
-    </div>
-    
-    <h4>Drink Items</h4>
-    
-    <% row2.dRows.forEach((r) => { %>
-      <div class="item_card">
-        <h5><%=r.item%> - <%=r.price%></h5>
-        <form action="/add_to_cart" method="POST">
-          <input type="hidden" value="<%=r.item%>" name="item_name" id="item_name">
-          <label for="item_quantity">Amount</label>
-          <input name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
-          <input id="item_submit" type="submit" value="Add To Cart">
-        </form>
-      </div>
+      <h4>Drink Items</h4>
+      
+      <% row2.dRows.forEach((r) => { %>
+        <div class="item_card">
+          <h5><%=r.item%> - <%=r.price%></h5>
+          <form action="/add_to_cart" method="POST">
+            <input type="hidden" value="<%=r.item%>" name="item_name" id="item_name">
+            <label for="item_quantity">Amount</label>
+            <input name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
+            <input id="item_submit" type="submit" value="Add To Cart">
+          </form>
+        </div>
 
-    <% }); %>
- 
-    <h4>Cart</h4>
-    <% if(row4.cartrow != undefined) {%>
-      <% var subtotal = 0; %>
-      <% row4.cartrow.forEach(function(r) { %>
-        <form action="/remove_from_cart" method="POST"> 
-          <h5><%= r.name %> - <%= r.price %> - <%= r.amount %></h5>
-          <input type="hidden" value="<%=r.name%>" name="item_name" id="item_name">       
-          <input type="submit" value="remove">
-        </form>
-        <%subtotal += r.price*r.amount%>
       <% }); %>
-      <form action="/remove_all_from_cart" method="POST">
-        <input type="submit" value="remove all">
+  
+      <h4>Cart</h4>
+      <% if(row4.cartrow != undefined) {%>
+        <% var subtotal = 0; %>
+        <% row4.cartrow.forEach(function(r) { %>
+          <form action="/remove_from_cart" method="POST"> 
+            <h5><%= r.name %> - <%= r.price %> - <%= r.amount %></h5>
+            <input type="hidden" value="<%=r.name%>" name="item_name" id="item_name">       
+            <input type="submit" value="remove">
+          </form>
+          <%subtotal += r.price*r.amount%>
+        <% }); %>
+        <form action="/remove_all_from_cart" method="POST">
+          <input type="submit" value="remove all">
+        </form>
+        <% subtotal = Math.round((subtotal + Number.EPSILON) * 100) / 100; %>
+        <h4>Subtotal: <%= subtotal %></h4>
+      <% } %>
+
+      <form action="confirm_order" method="GET">
+        <input type="submit" value="Confirm Order">
       </form>
-      <% subtotal = Math.round((subtotal + Number.EPSILON) * 100) / 100; %>
-      <h4>Subtotal: <%= subtotal %></h4>
-    <% } %>
-
-  <form action="confirm_order" method="GET">
-    <input type="submit" value="Confirm Order">
-  </form>
-
+    </main>
   </body>
   </html>

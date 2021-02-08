@@ -11,6 +11,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script defer src="../node_modules/swup/dist/swup.min.js"></script>  
+  <script defer src="../test.js"></script>
+
   
   <title> Log In - Skip The Line </title>
   <link rel="stylesheet" href="styles.css">
@@ -59,53 +62,56 @@ FRIDAY, APRIL 10, 2020
     
 <body>
 
-    <div class="header">
-     <h1 style="text-align:center;">SKIP THE LINE</h1>
-        
-      <!-- code for the logo in the header -- needs fixing!!
-        <div class="row">
-          <div class="col-6">
-            <img class="header-brand" src="wwwwwww.png" style="max-width:15%">
-          </div>
-          <div class="col-6">
-            <h1 style="color:white;text-align:left;">SKIP THE LINE</h1>
-          </div>
-        </div> -->
+    <main id="swup" class="transition-fade">
+      <div class="header">
+      <h1 style="text-align:center;">SKIP THE LINE</h1>
+          
+        <!-- code for the logo in the header -- needs fixing!!
+          <div class="row">
+            <div class="col-6">
+              <img class="header-brand" src="wwwwwww.png" style="max-width:15%">
+            </div>
+            <div class="col-6">
+              <h1 style="color:white;text-align:left;">SKIP THE LINE</h1>
+            </div>
+          </div> -->
 
-    </div>
-    
-    <div class='loginbox'>
-      <h1 class='logintext'>Log In</h1>
-
-    <!--<div class="form-group">
-        <label for="usr">Student Email</label>
-        <input type="text" class="form-control" id="usr" required>
-    </div>
-    
-    <div class="form-group" style="padding-bottom:10px">
-        <label for="pwd">Password</label>
-        <input type="password" class="form-control" id="pwd" required>
-    </div> -->
-      <div class='loginfields'>
-        <form method="POST" action="/login">
-          <p>
-              <input required type="text" name="username" id="username"
-              placeholder="Email" >
-          </p>
-          <p>
-              <input required type="password" name="password" id="password" placeholder="Password">
-          </p>
-              <input type="submit" value="Login">
-        </form>
-       
-     <!---- <a href="order_now.html" class="btn" role="button">Continue</a> -->
-      
-        <p style="text-align: center; padding-top:20px;">
-          Don't have an account? Sign up 
-          <a href="sign_up.html"> here </a>
-        </p> 
       </div>
-    </div>
+    </main>  
+    <main id="swup" class="transition-wipe">
+      <div class='loginbox'>
+        <h1 class='logintext'>Log In</h1>
+
+      <!--<div class="form-group">
+          <label for="usr">Student Email</label>
+          <input type="text" class="form-control" id="usr" required>
+      </div>
+      
+      <div class="form-group" style="padding-bottom:10px">
+          <label for="pwd">Password</label>
+          <input type="password" class="form-control" id="pwd" required>
+      </div> -->
+        <div class='loginfields'>
+          <form method="POST" action="/login">
+            <p>
+                <input required type="text" name="username" id="username"
+                placeholder="Email" >
+            </p>
+            <p>
+                <input required type="password" name="password" id="password" placeholder="Password">
+            </p>
+                <input type="submit" value="Login">
+          </form>
+        
+      <!---- <a href="order_now.html" class="btn" role="button">Continue</a> -->
+        
+          <p style="text-align: center; padding-top:20px;">
+            Don't have an account? Sign up 
+            <a href="sign_up.html"> here </a>
+          </p> 
+        </div>
+      </div>
+    </main>
 </body>
 
 </html>

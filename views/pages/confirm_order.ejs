@@ -31,63 +31,65 @@
     <div class="container-fluid">
 
       <div class="header">
+        <main id="swup" class="transition-fade">
           <h1>SKIP THE LINE</h1>
+        </main>
       </div>
 
 
       <div class='loginbox'>
+        <main id="swup" class="transition-wipe">
+          <br>
+          <h1> Confirm Order </h1>
+          <h3>Ordering for: <%= date %></h3>
 
-      <br>
-      <h1> Confirm Order </h1>
-      <h3>Ordering for: <%= date %></h3>
+          <% console.log("confirm order cart = ", cart); %>
+          <h5>Item - Price - Amount</h5>
+          <% for(var i = 0; i < cart.length; i++) { %>
+            
+            <li><%= cart[i].name %> – <%= cart[i].price %> – <%= cart[i].amount %></li>
+          <% } %>
+          <h4>Subtotal: <%= subtotal %></h4>
+          
+          <br>
+          <form action="/order_now" method="GET">
+            <input type="submit" value="Go Back">
+          </form>
 
-      <% console.log("confirm order cart = ", cart); %>
-      <h5>Item - Price - Amount</h5>
-      <% for(var i = 0; i < cart.length; i++) { %>
-        
-        <li><%= cart[i].name %> – <%= cart[i].price %> – <%= cart[i].amount %></li>
-      <% } %>
-      <h4>Subtotal: <%= subtotal %></h4>
-      
-      <br>
-      <form action="/order_now" method="GET">
-        <input type="submit" value="Go Back">
-      </form>
+          <button id="checkout-button">Pay Now</button>
 
-      <button id="checkout-button">Pay Now</button>
+          <script type="text/javascript">
+            // Create an instance of the Stripe object with your publishable API key
+            var stripe = Stripe('pk_test_mKcGC6Cx3PUXSKEWFSOL9chX00ysQ8DqVX');
+            var checkoutButton = document.getElementById('checkout-button');
 
-      <script type="text/javascript">
-        // Create an instance of the Stripe object with your publishable API key
-        var stripe = Stripe('pk_test_mKcGC6Cx3PUXSKEWFSOL9chX00ysQ8DqVX');
-        var checkoutButton = document.getElementById('checkout-button');
-
-        checkoutButton.addEventListener('click', function() {
-          // Create a new Checkout Session using the server-side endpoint you
-          // created in step 3.
-          fetch('/create-checkout-session', {
-            method: 'POST',
-          })
-          .then(function(response) {
-            return response.json();
-          })
-          .then(function(session) {
-            console.log(session);
-            return stripe.redirectToCheckout({ sessionId: session.id });
-          })
-          .then(function(result) {
-            // If `redirectToCheckout` fails due to a browser or network
-            // error, you should display the localized error message to your
-            // customer using `error.message`.
-            if (result.error) {
-              alert(result.error.message);
-            }
-          })
-          .catch(function(error) {
-            console.error('Error:', error);
-          });
-        });
-      </script>
-
+            checkoutButton.addEventListener('click', function() {
+              // Create a new Checkout Session using the server-side endpoint you
+              // created in step 3.
+              fetch('/create-checkout-session', {
+                method: 'POST',
+              })
+              .then(function(response) {
+                return response.json();
+              })
+              .then(function(session) {
+                console.log(session);
+                return stripe.redirectToCheckout({ sessionId: session.id });
+              })
+              .then(function(result) {
+                // If `redirectToCheckout` fails due to a browser or network
+                // error, you should display the localized error message to your
+                // customer using `error.message`.
+                if (result.error) {
+                  alert(result.error.message);
+                }
+              })
+              .catch(function(error) {
+                console.error('Error:', error);
+              });
+            });
+          </script>
+        </main>
       </div>
     </div>
   </body>

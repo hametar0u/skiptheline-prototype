@@ -6,6 +6,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script defer src="../../node_modules/swup/dist/swup.min.js"></script>  
+    <script defer src="../../test.js"></script>
     
     <title> Sign Up - Skip The Line </title>
     <link rel="stylesheet" href="styles.css">
@@ -22,7 +24,7 @@ FRIDAY, APRIL 10, 2020
     html {
       font-family: 'Roboto', sans-serif;
     } body {
-      background-color: #11BFC7;*/
+      background-color: #11BFC7;
       /*background-image: linear-gradient(to bottom, #11BFC7, #47E2D6);*/
     }
 </style>
@@ -40,47 +42,51 @@ FRIDAY, APRIL 10, 2020
     <div class="container-fluid">
 
       <div class="header">
-         <h1 style="text-align:center;">SKIP THE LINE</h1>
+        <main id="swup" class="transition-fade">
+          <h1 style="text-align:center;">SKIP THE LINE</h1>
+        </main>
       </div>
       <div style="width:600px;padding-bottom:3%" class='loginbox'>
-          <h1 style="padding-top:5%;padding-bottom:2%;"> Join Today</h1>
+        <main id="swup" class="transition-wipe">
+            <h1 style="padding-top:5%;padding-bottom:2%;"> Join Today</h1>
 
-          <!-- <div class="form-group">
-            <label for="usr">First Name</label>
-            <input required type="text" class="form-control" id="firstname" name="firstname">
-          </div>
-          
-          <div class="form-group">
-            <label for="usr">Last name</label>
-            <input required type="text" class="form-control" id="lastname" name="lastname">
-          </div>   -->
-          
-          <div class="form-group">
-            <label for="usr">Student Email</label>
-            <input required type="email" class="form-control" id="usr" name="usr">
-          </div>
+            <!-- <div class="form-group">
+              <label for="usr">First Name</label>
+              <input required type="text" class="form-control" id="firstname" name="firstname">
+            </div>
             
-          <div class="form-group" style="padding-bottom:10px">
-            <label for="pwd">Password</label>
-            <input required type="password" class="form-control" id="pwd" name="pwd">
-          </div> 
+            <div class="form-group">
+              <label for="usr">Last name</label>
+              <input required type="text" class="form-control" id="lastname" name="lastname">
+            </div>   -->
+            
+            <div class="form-group">
+              <label for="usr">Student Email</label>
+              <input required type="email" class="form-control" id="usr" name="usr">
+            </div>
+              
+            <div class="form-group" style="padding-bottom:10px">
+              <label for="pwd">Password</label>
+              <input required type="password" class="form-control" id="pwd" name="pwd">
+            </div> 
 
-          <div class="form-group" style="padding-bottom:10px">
-            <label for="pwd">Confirm Password</label>
-            <input required type="password" class="form-control" id="pwd2" name="pwd2">
-          </div>
-            
-          <input type="submit" value="Register" onclick="return validateform()"><br>
-          <p>
-            <br>
-            Already have an account? Login 
-            <a href="login.html" role="button">here</a>
-          </p>
-        </div>
-        
-      </form>
-      
+            <div class="form-group" style="padding-bottom:10px">
+              <label for="pwd">Confirm Password</label>
+              <input required type="password" class="form-control" id="pwd2" name="pwd2">
+            </div>
+              
+            <input type="submit" value="Register" onclick="return validateform()"><br>
+            <p>
+              <br>
+              Already have an account? Login 
+              <a href="login.html" role="button">here</a>
+            </p>
+          </main>
       </div>
+        
+    </form>
+      
+  </div>
 </body>
 
 <script type="text/javascript">

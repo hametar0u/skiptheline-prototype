@@ -6,6 +6,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script defer src="../node_modules/swup/dist/swup.min.js"></script>  
+    <script defer src="../test.js"></script>
     
     <title> Sign Up - Skip The Line </title>
     <link rel="stylesheet" href="styles.css">
@@ -32,10 +34,14 @@ FRIDAY, APRIL 10, 2020
   <form method="POST" action="/createaccount">
     <div class="container-fluid">
 
-      <div class="header">
-         <h1 style="text-align:center;">SKIP THE LINE</h1>
-      </div>
+      <main id="swup" class="transition-fade">
+        <div class="header">
+          <h1 style="text-align:center;">SKIP THE LINE</h1>
+        </div>
+      </main>
+      
       <div style="width:600px;padding-bottom:3%" class='loginbox'>
+        <main id="swup" class="transition-wipe">
           <h1 style="padding-top:5%;padding-bottom:2%;"> Join Today</h1>
 
           <!-- <div class="form-group">
@@ -69,6 +75,7 @@ FRIDAY, APRIL 10, 2020
             Already have an account? Login 
             <a href="login.html" role="button">here</a>
           </p>
+          </main>
         </div>
         
       </form>

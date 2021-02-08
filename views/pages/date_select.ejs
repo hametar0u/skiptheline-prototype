@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-       
+      <% include ../partials/header.ejs %>
+
+      <title>Date Select - Skip the Line</title>
+
     </head>
     <body>
         <!-- workflow
@@ -9,16 +12,19 @@
         2. send the information back to server -- invalid time value
         3. in order now server should only display menu items that lie within that range
         -->
-        <h4>What Date are you Ordering For?</h4>
-        <form action="/date_select" method="POST">
-        <select name="selectDate" id="selectDate" name="selectDate">
-          <% row.forEach((r) => { %>
-          <option value="<%=r.toLocaleDateString()%>"><%=r.toLocaleDateString()%></option>
-          <% }); %>
-        </select>
-        <input type="submit" value="submit">
-      </form>
-        
+        <main id="swup" class="transition-fade">
+          <h4>What Date are you Ordering For?</h4>
+        </main>
+        <main id="swup" class="transition-wipe">
+          <form action="/date_select" method="POST">
+            <select name="selectDate" id="selectDate" name="selectDate">
+              <% row.forEach((r) => { %>
+              <option value="<%=r.toLocaleDateString()%>"><%=r.toLocaleDateString()%></option>
+              <% }); %>
+            </select>
+            <input type="submit" value="submit">
+          </form>
+        </main>
       
     </body>
 </html>

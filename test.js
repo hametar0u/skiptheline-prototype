@@ -26,3 +26,5 @@ test('responds to requests', (t) => {
     })();
   });
 });
+
+const swup = new Swup();

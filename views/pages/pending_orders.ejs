@@ -21,12 +21,16 @@ SUNDAY, APRIL 12, 2020
 
 
   </div>
-  <h5>Order ID - Item - Price - Amount - Date</h5>
-  <ul>
-    <% rows.forEach(function(r) { %>
-        <li><%= r.order_id %> - <%= r.item %> - <%= r.price %> – <%= r.quantity%> – <%= r.date %></li>
-    <% }); %>
-</ul>
+    <main id="swup" class="transition-fade">
+      <h5>Order ID - Item - Price - Amount - Date</h5>
+    </main> 
+    <main id="swup" class="transition-wipe">
+      <ul>
+        <% rows.forEach(function(r) { %>
+            <li><%= r.order_id %> - <%= r.item %> - <%= r.price %> – <%= r.quantity%> – <%= r.date %></li>
+        <% }); %>
+      </ul>
+    </main>
 </body>
 
 </html>
