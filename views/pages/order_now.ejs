@@ -55,10 +55,16 @@
     <% if(row4.cartrow != undefined) {%>
       <% var subtotal = 0; %>
       <% row4.cartrow.forEach(function(r) { %>
-        <h5><%= r.name %> - <%= r.price %> - <%= r.amount %></h5>
+        <form action="/remove_from_cart" method="POST"> 
+          <h5><%= r.name %> - <%= r.price %> - <%= r.amount %></h5>
+          <input type="hidden" value="<%=r.name%>" name="item_name" id="item_name">       
+          <input type="submit" value="remove">
+        </form>
         <%subtotal += r.price*r.amount%>
       <% }); %>
-      
+      <form action="/remove_all_from_cart" method="POST">
+        <input type="submit" value="remove all">
+      </form>
       <% subtotal = Math.round((subtotal + Number.EPSILON) * 100) / 100; %>
       <h4>Subtotal: <%= subtotal %></h4>
     <% } %>

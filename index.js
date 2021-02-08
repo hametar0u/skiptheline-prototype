@@ -1,10 +1,6 @@
 //Next week
-// NOTES: date function is pretty much finished
 // IMPROVEMENTS:
 // make the date format readable
-// don't really know what to do about the workflow post-checkout
-// pay_now crashes if i reset localhost and I'm still on that page but idk if that's something customers will experienc in prod
-//cart item order sort by date
 
 //problems:
 //stripe receipt email not sending through
@@ -12,8 +8,14 @@
 //Pending:
 //hook front end to back end
 //personal order key system; wipe the entries of days that already pass
-//clear cart when going back to order now after a successful order
-//keyframes and animate to make this crap bougie
+//keyframes and animate to make this crap bougie --kenn's job lmao
+
+//create admin account
+// 1. can only touch order management + menu
+// 2. database + menu + order management basically sudo user
+//add database column + default value = 0
+
+// talk about what happens with the club afterwards
 
 
 const express = require('express')
@@ -218,6 +220,14 @@ class Cart{
       return;
   }
 
+  removeItem(item_name){
+    var i = this.hasItem(item_name);
+    if (i != -1){
+      this.items.splice(i,1);
+    }
+    return;
+  }
+
   clearItems(){
       this.items = [];
       this.total = 0;
@@ -289,31 +299,64 @@ app.get('/my_secret_page', checkAuth, function (req, res) {
   res.send('if you are viewing this page it means you are logged in');
 }); 
 
-app.get('/signup', (req, res) => res.redirect('sign_up.html'));
+app.get('/signup', (req, res) => res.render('pages/sign_up.ejs'));
 
 app.post('/createaccount', (req, res) => {
-  var firstname = req.body.firstname;
-  var lastname = req.body.lastname;
-  req.session.usr = req.body.usr;
-  req.session.pwd = req.body.pwd;
-  var confcode = makeconfcode(6);
-  
-  var mailOptions = {
-    from: 'kevinlu1248@gmail.com', // sender address
-    to: req.session.usr, // list of receivers
-    subject: 'Skip The Line Confirmation Code', // Subject line
-    html: `<p>Your confirmation code is: '${confcode}'</p>`// plain text body
-  };
-
-  transporter.sendMail(mailOptions, function (err, info) {
-    if(err)
-      console.log(err)
-    else
-      console.log('Message sent: ' + info);
+  var usr = req.body.usr;
+  console.log("usr = ", usr);
+  var select_query = "SELECT username FROM users;"
+  console.log ("start of pool query");
+  req.session.account_exists = 0;
+  pool.query(select_query, (error, result) => {
+    if(error) {
+      console.log(error);
+      res.redirect("/error");
+    }
+    else {
+      var username_array = [];
+      for (var i = 0; i<result.rowCount; i++) {
+        console.log(result.rows[i]);
+        username_array.push(result.rows[i]['username']); 
+        // console.log("result.rows[i]['user_id'] = ",result.rows[i]['user_id']);
+        // console.log("result.rows[i]['username'] = ",result.rows[i]['username']);
+      }
+      console.log("username_array = ",username_array);
+      for (var i=0; i<username_array.length; i++){
+        if (usr == username_array[i]) {
+          req.session.account_exists = 1;
+        }
+      }
+      if (req.session.account_exists == 1) {
+        console.log("account already exists");
+        res.render('pages/sign_up.ejs', {'account_exists': req.session.account_exists});
+      }
+      else{
+        req.session.usr = usr; 
+        req.session.pwd = req.body.pwd;
+        var confcode = makeconfcode(6);
+        
+        var mailOptions = {
+          from: 'kevinlu1248@gmail.com', // sender address
+          to: req.session.usr, // list of receivers
+          subject: 'Skip The Line Confirmation Code', // Subject line
+          html: `<p>Your confirmation code is: '${confcode}'</p>`// plain text body
+        };
+      
+        transporter.sendMail(mailOptions, function (err, info) {
+          if(err)
+            console.log(err)
+          else
+            console.log('Message sent: ' + info);
+        });
+      
+        req.session.confcode = confcode;
+        res.render("pages/confirmation_code.ejs");
+      }
+    }
   });
-
-  req.session.confcode = confcode;
-  res.render("pages/confirmation_code.ejs");
+  
+  // var firstname = req.body.firstname;
+  // var lastname = req.body.lastname;
 });
  
 app.post('/confirmation', (req, res) => {
@@ -326,7 +369,8 @@ app.post('/confirmation', (req, res) => {
     console.log ("start of pool query");
     pool.query(select_query, (error, result) => {
       if(error) {
-        res.send(error);
+        console.log(error);
+        res.redirect("/error");
       }
       else {
         var id_array = [];
@@ -334,17 +378,19 @@ app.post('/confirmation', (req, res) => {
         console.log(result[i]);
         for (var i = 0; i<result.rowCount; i++) {
           console.log(result.rows[i]);
-          id_array.push(result.rows[i][0]);
-          username_array.push(result.rows[i][1]); 
+          id_array.push(result.rows[i]['user_id']);
+          username_array.push(result.rows[i]['username']); 
+          console.log("result.rows[i]['user_id'] = ",result.rows[i]['user_id']);
+          console.log("result.rows[i]['username'] = ",result.rows[i]['username']);
         }
-        console.log("id_array = ",id_array);
-        console.log("username_array = ",username_array);
-        while (user_id in id_array || user_id[0]==0) {
-          user_id = makeconfcode(7);
-        }
+          console.log("id_array = ",id_array);
+          console.log("username_array = ",username_array);
         while (usr in username_array) {
           console.log("account already exists");
           res.redirect("login.html");
+        }
+        while (user_id in id_array || user_id[0]==0) {
+          user_id = makeconfcode(7);
         }
         console.log("confcode creation 200 OK");
       }
@@ -355,7 +401,8 @@ app.post('/confirmation', (req, res) => {
     pool.query(createAccountQuery, (error, result) => {
 
       if (error) {
-        res.send(error);
+        console.log(error);
+        res.redirect("/error");
       }
       else {
         res.render("pages/create_account_success.ejs");
@@ -377,7 +424,8 @@ app.get('/users', async (req, res) => {
     client.release();
   } catch (err) {
     console.error(err);
-    res.send("Error " + err);
+    console.log(error);
+    res.redirect("/error");
   }
 });
 
@@ -390,7 +438,8 @@ app.get('/orders', async (req, res) => {
     client.release();
   } catch (err) {
     console.error(err);
-    res.send("Error " + err);
+    console.log(error);
+    res.redirect("/error");
   }
 });
 
@@ -403,7 +452,8 @@ app.get('/order_details', async (req, res) => {
     client.release();
   } catch (err) {
     console.error(err);
-    res.send("Error " + err);
+    console.log(error);
+    res.redirect("/error");
   }
 });
 
@@ -418,7 +468,8 @@ app.get('/menu', async (req, res) => { //make admin checkAuth function and call 
     client.release();
   } catch (err) {
     console.error(err);
-    res.send("Error " + err);
+    console.log(error);
+    res.redirect("/error");
   }
 });
 
@@ -429,7 +480,8 @@ app.post('/login',  (req, res) => {
   pool.query(loginQuery, (error, result) => {
     if (error){
       console.log(error);
-      res.send(error);
+      console.log(error);
+      res.redirect("/error");
     }
     else {
       var results = {'rows': result.rows };
@@ -467,7 +519,7 @@ app.get('/order_now', checkAuth, async (req, res) => {
   } 
   catch (err) {
     console.error(err);
-    res.send("Error " + err);
+    res.redirect("/error");
   }
   
 }); 
@@ -478,7 +530,7 @@ app.get('/date_select', (req,res) => {
     var today = new Date;
     var array = []; 
 
-    while ( count<7 ) {
+    while (count<7) {
       today.setDate(today.getDate() + 1); 
       //console.log("today = ", today);
       if (today.getDay() != 0 && today.getDay() != 6) {// Skip weekends
@@ -519,12 +571,17 @@ app.post('/date_select', async (req,res) => { //put this shit in order now
     req.session.pricelist = list;
   });
   console.log("req.session.pricelist = ", req.session.pricelist);
-  console.log("line 540 session cart ",req.session.cart);
+  console.log("line 522 session cart ",req.session.cart);
   //date stuff
     var chosenDate = new Date(req.body.selectDate);
     chosenDate = chosenDate.toISOString();
     var dateObject = {'chosenDate': chosenDate};
-    req.session.chosenDate = chosenDate;
+
+    if (req.session.chosenDate != chosenDate) {
+      cart.clearItems();
+      req.session.cart = cart.getItems();
+      req.session.chosenDate = chosenDate;
+    }
     
   try {
     const client = await pool.connect()
@@ -532,14 +589,14 @@ app.post('/date_select', async (req,res) => { //put this shit in order now
     const drinkResult = await client.query(`SELECT item,price FROM drinkmenu;`);
     const foodResults = { 'fRows': (foodResult) ? foodResult.rows : null};
     const drinkResults = { 'dRows': (drinkResult) ? drinkResult.rows : null};
-    const cart = { 'cartrow': req.session.cart };
+    const cartObject = { 'cartrow': req.session.cart };
     console.log("cart in date select post = ", cart);
-    res.render('pages/order_now.ejs', {row3: dateObject, row1: foodResults, row2: drinkResults, row4: cart} );
+    res.render('pages/order_now.ejs', {row3: dateObject, row1: foodResults, row2: drinkResults, row4: cartObject} );
     client.release();
   } 
   catch (err) {
-    console.error(err);
-    res.send("Error " + err);
+    console.log(error);
+    res.redirect("/error");
   }
 });
 
@@ -562,6 +619,20 @@ app.post('/add_to_cart', (req,res) => {
   res.redirect("/order_now");
 });
  
+app.post('/remove_from_cart', (req,res) => {
+  var item_name = req.body.item_name;
+  //console.log('item_name = ', item_name);
+  cart.removeItem(item_name);
+  req.session.cart = cart.getItems();
+  res.redirect('/order_now');
+});
+
+app.post('/remove_all_from_cart', (req,res) => {
+  cart.clearItems();
+  req.session.cart = cart.getItems();
+  res.redirect('/order_now');
+});
+
 app.get('/confirm_order', (req,res) => {
   var cart = req.session.cart; 
   var subtotal = 0;
@@ -633,7 +704,7 @@ app.get('/order_success', (req,res) => {
   console.log("pool.query start");
   pool.query(orderIDQuery, (error,result) => {
     if(error) {
-      res.send(error);
+      res.redirect("/error");
     }
     else {
       while (order_id in result || order_id[0]==0) {
@@ -660,7 +731,8 @@ app.get('/order_success', (req,res) => {
   pool.query(str, (error,result) => {
     if(error) {
       console.log('/order_success error');
-      res.send(error);
+      console.log(error)
+      res.redirect("/error");
     }
     else {
       console.log('/order_success 200 OK');
@@ -673,7 +745,8 @@ app.get('/order_success', (req,res) => {
   pool.query(userIdRetrieveQuery, (error,result) => {
     if(error) {
       console.log('user id retrieve error = ',error);
-      //res.send(error);
+      console.log(error);
+      res.redirect("/error");
     }
     else {
       console.log('user id retrieve 200 OK, result = ',result.rows);
@@ -682,7 +755,8 @@ app.get('/order_success', (req,res) => {
       pool.query(orderJoinQuery, (error,result) => {
         if(error) {
           console.log('order join error = ',error);
-          //res.send(error);
+          console.log(error);
+          res.redirect("/error");
         }
         else {
           console.log('order join 200 OK');
@@ -691,6 +765,9 @@ app.get('/order_success', (req,res) => {
     }
   });
   console.log("userIDretrievequery complete");
+  cart.clearItems(); //clear cart on order success
+  req.session.cart = cart.getItems(); 
+  
   if (LOCAL_DEV_FLAG) {
     res.redirect('/order_success_local.html');
   }
@@ -705,7 +782,7 @@ app.get('/pending_orders', checkAuth, function (req, res) {
   pool.query(order_query, (error, result) => {
     if (error) {
       console.log(error);
-      res.send(error);
+      res.redirect("/error");
     }
     else {
       console.log("result.rows = ",result.rows);
@@ -722,7 +799,7 @@ app.get('/order_history', checkAuth, function (req, res) {
   pool.query(order_query, (error, result) => {
     if (error) {
       console.log(error);
-      res.send(error);
+      res.redirect("/error");
     }
     else {
       console.log(result.rows);
@@ -736,7 +813,7 @@ app.get('/order_management', function (req, res) {
   pool.query(order_query, (error, result) => {
     if (error) {
       console.log(error);
-      res.send(error);
+      res.redirect("/error");
     }
     else {
       console.log("result.rows order management = ",result.rows);
@@ -751,7 +828,7 @@ app.post('/fulfill_order', function (req, res) {
   pool.query(fulfill_order_query, (error, result) => {
     if (error) {
       console.log(error);
-      res.send(error);
+      res.redirect("/error");
     }
     else {
       console.log(result.rows);
@@ -776,7 +853,7 @@ app.post('/menu_add', function (req, res) {
   pool.query(menuItemAddQuery, (error, result) => {
     if (error) {
       console.log(error);
-      res.send(error);
+      res.redirect("/error");
     }
     else {
       console.log(result);
@@ -804,7 +881,8 @@ app.post('/drink_menu_add', function (req,res) {
   pool.query(menuItemAddQuery, (error, result) => {
     if (error) {
       console.log(error);
-      res.send(error);
+      console.log(error);
+res.redirect("/error");
     }
     else {
       console.log(result);
@@ -828,7 +906,8 @@ app.post('/menu_remove', function (req, res) {
   var menuRemoveQuery = `DELETE FROM foodmenu WHERE item = '${menuItemRemove}' AND '${menuDateRemove}' >= startdate AND '${menuDateRemove}' <= enddate;`;
   pool.query(menuRemoveQuery, (error, result) => {
     if (error) {
-      res.send(error);
+      console.log(error);
+      res.redirect("/error");
     }
     else {
       res.redirect('/menu');
@@ -839,6 +918,10 @@ app.post('/menu_remove', function (req, res) {
 app.post('/logout', function (req, res) {
   req.session.destroy();
   res.redirect('login.html');
+});
+
+app.get('/error', (req,res) => {
+  res.redirect('error.html');
 });
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));

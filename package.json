@@ -23,6 +23,7 @@
     "passport": "^0.4.1",
     "pg": "^7.18.2",
     "stripe": "^8.81.0",
+    "swup": "^2.0.14",
     "xoauth2": "^1.2.0"
   },
   "devDependencies": {

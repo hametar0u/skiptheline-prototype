@@ -29,6 +29,13 @@ FRIDAY, APRIL 10, 2020
 </head>
 
 <body>
+    <% if (account_exists == 1) { %>
+      <script>
+        alert("Account already exists");
+      </script>
+    <% } %>
+
+
   <form method="POST" action="/createaccount">
     <div class="container-fluid">
 
