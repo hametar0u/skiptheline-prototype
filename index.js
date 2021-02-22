@@ -1,6 +1,7 @@
 //Next week
 //add a blank option at the top for the select date thing and delete the load event listener at the bottom
 //learn how to hook front end and back end for React
+//combine the order IDs and if same date
 
 // IMPROVEMENTS:
 // make the date format readable
@@ -23,7 +24,7 @@ const path = require('path')
 const PORT = process.env.PORT || 5000 
 const { Pool } = require('pg');
 var pool;
-var LOCAL_DEV_FLAG = true;
+var LOCAL_DEV_FLAG = false;
 if (LOCAL_DEV_FLAG){
   pool = new Pool ({
     user: 'postgres',
