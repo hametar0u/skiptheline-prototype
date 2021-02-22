@@ -1,19 +1,19 @@
 //Next week
+//add a blank option at the top for the select date thing and delete the load event listener at the bottom
+//learn how to hook front end and back end for React
+
 // IMPROVEMENTS:
 // make the date format readable
+//check if the db queries on the order now have already been run and if so just don't run it
+//make pending orders look nice
 
 //problems:
-//stripe receipt email not sending through
+//stripe receipt email not sending through --  might be the test api key
 
 //Pending:
+//change sendgrid to actual STL email
 //hook front end to back end
-//personal order key system; wipe the entries of days that already pass
 //keyframes and animate to make this crap bougie --kenn's job lmao
-
-//create admin account
-// 1. can only touch order management + menu
-// 2. database + menu + order management basically sudo user
-//add database column + default value = 0
 
 // talk about what happens with the club afterwards
 
@@ -23,7 +23,7 @@ const path = require('path')
 const PORT = process.env.PORT || 5000 
 const { Pool } = require('pg');
 var pool;
-var LOCAL_DEV_FLAG = false;
+var LOCAL_DEV_FLAG = true;
 if (LOCAL_DEV_FLAG){
   pool = new Pool ({
     user: 'postgres',
@@ -85,9 +85,15 @@ function makeconfcode(length) {
   var result           = '';
   var characters       = '0123456789';
   var charactersLength = characters.length;
-  for ( var i = 0; i < length; i++ ) {
-     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  var char = characters.charAt(Math.floor(Math.random() * charactersLength));
+  while (char == '0') {
+    char = characters.charAt(Math.floor(Math.random() * charactersLength));
   }
+  result += char;
+  for ( var i = 1; i < length; i++ ) {
+    char = characters.charAt(Math.floor(Math.random() * charactersLength)); 
+    result += char;
+  } 
   return result;
 }
 
@@ -100,6 +106,69 @@ async function checkAuth(req, res, next) {
     console.log("check auth success")
     return next();
   }
+}
+
+function checkAdmin(req,res,next) { //for level 1
+  var adminQuery = `SELECT authority FROM users WHERE username = '${req.session.username}';`;
+  var results;
+  var level = 0;
+  pool.query(adminQuery, (error,result) => {
+    if (error) {
+      return callback(error); //console log error and redirect to client error page
+    }
+    else {
+      console.log("result.rows=",result.rows);
+      if (result.rows.length == 0) {
+        console.log("result.rows was empty");
+        res.redirect("login.html");
+      }
+      else {
+        results = {'rows': result.rows };
+        level = results.rows[0].authority;
+        console.log("level = ",level)
+        if (level == 0) {
+          console.log("you don't have level 1+ clearance");
+          res.redirect("login.html");
+        }
+        else {
+          console.log("level 1+ clearance");
+          res.redirect("error.html");
+        }
+      }
+    }
+  });
+
+}
+function checkAdmin2(req,res,next) { //for level 2
+  var adminQuery = `SELECT authority FROM users WHERE username = '${req.session.username}';`;
+  var results;
+  var level = 0;
+  pool.query(adminQuery, (error,result) => {
+    if (error) {
+      return callback(error); //console log error and redirect to client error page
+    }
+    else {
+      console.log("result.rows=",result.rows);
+      if (result.rows.length == 0) {
+        console.log("result.rows was empty");
+        res.redirect("login.html");
+      }
+      else {
+        results = {'rows': result.rows };
+        level = results.rows[0].authority;
+        console.log("level = ",level)
+        if (level == 2) {
+          console.log("level 2 clearance");
+          return next();
+        }
+        else {
+          console.log("you don't have level 2 clearance");
+          res.redirect("error.html");
+        }
+      }
+    }
+  });
+
 }
 
 //cart class
@@ -295,8 +364,8 @@ app.set('view engine', 'ejs');
 app.get('/', (req, res) => res.redirect('login.html'));
 app.get('/login', (req, res) => res.redirect('login.html'));
 
-app.get('/my_secret_page', checkAuth, function (req, res) {
-  res.send('if you are viewing this page it means you are logged in');
+app.get('/my_secret_page', checkAdmin2, function (req, res) {
+  res.send('if you are viewing this page it means the function works');
 }); 
 
 app.get('/signup', (req, res) => res.render('pages/sign_up.ejs'));
@@ -397,7 +466,7 @@ app.post('/confirmation', (req, res) => {
     });
     console.log("pool query complete");
     
-    var createAccountQuery = `INSERT INTO users(user_id, username, password) VALUES('${user_id}', '${usr}', crypt('${pwd}', gen_salt('bf')));`;
+    var createAccountQuery = `INSERT INTO users(user_id, username, password, authority) VALUES('${user_id}', '${usr}', crypt('${pwd}', gen_salt('bf')), '0');`;
     pool.query(createAccountQuery, (error, result) => {
 
       if (error) {
@@ -415,7 +484,7 @@ app.post('/confirmation', (req, res) => {
 });
 
 
-app.get('/users', async (req, res) => {
+app.get('/users', checkAdmin2, async (req, res) => { //change the EJS and query strings
   try {
     const client = await pool.connect()
     const result = await client.query('SELECT * FROM users');
@@ -429,7 +498,7 @@ app.get('/users', async (req, res) => {
   }
 });
 
-app.get('/orders', async (req, res) => {
+app.get('/orders', checkAdmin2, async (req, res) => {
   try {
     const client = await pool.connect()
     const result = await client.query('SELECT * FROM orders');
@@ -443,7 +512,7 @@ app.get('/orders', async (req, res) => {
   }
 });
 
-app.get('/order_details', async (req, res) => {
+app.get('/order_details', checkAdmin2, async (req, res) => {
   try {
     const client = await pool.connect()
     const result = await client.query('SELECT * FROM order_details WHERE ;');
@@ -457,7 +526,7 @@ app.get('/order_details', async (req, res) => {
   }
 });
 
-app.get('/menu', async (req, res) => { //make admin checkAuth function and call it here
+app.get('/menu', checkAdmin2, async (req, res) => { //make admin checkAuth function and call it here
   try {
     const client = await pool.connect()
     const foodResult = await client.query('SELECT * FROM foodmenu;');
@@ -475,11 +544,25 @@ app.get('/menu', async (req, res) => { //make admin checkAuth function and call 
 
 app.post('/login',  (req, res) => {
   var loginUsername = req.body.username;
+  if (loginUsername == "sudoUser") { //remove in prod
+    console.log("sudo user remove in prod");
+    req.session.user_id = makeid(10);
+    req.session.username = loginUsername;
+    res.redirect("/date_select")
+    return;
+  }
+  else if (loginUsername == "cafAdmin") { //remove
+    console.log("caf admin account remove in prod");
+    req.session.user_id = makeid(10);
+    req.session.username = loginUsername;
+    res.redirect("/date_select")
+    return;
+  }
+
   var loginPassword = req.body.password;
   var loginQuery = `select * from users where users.username = '${loginUsername}' AND password = crypt('${loginPassword}', password)`;
   pool.query(loginQuery, (error, result) => {
     if (error){
-      console.log(error);
       console.log(error);
       res.redirect("/error");
     }
@@ -496,7 +579,6 @@ app.post('/login',  (req, res) => {
         req.session.username = loginUsername;
         console.log("login username - ", req.session.username)
         res.redirect("/date_select");
-          //tell user email/password is wrong -> redirect to another page/go back to the beginning
       } 
     }
   })
@@ -520,7 +602,7 @@ app.get('/order_now', checkAuth, async (req, res) => {
   catch (err) {
     console.error(err);
     res.redirect("/error");
-  }
+  } 
   
 }); 
  
@@ -541,10 +623,29 @@ app.get('/date_select', (req,res) => {
     }
     //console.log("array = ", array);
     return array;
-  } 
-  var array_object = {"row": select_date()};
-  //console.log("array_object = ", array_object);
-  res.render("pages/date_select.ejs", array_object);
+  }
+  var date_array = select_date();
+  console.log("date_array= ", date_array); 
+
+  var order_date_array = [];
+  //console.log("array_object = ", array_object); 
+
+  //get dates for which user has already order for; combine if ordering into same date
+  dateOrderQuery = `SELECT date FROM order_details NATURAL JOIN orders NATURAL JOIN users WHERE users.username = '${req.session.username}' GROUP BY date;`;
+  pool.query(dateOrderQuery, (error, result) => {
+    if (error){
+      console.log(error);
+      res.redirect("/error");
+    }
+    else {
+      result.rows.forEach((i) => {
+        order_date_array.push(i.date);
+      });
+      
+      console.log("order_date_array= ", order_date_array);
+      res.render("pages/date_select.ejs", {'row1': date_array, 'row2': order_date_array});
+    }
+  });
 });
 
 app.post('/date_select', async (req,res) => { //put this shit in order now
@@ -713,10 +814,6 @@ app.get('/order_success', (req,res) => {
       console.log("confcode creation 200 OK");
     }
   });
-  //personal order key = last 3 digits of order_id
-  //if it finds a duplicate of personal order key or the order is complete 
-  //add an a
-
 
   console.log(" orderIDquery over");
 
@@ -808,7 +905,7 @@ app.get('/order_history', checkAuth, function (req, res) {
   });
 });
 
-app.get('/order_management', function (req, res) {
+app.get('/order_management', checkAdmin, function (req, res) {
   order_query = `SELECT user_id,order_id,date,item,price,quantity FROM orders NATURAL JOIN order_details WHERE orders.complete = '0' ORDER BY date, user_id;`;
   pool.query(order_query, (error, result) => {
     if (error) {

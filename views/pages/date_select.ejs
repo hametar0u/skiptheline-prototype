@@ -12,13 +12,37 @@
         <h4>What Date are you Ordering For?</h4>
         <form action="/date_select" method="POST">
         <select name="selectDate" id="selectDate" name="selectDate">
-          <% row.forEach((r) => { %>
-          <option value="<%=r.toLocaleDateString()%>"><%=r.toLocaleDateString()%></option>
+          <% row1.forEach((r) => { %>
+          <option value="<%=r%>"><%=r.toLocaleDateString()%></option>
           <% }); %>
+        
         </select>
         <input type="submit" value="submit">
       </form>
-        
-      
+      <input type="hidden" value="<%=row2%>" id="orderedDates">
+      <h3 id="sameDateNotice"></h3>
     </body>
+    <script>
+      function checkSameDate() {
+        var rawSelectedDate = document.getElementById("selectDate").value;
+        var rawOrderedDates = document.getElementById("orderedDates").value;
+        rawOrderedDates = rawOrderedDates.split(",");
+        var selectedDate = rawSelectedDate.slice(0,15);
+        console.log("rawOrderedDates= ", rawOrderedDates);
+        for (var i = 0; i < rawOrderedDates.length; i++) {
+          var orderedDate = rawOrderedDates[i].slice(0,15);
+          console.log("selectedDate= ",selectedDate);
+          //console.log("orderedDate= ",orderedDate);
+          if (selectedDate == orderedDate) {
+            document.getElementById("sameDateNotice").innerHTML = "You already have an order placed on the selected date. Your current order will be combined with that order. If you wish to proceed, click submit again.";
+            return;
+          }
+        }
+        document.getElementById("sameDateNotice").innerHTML = "";
+        return;
+      }
+
+      document.getElementById("selectDate").addEventListener("change",checkSameDate);
+      document.getElementById("selectDate").addEventListener("load",checkSameDate);
+    </script>
 </html>
