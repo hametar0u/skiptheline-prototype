@@ -1,7 +1,6 @@
 //Next week
-//add a blank option at the top for the select date thing and delete the load event listener at the bottom
 //learn how to hook front end and back end for React
-//combine the order IDs and if same date
+//combine the order IDs and if same date BUGGED
 
 // IMPROVEMENTS:
 // make the date format readable
@@ -19,12 +18,13 @@
 // talk about what happens with the club afterwards
 
 
-const express = require('express')
-const path = require('path')
+const express = require('express');
+const fetch = require('node-fetch');
+const path = require('path');
 const PORT = process.env.PORT || 5000 
 const { Pool } = require('pg');
 var pool;
-var LOCAL_DEV_FLAG = false;
+var LOCAL_DEV_FLAG = true;
 if (LOCAL_DEV_FLAG){
   pool = new Pool ({
     user: 'postgres',
@@ -629,10 +629,11 @@ app.get('/date_select', (req,res) => {
   console.log("date_array= ", date_array); 
 
   var order_date_array = [];
+  var order_date_array_object = [];
   //console.log("array_object = ", array_object); 
 
   //get dates for which user has already order for; combine if ordering into same date
-  dateOrderQuery = `SELECT date FROM order_details NATURAL JOIN orders NATURAL JOIN users WHERE users.username = '${req.session.username}' GROUP BY date;`;
+  dateOrderQuery = `SELECT date, order_id FROM order_details NATURAL JOIN orders NATURAL JOIN users WHERE users.username = '${req.session.username}' GROUP BY date, order_id;`;
   pool.query(dateOrderQuery, (error, result) => {
     if (error){
       console.log(error);
@@ -640,16 +641,19 @@ app.get('/date_select', (req,res) => {
     }
     else {
       result.rows.forEach((i) => {
+        order_date_array_object.push({'date': i.date, 'order_id': i.order_id});
         order_date_array.push(i.date);
       });
       
+      req.session.ordered_date_array_object = order_date_array_object;
       console.log("order_date_array= ", order_date_array);
+      console.log("order_date_array_object= ", order_date_array_object);
       res.render("pages/date_select.ejs", {'row1': date_array, 'row2': order_date_array});
     }
   });
 });
 
-app.post('/date_select', async (req,res) => { //put this shit in order now
+app.post('/date_select', async (req,res) => { 
   //pricelist stuff
   if (req.session.pricelist == undefined) {
     req.session.pricelist = [];
@@ -675,15 +679,15 @@ app.post('/date_select', async (req,res) => { //put this shit in order now
   console.log("req.session.pricelist = ", req.session.pricelist);
   console.log("line 522 session cart ",req.session.cart);
   //date stuff
-    var chosenDate = new Date(req.body.selectDate);
-    chosenDate = chosenDate.toISOString();
-    var dateObject = {'chosenDate': chosenDate};
+  var chosenDate = new Date(req.body.selectDate);
+  chosenDate = chosenDate.toISOString();
+  var dateObject = {'chosenDate': chosenDate};
 
-    if (req.session.chosenDate != chosenDate) {
-      cart.clearItems();
-      req.session.cart = cart.getItems();
-      req.session.chosenDate = chosenDate;
-    }
+  if (req.session.chosenDate != chosenDate) {
+    cart.clearItems();
+    req.session.cart = cart.getItems();
+    req.session.chosenDate = chosenDate;
+  }
     
   try {
     const client = await pool.connect()
@@ -736,19 +740,19 @@ app.post('/remove_all_from_cart', (req,res) => {
 });
 
 app.get('/confirm_order', (req,res) => {
-  var cart = req.session.cart; 
+  var cart_contents = req.session.cart; 
   var subtotal = 0;
   var chosenDate = req.session.chosenDate;
 
-  for (var i=0; i<cart.length; i++) {
-    subtotal += cart[i].price*cart[i].amount;
+  for (var i=0; i<cart_contents.length; i++) {
+    subtotal += cart_contents[i].price*cart_contents[i].amount;
   }
   subtotal = Math.round((subtotal + Number.EPSILON) * 100) / 100
   console.log('subtotal = ', subtotal);
 
 
 
-  res.render("pages/confirm_order.ejs", {'cart': cart,'subtotal': subtotal, 'date': chosenDate});
+  res.render("pages/confirm_order.ejs", {'cart': cart_contents,'subtotal': subtotal, 'date': chosenDate});
 }); 
 
 
@@ -760,18 +764,18 @@ var calculateOrderAmount = items => {
 }; //is this obsolete?
 
 app.post("/create-checkout-session", async (req, res) => {
-  var cart = req.session.cart; 
+  var cart_contents = req.session.cart; 
   var line_item_array = [];
-  for (var i=0; i<cart.length; i++) {
+  for (var i=0; i<cart_contents.length; i++) {
     line_item_array.push({
       price_data: {
         currency: "cad",
         product_data: {
-          name: cart[i].name,
+          name: cart_contents[i].name,
         },
-        unit_amount: cart[i].price*100,
+        unit_amount: cart_contents[i].price*100,
       },
-      quantity: cart[i].amount,
+      quantity: cart_contents[i].amount,
     });
   }
   console.log(line_item_array);
@@ -798,68 +802,61 @@ app.post("/create-checkout-session", async (req, res) => {
 
 //https://stripe.com/docs/testing for card information
 
-app.get('/order_success', (req,res) => {
+app.get('/order_success', async (req,res) => { //bugged
+  var user_id,order_id;
   var username = req.session.username;
-  console.log("order success username = ", username);
-  var orderIDQuery = 'SELECT order_id FROM order_details;';
-  var order_id = makeconfcode(7); //reusing code lmao
-  console.log("pool.query start");
-  pool.query(orderIDQuery, (error,result) => {
-    if(error) {
-      res.redirect("/error");
-    }
-    else {
-      while (order_id in result || order_id[0]==0) {
-        order_id = makeconfcode(7);
-      }
-      console.log("confcode creation 200 OK");
-    }
-  });
-
-  console.log(" orderIDquery over");
-
-  var str = "INSERT INTO order_details VALUES";
-  req.session.cart.forEach(cart_element => {
-    str+=`('${order_id}','${cart_element.name}','${cart_element.price}','${cart_element.amount}','${cart_element.date}'),`
-  });
-  str = str.slice(0,-1) + ';';
-
-  
-  //console.log('order detail query:',str);
-  pool.query(str, (error,result) => {
-    if(error) {
-      console.log('/order_success error');
-      console.log(error)
-      res.redirect("/error");
-    }
-    else {
-      console.log('/order_success 200 OK');
-    }
-  });
-  console.log("insert somethign query complete");
+  var cart_contents = req.session.cart
+  console.log("req session cart 869= ", cart_contents);
 
   var userIdRetrieveQuery = `SELECT user_id FROM users WHERE "username" = '${username}';`;
   //console.log("retrieve ID query = ",userIdRetrieveQuery);
-  pool.query(userIdRetrieveQuery, (error,result) => {
-    if(error) {
-      console.log('user id retrieve error = ',error);
-      console.log(error);
+  pool.query(userIdRetrieveQuery, (err,res) => {
+    if(err) {
+      console.log('user id retrieve error = ',err);
+      console.log(err);
       res.redirect("/error");
     }
     else {
-      console.log('user id retrieve 200 OK, result = ',result.rows);
-      var orderJoinQuery = `INSERT INTO orders("user_id", "order_id", "complete") VALUES('${result.rows[0].user_id}','${order_id}','0');`;
-      //console.log("order join query = ",orderJoinQuery);
-      pool.query(orderJoinQuery, (error,result) => {
-        if(error) {
-          console.log('order join error = ',error);
-          console.log(error);
+      console.log('user id retrieve 200 OK, result = ',res.rows);
+
+      user_id = res.rows[0].user_id
+
+      var orderDatabaseQuery = "INSERT INTO order_details VALUES";
+      var selectedDate = req.session.chosenDate.slice(0,10);
+      console.log("rawOrderedDates= ", selectedDate);
+
+      order_id = user_id.toString().concat(selectedDate.slice(2,4),selectedDate.slice(5,7),selectedDate.slice(8,10));
+      order_id = parseInt(order_id); 
+
+      console.log("req session cart 891= ", cart_contents);
+      cart_contents.forEach(cart_element => {
+        orderDatabaseQuery+=`('${order_id}','${cart_element.name}','${cart_element.price}','${cart_element.amount}','${cart_element.date}'),`
+      });
+      orderDatabaseQuery = orderDatabaseQuery.slice(0,-1) + ';';
+      console.log('orderDatabaseQuery= ', orderDatabaseQuery);
+      pool.query(orderDatabaseQuery, (err,res) => {
+        if(err) {
+          console.log('/order_success error');
+          console.log(err)
           res.redirect("/error");
         }
         else {
-          console.log('order join 200 OK');
+          console.log('/order_success 200 OK');
         }
       });
+        
+        var orderJoinQuery = `INSERT INTO orders("user_id", "order_id", "complete") VALUES('${res.rows[0].user_id}','${order_id}','0');`;
+        //console.log("order join query = ",orderJoinQuery);
+        pool.query(orderJoinQuery, (err,res) => {
+          if(err) {
+            console.log('order join error = ',err);
+            console.log(err);
+            res.redirect("/error");
+          }
+          else {
+            console.log('order join 200 OK'); //after this point it hangs
+          }
+        });
     }
   });
   console.log("userIDretrievequery complete");

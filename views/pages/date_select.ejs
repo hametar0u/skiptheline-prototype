@@ -11,7 +11,8 @@
         -->
         <h4>What Date are you Ordering For?</h4>
         <form action="/date_select" method="POST">
-        <select name="selectDate" id="selectDate" name="selectDate">
+        <select name="selectDate" id="selectDate" name="selectDate" required>
+          <option disabled selected value> -- select an option -- </option>
           <% row1.forEach((r) => { %>
           <option value="<%=r%>"><%=r.toLocaleDateString()%></option>
           <% }); %>
@@ -23,7 +24,7 @@
       <h3 id="sameDateNotice"></h3>
     </body>
     <script>
-      function checkSameDate() {
+      function checkSameDate() { //the console logs don't execute
         var rawSelectedDate = document.getElementById("selectDate").value;
         var rawOrderedDates = document.getElementById("orderedDates").value;
         rawOrderedDates = rawOrderedDates.split(",");
@@ -43,6 +44,5 @@
       }
 
       document.getElementById("selectDate").addEventListener("change",checkSameDate);
-      document.getElementById("selectDate").addEventListener("load",checkSameDate);
     </script>
 </html>

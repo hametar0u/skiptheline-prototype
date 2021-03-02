@@ -1,0 +1,53 @@
+.app {
+	text-align: center;
+	align-items: center;
+	align-content: center;
+	vertical-align: middle;
+	background-color: #11BFC7;
+}
+
+body {
+	background-color: #11BFC7;
+}
+
+.app-header {
+	background-color: #282c34;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
+}
+
+.container {
+	text-align: center;
+	align-items: center;
+	align-content: center;
+	align-self: center;
+}
+
+button {
+	align-self: center;
+}
+
+h6 {
+	text-align: center;
+}
+
+#tablecart {
+	border: 2px solid;
+	border-color: black;
+	border-radius: 5px;
+	background-color: #FFFFFF;
+}
+
+#order-container {
+	align-items: center;
+}
+
+#menu-container {
+	align-items: flex-start;
+	align-content: flex-start;
+}
