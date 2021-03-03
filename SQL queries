@@ -5,12 +5,12 @@ CREATE TABLE users(
 );
 CREATE TABLE orders(
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    users_id INT,
-    order_id INT,
+    user_id INT,
+    order_id BIGINT,
     complete BOOLEAN
 );
 CREATE TABLE order_details(
-    order_id INT NOT NULL,
+    order_id BIGINT NOT NULL,
     item VARCHAR(20),
     price NUMERIC(5,2),
     quantity INT,
