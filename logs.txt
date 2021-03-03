@@ -1,0 +1,1 @@
+{"cart_items":[{"item":"crippling","price":"0.05","quantity":"525","date":"10/4/2020"},{"item":"hamburger university","price":"0.05","quantity":"452","date":"10/4/2020"}],"item_amount":2,"total_cost":"48.85"}
