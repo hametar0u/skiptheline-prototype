@@ -5,6 +5,9 @@
 //add images
 //change date select message
 
+//make an empty row placeholder for cart when there's nothing in it. Alternatively, only display cart when there's something inside cart
+//fix cart position on screen but when I did that it literally just disappeared
+
 
 // IMPROVEMENTS:
 // make the date format readable

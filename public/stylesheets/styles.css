@@ -1,18 +1,19 @@
 html {
     text-align: center;
-    background-color: #60D5DA;
-    font-family: 'Roboto', sans-serif;
+    background-color: White;
+    font-family: 'Futura', sans-serif;
 }
 body {
   background-color: white;
+  margin-top: 5%;
 }
 
 h1 {
     text-align: center;
 }
 .header {
-    padding-top: 2%;
-    padding-bottom: 1%;
+    /* padding-top: 2%;
+    padding-bottom: 1%; */
     background-color: white; 
     width:  100%;
     position:   absolute;
@@ -20,12 +21,48 @@ h1 {
     left:   0;
     margin: auto;
     font-family: 'Roboto', sans-serif;
-    background-color:white;
-    color:#60D5DA;
+    background-color:#60D5DA;
+    color:white;
     position:fixed;
     margin-bottom:20px;
-    text-align:center;
+    text-align:left;
+    padding-left: 3%;
+    display:inline-block;
 }
+
+.navbar {
+  text-align:right;
+  float: right;
+  padding-right: 3%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 8px;
+  width:60%;
+}
+.navbar_element {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  padding:10px;
+}
+.navbar_button {
+  background: none;
+  color: white;
+  /* border-radius: 1px; */
+  width: 60%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 2px solid white;
+  transition: 0.1s;
+  font-size: 100%;
+}  
+.navbar_button:hover {
+  background: #59c7cb;
+  color: white;
+  border: 2px solid white;
+  width: 60%;
+  font-size: 100%;
+}  
 
 .logintext {
     padding-top: 5%;
@@ -115,11 +152,14 @@ td {
   display: inline-block;
   margin: auto;
   margin-bottom: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  
   text-align: center;
   width: 300px;
   background-color: white;
   padding: 20px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 .card-body, .card-header, .card-footer {
@@ -199,7 +239,7 @@ td {
 
 
 .submit_button {
-  background: #60D5DA;
+  background: #889494;
   color: white;
   /* border-radius: 1px; */
   width: 60%;
@@ -214,11 +254,33 @@ td {
   width: 60%;
   font-size: 100%;
 }  
+
+.order_now {
+  margin-right: 80px;
+}
+
+.cart {
+  position: absolute; 
+  right: -400px; 
+  transition: 0.3s;
+  padding: 15px;
+  /* width: 100px; */
+  text-decoration: none;
+  font-size: 20px;
+  color: black;
+  border-radius: 0 5px 5px 0;
+}
+.cart:hover {
+  right:0;
+}
+
 .add_to_cart_button {
   background: #889494;
   color: white;
   /* border-radius: 1px; */
-  width: 60%;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border: 2px solid white;
   transition: 0.1s;
   font-size: 100%;
@@ -227,24 +289,42 @@ td {
   background: #59c7cb;
   color: white;
   border: 2px solid white;
-  width: 60%;
+  width: 80%;
   font-size: 100%;
 }  
 
 .remove_button {
   background: none;
-  color: black;
+  color: rgb(94, 94, 94);
   border-radius: 1px;
-  width: 60%;
-  border: 2px solid black;
+  width: 100%;
+  border: 2px solid rgb(94,94,94);
   display: inline-block;
   transition: 0.1s;
+  padding:10px;
 }  
 .remove_button:hover {
-  background: #60D5DA;
+  background: rgb(94, 94, 94);
   color: white;
   border: 2px solid white;
-  width: 60%;
+  width: 100%;
+  display: inline-block;
+}  
+.remove_all_button {
+  background: rgb(143, 143, 143);
+  color: white;
+  border-radius: 1px;
+  width: 27%;
+  border: 2px solid white;
+  display: inline-block;
+  transition: 0.1s;
+  padding:10px;
+}  
+.remove_all_button:hover {
+  background: rgb(94, 94, 94);
+  color: white;
+  border: 2px solid white;
+  width: 27%;
   display: inline-block;
 }  
 
@@ -258,9 +338,10 @@ td {
 
 .logo_img {
   display: inline-block;
+  width:65px;
 }
 
 .product_image {
-  width: 85%;
-  height: auto;
+  object-fit: cover;
+  width: 100%;
 }
