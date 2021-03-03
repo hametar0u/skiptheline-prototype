@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="/public/scripts/scripts.js"></script>
     <title>Order Now</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
+    <!-- <div class="header">
+      <h1 style="text-align:center; display:inline-block;">SKIP THE LINE</h1>
+      <img src="logo-teal.png" class="logo_img" style="width:75px; margin-bottom: 20px;">
+     </div> -->
   </head>
   
   <body>
@@ -25,12 +30,13 @@
       <% var r = row1.fRows; %>
       <% for (var i=0; i<r.length; i++) {%>
         <div class="item_card">
-          <h5><%=r[i].item%> - <%=r[i].price%></h5>
+          <h2><%=r[i].item%> - <%=r[i].price%></h2>
+          <img class="product_image" src="COOKIE.png">
           <form action="/add_to_cart" method="POST">
             <input type="hidden" value="<%=r[i].item%>" name="item_name" id="item_name">       
-            <label for="item_quantity">Amount</label>
-            <input name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
-            <input class="submit_button" id="item_submit" type="submit" value="Add To Cart">
+            <label style="font-size:120%;" for="item_quantity">Amount</label>
+            <input style="font-size:100%;" name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
+            <input class="add_to_cart_button" id="item_submit" type="submit" value="Add To Cart">
           </form>
         </div>
       <%}%>
@@ -40,23 +46,23 @@
     
     <% row2.dRows.forEach((r) => { %>
       <div class="item_card">
-        <h5><%=r.item%> - <%=r.price%></h5>
+        <h2><%=r.item%> - <%=r.price%></h2>
         <form action="/add_to_cart" method="POST">
           <input type="hidden" value="<%=r.item%>" name="item_name" id="item_name">
           <label for="item_quantity">Amount</label>
           <input name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
-          <input class="submit_button" id="item_submit" type="submit" value="Add To Cart">
+          <input class="add_to_cart_button" id="item_submit" type="submit" value="Add To Cart">
         </form>
       </div>
 
     <% }); %>
  
-    <h4>Cart</h4>
+    <h1>Cart</h1>
     <% if(row4.cartrow != undefined) {%>
       <% var subtotal = 0; %>
       <% row4.cartrow.forEach(function(r) { %>
         <form class="order_now_cart" action="/remove_from_cart" method="POST"> 
-          <h5 class="cart_text"><%= r.name %> - <%= r.price %> - <%= r.amount %></h5>
+          <h2 class="cart_text"><%= r.name %> - <%= r.price %> - <%= r.amount %></h2>
           <input class="remove_button" type="submit" value="remove">
           <input type="hidden" value="<%=r.name%>" name="item_name" id="item_name">       
         </form>
@@ -66,7 +72,7 @@
         <input class="submit_button" type="submit" value="remove all">
       </form>
       <% subtotal = Math.round((subtotal + Number.EPSILON) * 100) / 100; %>
-      <h4>Subtotal: <%= subtotal %></h4>
+      <h2>Subtotal: <%= subtotal %></h2>
     <% } %>
 
   <form action="confirm_order" method="GET">
