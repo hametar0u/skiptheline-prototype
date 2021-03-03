@@ -13,7 +13,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   
   <title> Log In - Skip The Line </title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="stylesheets/styles.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- ADD FONTS-->
@@ -48,12 +48,8 @@ FRIDAY, APRIL 10, 2020
 -->
   <style>
     html {
-
       font-family: 'Roboto', sans-serif;
-    } body {
-      background-color: #11BFC7;*/
-      /*background-image: linear-gradient(to bottom, #11BFC7, #47E2D6);*/
-    }
+    } 
   </style>
 </head>
     
@@ -77,15 +73,6 @@ FRIDAY, APRIL 10, 2020
     <div class='loginbox'>
       <h1 class='logintext'>Log In</h1>
 
-    <!--<div class="form-group">
-        <label for="usr">Student Email</label>
-        <input type="text" class="form-control" id="usr" required>
-    </div>
-    
-    <div class="form-group" style="padding-bottom:10px">
-        <label for="pwd">Password</label>
-        <input type="password" class="form-control" id="pwd" required>
-    </div> -->
       <div class='loginfields'>
         <form method="POST" action="/login">
           <p>
@@ -95,15 +82,11 @@ FRIDAY, APRIL 10, 2020
           <p>
               <input required type="password" name="password" id="password" placeholder="Password">
           </p>
-              <input type="submit" value="Login">
+              <input class="submit_button" type="submit" value="Login">
         </form>
        
-     <!---- <a href="order_now.html" class="btn" role="button">Continue</a> -->
-      
-        <p style="text-align: center; padding-top:20px;">
-          Don't have an account? Sign up 
-          <a href="sign_up.html"> here </a>
-        </p> 
+        <p style="text-align: center; padding-top:20px; padding-bottom:0%;"> Don't have an account? </p> 
+        <p> Sign up <a href="sign_up.html"> here </a></p>
       </div>
     </div>
 </body>

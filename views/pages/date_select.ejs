@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html>
     <head>
-       
+      <link rel="stylesheet" href="stylesheets/styles.css">
+
     </head>
     <body>
-        <!-- workflow
-        1. what date are you choosing (dropdown?) -- complete
-        2. send the information back to server -- invalid time value
-        3. in order now server should only display menu items that lie within that range
-        -->
+      <div class="loginbox">
         <h4>What Date are you Ordering For?</h4>
-        <form action="/date_select" method="POST">
-        <select name="selectDate" id="selectDate" name="selectDate" required>
-          <option disabled selected value> -- select an option -- </option>
-          <% row1.forEach((r) => { %>
-          <option value="<%=r%>"><%=r.toLocaleDateString()%></option>
-          <% }); %>
-        
-        </select>
-        <input type="submit" value="submit">
-      </form>
-      <input type="hidden" value="<%=row2%>" id="orderedDates">
-      <h3 id="sameDateNotice"></h3>
+        <div class="loginfields">
+          <form action="/date_select" method="POST">
+            <select name="selectDate" id="selectDate" name="selectDate" required>
+              <option disabled selected value> -- select an option -- </option>
+              <% row1.forEach((r) => { %>
+                <option value="<%=r%>"><%=r.toLocaleDateString()%></option>
+                <% }); %>
+            </select>
+            <input class="submit_button" type="submit" value="submit">
+          </form>
+          <input type="hidden" value="<%=row2%>" id="orderedDates">
+          <h3 id="sameDateNotice"></h3>
+        </div>
+      </div>
     </body>
     <script>
       function checkSameDate() { //the console logs don't execute

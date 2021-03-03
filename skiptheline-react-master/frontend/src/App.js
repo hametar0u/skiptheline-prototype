@@ -21,11 +21,12 @@ const App = () => {
   return (
   	<Container fluid>
    		<Switch>
+			<Route exact path='/' component={Login}/>
   			<Route exact path='/login' component={Login}/>
   			<Route exact path='/signup' component={Signup}/>
-        <Route exact path='/app/OrderNow' component={OrderNow}/>
-        <Route exact path='/app/PendingOrders' component={PendingOrders}/>
-        <Route exact path='/app/OrderHistory' component={OrderHistory}/>
+			<Route exact path='/app/OrderNow' component={OrderNow}/>
+			<Route exact path='/app/PendingOrders' component={PendingOrders}/>
+			<Route exact path='/app/OrderHistory' component={OrderHistory}/>
   		</Switch>
   	</Container>
   );

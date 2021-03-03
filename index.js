@@ -1,6 +1,10 @@
 //Next week
-//learn how to hook front end and back end for React
-//combine the order IDs and if same date BUGGED
+//set border of the page to a certain amount
+//make the database entries display nice
+//through tables
+//add images
+//change date select message
+
 
 // IMPROVEMENTS:
 // make the date format readable
@@ -71,7 +75,6 @@ else{
 
 var transporter = nodemailer.createTransport(sgTransport(options));
 
- 
 function makeid(length) {
   var result           = '';
   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
