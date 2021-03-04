@@ -36,21 +36,3 @@ SUNDAY, APRIL 12, 2020
 </body>
 
 </html>
-<div class="item_card">
-  <h5><%=r[i+1].item%> - <%=r[i+1].price%></h5>
-  <form action="/add_to_cart" method="POST">
-    <input type="hidden" value="<%=r[i+1].item%>" name="item_name" id="item_name">       
-    <label for="item_quantity">Amount</label>
-    <input name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
-    <input class="submit_button" id="item_submit" type="submit" value="Add To Cart">
-  </form>
-</div>
-<div class="item_card">
-  <h5><%=r[i+2].item%> - <%=r[i+2].price%></h5>
-  <form action="/add_to_cart" method="POST">
-    <input type="hidden" value="<%=r[i+2].item%>" name="item_name" id="item_name">       
-    <label for="item_quantity">Amount</label>
-    <input name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
-    <input class="submit_button" id="item_submit" type="submit" value="Add To Cart">
-  </form>
-</div>

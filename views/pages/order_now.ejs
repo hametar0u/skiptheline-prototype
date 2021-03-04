@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link href="https://fonts.googleapis.com/css2?family=Futura:wght@100;400&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="/public/scripts/scripts.js"></script>
@@ -29,7 +28,6 @@
         <form class="navbar_element" method="POST" action="/logout">
           <input class="navbar_button" type="submit" value="logout">
         </form>
-        </li>
       </div>
     </div>
   </head>
@@ -97,7 +95,7 @@
                 <td><%= r.price %> </td>
                 <td><%= r.amount %> </td>
                 <form class="order_now_cart" action="/remove_from_cart" method="POST">
-                  <td><input class="remove_button" type="submit" value="remove" style="font-family: 'Futura',sans-serif; font-size:15px"></td>
+                  <td><input class="remove_button" type="submit" value="remove" style="font-family: 'Helvetica Neue',sans-serif; font-size:15px"></td>
                   <input type="hidden" value="<%=r.name%>" name="item_name" id="item_name">       
                 </form>
               </tr>
@@ -105,7 +103,7 @@
               <% }); %>
             </table>
             <form action="/remove_all_from_cart" method="POST">
-              <input class="remove_all_button" type="submit" value="Remove All" style="font-family: 'Futura',sans-serif; font-size:15px">
+              <input class="remove_all_button" type="submit" value="Remove All" style="font-family: 'Helvetica Neue',sans-serif; font-size:15px">
             </form>
             <% subtotal = Math.round((subtotal + Number.EPSILON) * 100) / 100; %>
             <h2>Subtotal: <%= subtotal %></h2>

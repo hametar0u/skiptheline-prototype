@@ -2,29 +2,60 @@
 <html lang="en">
 
 <head>
-    <!--HEADER-->
-    <% include ../partials/header.ejs %>
     
 <!--INFO:
 MUDIT (MATT) JAIN
 SKIP THE LINE
 SUNDAY, APRIL 12, 2020
 -->
-
+  <link rel="stylesheet" href="stylesheets/styles.css">
+  <div class="header">
+    <img src="images/logo.png" class="logo_img">
+    <h1 style="text-align:left; display:inline-block;">SKIP THE LINE</h1>
+    <div class="navbar">
+      <form class="navbar_element" action="/order_management" method="GET">
+        <input class="navbar_button" type="submit" value="order management">
+      </form>
+      <form class="navbar_element" action="/order_history" method="GET">
+        <input class="navbar_button" type="submit" value="order history">
+      </form>
+      <form class="navbar_element" action="/date_select" method="GET">
+        <input class="navbar_button" type="submit" value="date select">
+      </form>
+      <form class="navbar_element" action="/order_now" method="GET">
+        <input class="navbar_button" type="submit" value="Order Now">
+      </form>
+      <form class="navbar_element" action="/pending_orders" method="GET">
+        <input class="navbar_button" type="submit" value="Pending Orders">
+      </form>
+      <form class="navbar_element" method="POST" action="/logout">
+        <input class="navbar_button" type="submit" value="logout">
+      </form>
+    </div>
+  </div>
 </head>
 
 <body>
-  <div class="container-fluid">
-
-    <!-- NAVBAR -->
-    <% include ../partials/nav.ejs %>
-    <h5>Order ID - Item - Price - Amount - Date</h5>
-    <ul>
-      <% rows.forEach(function(r) { %>
-          <li><%= r.order_id %> - <%= r.item %> - <%= r.price %> – <%= r.quantity%> – <%= r.date %></li>
-      <% }); %>
-    </ul>
-  </div>
+    <table style="margin:auto;">
+      <tr>
+        <th>Order ID</th>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Date</th>
+      </tr>
+      <% if(rows != undefined) {%>
+        <% rows.forEach(function(r) { %>
+          <tr>
+            <td><%= r.order_id %> </td>
+            <td><%= r.item %> </td>
+            <td><%= r.price %> </td>
+            <td><%= r.quantity %> </td>
+            <td><%= r.date %> </td>
+          </tr>
+        <% }); %>
+      <%}%>
+    </table>
 </body>
 
 </html>

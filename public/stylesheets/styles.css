@@ -1,7 +1,7 @@
 html {
     text-align: center;
     background-color: White;
-    font-family: 'Futura', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 body {
   background-color: white;
@@ -20,7 +20,7 @@ button {
   transition: 0.1s;
   font-size: 100%;
   padding: 10px;
-  font-family: "Futura", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }  
 button:hover {
   background: #59c7cb;
@@ -29,7 +29,7 @@ button:hover {
   width: 50%;
   font-size: 100%;
   padding: 10px;
-  font-family: "Futura", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }  
 
 
@@ -42,7 +42,7 @@ button:hover {
     top:    0;
     left:   0;
     margin: auto;
-    font-family: 'Roboto', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     background-color:#60D5DA;
     color:white;
     position:fixed;
@@ -128,7 +128,7 @@ select {
   height: 50px;
   font-size: 100%;
   font-weight: bold;
-  font-family: "Futura", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   cursor: pointer;
   border-radius: 0;
   background-color: rgb(143,143,143);
@@ -214,7 +214,7 @@ th {
 }
 
 #item_quantity {
-  font-family: "Futura", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 100%;
   width:97%;
 }
@@ -364,11 +364,11 @@ input[type=number]::-webkit-outer-spin-button {
   color: white;
   /* border-radius: 1px; */
   width: 60%;
-  border: 2px solid white;
+  border-bottom: 2px solid rgb(94,94,94);
   transition: 0.1s;
   font-size: 100%;
   padding: 10px;
-  font-family: "Futura", sans-serif;
+  font-family: "Helvetica Neue", sans-serif;
 }  
 .submit_button:hover {
   background: #59c7cb;
@@ -377,7 +377,6 @@ input[type=number]::-webkit-outer-spin-button {
   width: 50%;
   font-size: 100%;
   padding: 10px;
-  font-family: "Futura", sans-serif;
 }  
 
 .order_now {
@@ -409,7 +408,7 @@ input[type=number]::-webkit-outer-spin-button {
   border: 2px solid white;
   transition: 0.1s;
   font-size: 100%;
-  font-family: "Futura", sans-serif;
+  font-family: "Helvetica Neue", sans-serif;
 }  
 .add_to_cart_button:hover {
   background: #59c7cb;
