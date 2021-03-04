@@ -21,6 +21,7 @@ button {
   font-size: 100%;
   padding: 10px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  border-radius: 0.4em;
 }  
 button:hover {
   background: #59c7cb;
@@ -30,6 +31,7 @@ button:hover {
   font-size: 100%;
   padding: 10px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  border-radius: 0.4em;
 }  
 
 
@@ -302,9 +304,11 @@ input[type=number]::-webkit-outer-spin-button {
     cursor: pointer;
     transition: all 0.3s ease-out;
     background-color: #11BFC7;
+    border-radius: 0.4em;
   }
   .button:hover {
     background: #60D5DA;
+    border-radius: 0.4em;
   }
   
   .overlay {
@@ -369,6 +373,7 @@ input[type=number]::-webkit-outer-spin-button {
   font-size: 100%;
   padding: 10px;
   font-family: "Helvetica Neue", sans-serif;
+  border-radius: 0.4em;
 }  
 .submit_button:hover {
   background: #59c7cb;
@@ -377,6 +382,7 @@ input[type=number]::-webkit-outer-spin-button {
   width: 50%;
   font-size: 100%;
   padding: 10px;
+  border-radius: 0.4em;
 }  
 
 .order_now {
@@ -409,6 +415,7 @@ input[type=number]::-webkit-outer-spin-button {
   transition: 0.1s;
   font-size: 100%;
   font-family: "Helvetica Neue", sans-serif;
+  border-radius: 0.4em;
 }  
 .add_to_cart_button:hover {
   background: #59c7cb;
@@ -416,6 +423,7 @@ input[type=number]::-webkit-outer-spin-button {
   border: 2px solid white;
   width: 80%;
   font-size: 100%;
+  border-radius: 0.4em;
 }  
 
 .remove_button {
@@ -427,6 +435,7 @@ input[type=number]::-webkit-outer-spin-button {
   display: inline-block;
   transition: 0.1s;
   padding:10px;
+  border-radius: 0.4em;
 }  
 .remove_button:hover {
   background: rgb(94, 94, 94);
@@ -434,6 +443,7 @@ input[type=number]::-webkit-outer-spin-button {
   border: 2px solid white;
   width: 100%;
   display: inline-block;
+  border-radius: 0.4em;
 }  
 .remove_all_button {
   background: rgb(143, 143, 143);
@@ -444,6 +454,7 @@ input[type=number]::-webkit-outer-spin-button {
   display: inline-block;
   transition: 0.1s;
   padding:10px;
+  border-radius: 0.4em;
 }  
 .remove_all_button:hover {
   background: rgb(94, 94, 94);
@@ -451,6 +462,7 @@ input[type=number]::-webkit-outer-spin-button {
   border: 2px solid white;
   width: 27%;
   display: inline-block;
+  border-radius: 0.4em;
 }  
 
 .cart_text {
@@ -483,4 +495,27 @@ input[type=number]::-webkit-outer-spin-button {
 .product_image {
   object-fit: cover;
   width: 100%;
+}
+
+.fancybutton_teal {
+  display: inline-block;
+  background-color: #4bbebe;
+  color: white;
+  font-size: 30px;
+  padding: 1em 1.8em;
+  border-style: none;
+  outline-style: none;
+  border-radius: 0.3em;
+  border-bottom: 0.25em solid #027575;
+  -moz-transition: 0.1s;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+  box-shadow: 0 2px 3px #ccc;
+  position: relative;
+}
+
+.fancybutton_teal:active {
+  background-color: #7ad7d7;
+  border-bottom-width: 0;
+  margin-top: 0.2em;
 }
