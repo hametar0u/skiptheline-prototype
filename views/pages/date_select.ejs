@@ -3,7 +3,10 @@
     <head>
       <link href="https://fonts.googleapis.com/css2?family=Futura:wght@100;400&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="stylesheets/styles.css">
-
+      <div class="header">
+        <img src="images/logo.png" class="logo_img">
+        <h1 style="text-align:left; display:inline-block;">SKIP THE LINE</h1>
+      </div>
     </head>
     <body>
       <div class="dateSelectBox">
@@ -37,7 +40,7 @@
           console.log("selectedDate= ",selectedDate);
           //console.log("orderedDate= ",orderedDate);
           if (selectedDate == orderedDate) {
-            document.getElementById("sameDateNotice").innerHTML = "You already have an order placed on the selected date. Your current order will be combined with that order. If you wish to proceed, click submit again.";
+            document.getElementById("sameDateNotice").innerHTML = "You already have an order placed on the selected date. Your current order will be combined with that order. If you wish to proceed, click submit.";
             return;
           }
         }

@@ -36,26 +36,35 @@
       </div>
 
 
-      <div class='loginbox'>
+      <div class='confirmorderbox'>
 
       <br>
       <h1> Confirm Order </h1>
       <h3>Ordering for: <%= date %></h3>
 
       <% console.log("confirm order cart = ", cart); %>
-      <h5>Item - Price - Amount</h5>
-      <% for(var i = 0; i < cart.length; i++) { %>
-        
-        <li><%= cart[i].name %> – <%= cart[i].price %> – <%= cart[i].amount %></li>
-      <% } %>
+      <table style="margin:auto; text-align: center;">
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Quantity</th>
+        </tr>
+        <% for(var i = 0; i < cart.length; i++) { %>
+          <tr>
+            <td><%= cart[i].name %> </td>
+            <td><%= cart[i].price %> </td>
+            <td><%= cart[i].amount %> </td>
+          </tr>
+        <% } %>
+      </table>
       <h4>Subtotal: <%= subtotal %></h4>
       
       <br>
       <form action="/order_now" method="GET">
-        <input type="submit" value="Go Back">
+        <input class="submit_button" style="width:40%; display:inline-block;" type="submit" value="Go Back">
       </form>
 
-      <button id="checkout-button">Pay Now</button>
+      <button class="submit_button" style="width:40%; display:inline-block; margin-bottom: 20px;" id="checkout-button">Pay Now</button>
 
       <script type="text/javascript">
         // Create an instance of the Stripe object with your publishable API key

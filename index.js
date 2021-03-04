@@ -749,16 +749,18 @@ app.get('/confirm_order', (req,res) => {
   var cart_contents = req.session.cart; 
   var subtotal = 0;
   var chosenDate = req.session.chosenDate;
-
-  for (var i=0; i<cart_contents.length; i++) {
-    subtotal += cart_contents[i].price*cart_contents[i].amount;
+  if (cart_contents!= undefined) {
+    for (var i=0; i<cart_contents.length; i++) {
+      subtotal += cart_contents[i].price*cart_contents[i].amount;
+    }
+    subtotal = Math.round((subtotal + Number.EPSILON) * 100) / 100
+    console.log('subtotal = ', subtotal);
+    res.render("pages/confirm_order.ejs", {'cart': cart_contents,'subtotal': subtotal, 'date': chosenDate});
   }
-  subtotal = Math.round((subtotal + Number.EPSILON) * 100) / 100
-  console.log('subtotal = ', subtotal);
-
-
-
-  res.render("pages/confirm_order.ejs", {'cart': cart_contents,'subtotal': subtotal, 'date': chosenDate});
+  else {
+    console.log("cart_contents was undefined");
+    res.redirect("/error");
+  }
 }); 
 
 
