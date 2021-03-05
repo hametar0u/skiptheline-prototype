@@ -12,7 +12,17 @@ body {
 
 h1 {
     text-align: center;
+    font-size: 40px; 
+    font-weight:500;
 }
+h2 {
+  font-weight:500;
+}
+h3 {
+  font-weight: 450;
+}
+
+
 button {
   background: #889494;
   color: white;
@@ -54,6 +64,7 @@ button:hover {
     text-align:left;
     padding-left: 3%;
     display:inline-block;
+    z-index: 69;
 }
 
 .navbar {
@@ -133,7 +144,7 @@ select {
   width: 100%;
   height: 50px;
   font-size: 100%;
-  font-weight: bold;
+  font-weight: 400;
   font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
   cursor: pointer;
   border-radius: 0;
@@ -199,10 +210,12 @@ tr:nth-child(even) {
 td {
     padding: 22px;
     text-align: center;
+    font-weight: 400;
 }
 th {
   background-color: #59c7cb;
   padding: 20px;
+  font-weight: 500;
 }
 
 .item_card {
@@ -454,6 +467,7 @@ input[type=number]::-webkit-outer-spin-button {
   color: white;
   font-size: 100%;
   padding: 1em 1.8em;
+  margin-top: 10px;
   border-style: none;
   outline-style: none;
   border-radius: 0.4em;
@@ -466,14 +480,14 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .add_to_cart_button:hover {
   display: inline-block;
-  background-color: #59c7cb;
+  background-color: #9faaaa;
   color: white;
   font-size: 100%;
   padding: 1em 1.8em;
   border-style: none;
   outline-style: none;
   border-radius: 0.4em;
-  border-bottom: 0.25em solid #027575;
+  border-bottom: 0.25em solid #889494;
   -moz-transition: 0.1s;
   -webkit-transition: 0.1s;
   transition: 0.1s;
@@ -482,7 +496,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .add_to_cart_button:active {
-  background-color: #59c7cb;
+  background-color: #9faaaa;
   border-bottom-width: 0;
   margin-top: 0.2em;
 }
@@ -556,6 +570,7 @@ input[type=number]::-webkit-outer-spin-button {
 .product_image {
   object-fit: cover;
   width: 100%;
+  max-height: 300px;
 }
 
 .fancybutton_teal {

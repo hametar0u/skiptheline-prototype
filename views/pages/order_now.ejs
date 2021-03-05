@@ -32,7 +32,7 @@
     </div>
   </head>
   
-  <body>
+  <body style="margin-top: 150px;">
 
     <h3>Showing Results for: <%= row3.chosenDate %></h3>
     <div class="order_now">
@@ -41,7 +41,7 @@
       <% for (var i=0; i<r.length; i++) {%>
         <div class="item_card">
           <h2><%=r[i].item%> - <%=r[i].price%></h2>
-          <img class="product_image" src="images/COOKIE.png">
+          <img class="product_image" src="images/<%=r[i].item%>.jpg">
           <form action="/add_to_cart" method="POST">
             <input type="hidden" value="<%=r[i].item%>" name="item_name" id="item_name">       
             <label id="amount" for="item_quantity">Amount</label>
@@ -59,7 +59,7 @@
         <div class="item_card">
           <h2><%=r.item%> - <%=r.price%></h2>
           <form action="/add_to_cart" method="POST">
-            <img class="product_image" src="images/salad.jpg">
+            <img class="product_image" src="images/<%=r.item%>.jpg">
             <input type="hidden" value="<%=r.item%>" name="item_name" id="item_name">
             <label id="amount" for="item_quantity">Amount</label>
             <input name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
