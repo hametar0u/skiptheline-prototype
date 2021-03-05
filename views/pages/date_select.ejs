@@ -2,31 +2,38 @@
 <html style="background-color: #60D5DA;">
     <head>
       <link href="https://fonts.googleapis.com/css2?family=Futura:wght@100;400&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="stylesheets/styles.css">
+      <script defer src="../../node_modules/swup/dist/swup.min.js"></script>
+      <script defer src="../../public/scripts/scripts.js"></script>
+      <link rel="stylesheet" href="../../public/stylesheets/styles.css">
+      
       <div class="header" style=" background-color: white;">
         <h1 style="color: #60D5DA; text-align:center; display:inline-block;">SKIP THE LINE</h1>
         <img src="images/logo-teal.png" class="logo_img" style="width:75px;">
       </div>
     </head>
     <body style="background-color: #60D5DA;">
-      <div class="dateSelectBox">
-        <!-- <h1>What Date are you Ordering For?</h2> -->
-        <h1 >Which Date Would You Like to Order For?</h1>
-        <div class="loginfields">
-          <form action="/date_select" method="POST">
-            <select name="selectDate" id="selectDate" name="selectDate" required>
-              <option disabled selected value> -- select an option -- </option>
-              <% row1.forEach((r) => { %>
-                <option value="<%=r%>"><%=r.toLocaleDateString()%></option>
-                <% }); %>
-            </select>
-            <br>
-            <input class="submit_button" type="submit" value="Submit" style="font-size:150%; position: relative; top:300px;">
-          </form>
-          <input type="hidden" value="<%=row2%>" id="orderedDates">
-          <h3 id="sameDateNotice"></h3>
+
+      <main id="swup" class="transition-wipe">
+        <div class="dateSelectBox">
+          <!-- <h1>What Date are you Ordering For?</h2> -->
+          <h1 >Which Date Would You Like to Order For?</h1>
+          <div class="loginfields">
+            <form action="/date_select" method="POST">
+              <select name="selectDate" id="selectDate" name="selectDate" required>
+                <option disabled selected value> -- select an option -- </option>
+                <% row1.forEach((r) => { %>
+                  <option value="<%=r%>"><%=r.toLocaleDateString()%></option>
+                  <% }); %>
+              </select>
+              <br>
+              <input class="submit_button" type="submit" value="Submit" style="font-size:150%; position: relative; top:300px;">
+            </form>
+            <input type="hidden" value="<%=row2%>" id="orderedDates">
+            <h3 id="sameDateNotice"></h3>
+          </div>
         </div>
-      </div>
+      </main>
+      
     </body>
     <script>
       function checkSameDate() { //the console logs don't execute

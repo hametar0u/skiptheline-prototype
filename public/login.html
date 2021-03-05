@@ -10,6 +10,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script defer src="../node_modules/swup/dist/swup.min.js"></script>
+  <script defer src="../public/scripts/scripts.js"></script>
   
   <title> Log In - Skip The Line </title>
   <link rel="stylesheet" href="stylesheets/styles.css">
@@ -61,28 +63,30 @@ FRIDAY, APRIL 10, 2020
      <img src="images/logo-teal.png" class="logo_img" style="width:75px; margin-bottom: 20px;">
     </div>
     
-    <div class='loginbox'>
-      <h1 class='logintext'>Log In</h1>
+    <main id="swup" class="transition-wipe">
+      <div class='loginbox'>
+        <h1 class='logintext'>Log In</h1>
 
-      <div class='loginfields'>
-        <form method="POST" action="/login">
-          <p>
-              <input required type="text" name="username" id="username"
-              placeholder="Email" >
-          </p>
-          <p>
-              <input required type="password" name="password" id="password" placeholder="Password">
-          </p>
-              <!-- <input class="submit_button" type="submit" value="Login"> -->
-              <input class="submit_button" type="submit" value="Login">
+        <div class='loginfields'>
+          <form method="POST" action="/login">
+            <p>
+                <input required type="text" name="username" id="username"
+                placeholder="Email" >
+            </p>
+            <p>
+                <input required type="password" name="password" id="password" placeholder="Password">
+            </p>
+                <!-- <input class="submit_button" type="submit" value="Login"> -->
+                <input class="submit_button" type="submit" value="Login">
 
-              
-        </form>
-       
-        <p style="text-align: center; padding-top:20px; padding-bottom:0%;"> Don't have an account? <br> 
-        Sign up <a href="sign_up.html"> here </a></p>
+                
+          </form>
+        
+          <p style="text-align: center; padding-top:20px; padding-bottom:0%;"> Don't have an account? <br> 
+          Sign up <a href="sign_up.html"> here </a></p>
+        </div>
       </div>
-    </div>
+    </main>
 </body>
 
 </html>

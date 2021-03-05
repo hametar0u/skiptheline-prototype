@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="stylesheets/styles.css">
+        <script defer src="../../node_modules/swup/dist/swup.min.js"></script>
+        <script defer src="../../public/scripts/scripts.js"></script>
+        <link rel="stylesheet" href="../../public/stylesheets/styles.css">
     </head>
     <body>
-        <form action="/confirmation" method="POST" >
-            <label for="code">Type Your Confirmation Code Below</label>
-            <input type="text" id="code" name="code">
-            <input class="submit_button" type="submit" value="submit">
-        </form> 
+        <main id="swup" class="transition-wipe">
+            <form action="/confirmation" method="POST" >
+                <label for="code">Type Your Confirmation Code Below</label>
+                <input type="text" id="code" name="code">
+                <input class="submit_button" type="submit" value="submit">
+            </form> 
+        </main>
     </body>
 </html>

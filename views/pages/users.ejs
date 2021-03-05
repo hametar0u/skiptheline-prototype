@@ -10,13 +10,14 @@
     <div class="container">
       <h2>Database Results</h2>
 
-      <ul>
-          <% results.forEach(function(r) { %>
-              <li><%= r.username %> - <%= r.password %></li>
-          <% }); %>
-      </ul>
-
+      <main id="swup" class="transition-wipe">
+        <ul>
+            <% results.forEach(function(r) { %>
+                <li><%= r.username %> - <%= r.password %></li>
+            <% }); %>
+        </ul>
+      </main>
     </div>
-
+  
   </body>
 </html>
