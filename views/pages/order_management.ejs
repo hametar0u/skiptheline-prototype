@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
+      <script defer src="../../node_modules/swup/dist/swup.min.js"></script>
+      <script defer src="../../public/scripts/scripts.js"></script>
+      <link rel="stylesheet" href="../../public/stylesheets/styles.css">
+
+
       <form action="/order_now" method="GET">
         <input type="submit" value="back to order now">
       </form>
@@ -12,16 +17,19 @@
             2. have something that can check the order off
             3. send data back to server
          -->
-         <h5>Order ID - Item - Price - Amount - Date</h5>
-         <% rows.forEach((r) => { %>
-            <div class="item_card">
-              <h5><%= r.order_id %> - <%= r.item %> - <%= r.price %> – <%= r.quantity%> – <%= r.date %></h5>
-              <form action="/fulfill_order" method="POST">
-                <input type="hidden" value="<%=r.order_id%>" name="order_id" id="order_id">
-                <input id="item_submit" type="submit" value="Complete Order">
-              </form>
-            </div>
-            <!-- there should only be one button per order -->
-          <% }); %>
+         
+          <h5>Order ID - Item - Price - Amount - Date</h5>
+          <main id="swup" class="transition-wipe">
+          <% rows.forEach((r) => { %>
+              <div class="item_card">
+                <h5><%= r.order_id %> - <%= r.item %> - <%= r.price %> – <%= r.quantity%> – <%= r.date %></h5>
+                <form action="/fulfill_order" method="POST">
+                  <input type="hidden" value="<%=r.order_id%>" name="order_id" id="order_id">
+                  <input id="item_submit" type="submit" value="Complete Order">
+                </form>
+              </div>
+              <!-- there should only be one button per order -->
+            <% }); %>
+         </main>
     </body>
 </html>

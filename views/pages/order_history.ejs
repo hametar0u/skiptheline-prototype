@@ -8,7 +8,10 @@ MUDIT (MATT) JAIN
 SKIP THE LINE
 SUNDAY, APRIL 12, 2020
 -->
-  <link rel="stylesheet" href="stylesheets/styles.css">
+  <script defer src="../../node_modules/swup/dist/swup.min.js"></script>
+  <script defer src="../../public/scripts/scripts.js"></script>
+  <link rel="stylesheet" href="../../public/stylesheets/styles.css">
+
   <div class="header">
     <img src="images/logo.png" class="logo_img">
     <h1 style="text-align:left; display:inline-block;">SKIP THE LINE</h1>
@@ -36,26 +39,28 @@ SUNDAY, APRIL 12, 2020
 </head>
 
 <body>
-    <table style="margin:auto;">
-      <tr>
-        <th>Order ID</th>
-        <th>Item</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Date</th>
-      </tr>
-      <% if(rows != undefined) {%>
-        <% rows.forEach(function(r) { %>
-          <tr>
-            <td><%= r.order_id %> </td>
-            <td><%= r.item %> </td>
-            <td><%= r.price %> </td>
-            <td><%= r.quantity %> </td>
-            <td><%= r.date %> </td>
-          </tr>
-        <% }); %>
-      <%}%>
-    </table>
+  <main id="swup" class="transition-wipe">
+      <table style="margin:auto;">
+        <tr>
+          <th>Order ID</th>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Date</th>
+        </tr>
+        <% if(rows != undefined) {%>
+          <% rows.forEach(function(r) { %>
+            <tr>
+              <td><%= r.order_id %> </td>
+              <td><%= r.item %> </td>
+              <td><%= r.price %> </td>
+              <td><%= r.quantity %> </td>
+              <td><%= r.date %> </td>
+            </tr>
+          <% }); %>
+        <%}%>
+      </table>
+    </main> 
 </body>
 
 </html>
