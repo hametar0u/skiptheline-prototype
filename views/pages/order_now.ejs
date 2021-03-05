@@ -44,7 +44,7 @@
           <img class="product_image" src="images/COOKIE.png">
           <form action="/add_to_cart" method="POST">
             <input type="hidden" value="<%=r[i].item%>" name="item_name" id="item_name">       
-            <label style="font-size:120%;" for="item_quantity">Amount</label>
+            <label id="amount" for="item_quantity">Amount</label>
             <input style="font-size:100%; width:97%;" name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
             <input class="add_to_cart_button" id="item_submit" type="submit" value="Add To Cart">
           </form>
@@ -61,7 +61,7 @@
           <form action="/add_to_cart" method="POST">
             <img class="product_image" src="images/salad.jpg">
             <input type="hidden" value="<%=r.item%>" name="item_name" id="item_name">
-            <label for="item_quantity">Amount</label>
+            <label id="amount" for="item_quantity">Amount</label>
             <input name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
             <!-- <div class="number-input">
               <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" ></button>

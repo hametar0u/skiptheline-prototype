@@ -1,7 +1,9 @@
 html {
     text-align: center;
     background-color: White;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+    font-weight: 600;
+    letter-spacing: .009em;
 }
 body {
   background-color: white;
@@ -20,7 +22,7 @@ button {
   transition: 0.1s;
   font-size: 100%;
   padding: 10px;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
 }  
 button:hover {
   background: #59c7cb;
@@ -29,7 +31,7 @@ button:hover {
   width: 50%;
   font-size: 100%;
   padding: 10px;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
 }  
 
 
@@ -42,7 +44,7 @@ button:hover {
     top:    0;
     left:   0;
     margin: auto;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
     background-color:#60D5DA;
     color:white;
     position:fixed;
@@ -74,14 +76,14 @@ button:hover {
   width: 60%;
   padding-top: 10px;
   padding-bottom: 10px;
-  border: 2px solid white;
+  /* border: 2px solid white; */
   transition: 0.1s;
   font-size: 100%;
 }  
 .navbar_button:hover {
   background: #59c7cb;
   color: white;
-  border: 2px solid white;
+  /* border: 2px solid white; */
   width: 60%;
   font-size: 100%;
 }  
@@ -128,7 +130,7 @@ select {
   height: 50px;
   font-size: 100%;
   font-weight: bold;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
   cursor: pointer;
   border-radius: 0;
   background-color: rgb(143,143,143);
@@ -214,9 +216,13 @@ th {
 }
 
 #item_quantity {
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
   font-size: 100%;
   width:97%;
+}
+#amount {
+  font-weight: 500;
+  font-size: 120%;
 }
 
 /* input[type="number"] {
