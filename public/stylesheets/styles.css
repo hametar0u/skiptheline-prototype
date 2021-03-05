@@ -18,7 +18,7 @@ button {
   color: white;
   /* border-radius: 1px; */
   width: 60%;
-  border: 2px solid white;
+  /* border: 2px solid white; */
   transition: 0.1s;
   font-size: 100%;
   padding: 10px;
@@ -28,7 +28,7 @@ button {
 button:hover {
   background-color: #59c7cb;
   color: white;
-  border: 2px solid white;
+  /* border: 2px solid white; */
   width: 50%;
   font-size: 100%;
   padding: 10px;
@@ -66,7 +66,7 @@ button:hover {
   width:60%;
 }
 .navbar_element {
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   padding:10px;
@@ -76,11 +76,13 @@ button:hover {
   color: white;
   /* border-radius: 1px; */
   width: 60%;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   /* border: 2px solid white; */
   transition: 0.1s;
   font-size: 100%;
+  border-style:none;
+  outline-style: none;
 }  
 .navbar_button:hover {
   background: #59c7cb;
@@ -370,26 +372,43 @@ input[type=number]::-webkit-outer-spin-button {
 
 
 .submit_button {
-  background: #889494;
-  color: white;
-  /* border-radius: 1px; */
-  width: 60%;
-  border-bottom: 2px solid rgb(94,94,94);
-  transition: 0.1s;
-  font-size: 100%;
-  padding: 10px;
-  font-family: "Helvetica Neue", sans-serif;
-  border-radius: 0.4em;
-}  
-.submit_button:hover {
-  background: #59c7cb;
-  color: white;
-  border: 2px solid white;
-  width: 50%;
-  font-size: 100%;
-  padding: 10px;
-  border-radius: 0.4em;
-}  
+    display: inline-block;
+    background-color: #889494;
+    color: white;
+    font-size: 100%;
+    padding: 1em 1.8em;
+    border-style: none;
+    outline-style: none;
+    border-radius: 0.4em;
+    border-bottom: 0.25em solid rgb(94, 94, 94);
+    -moz-transition: 0.1s;
+    -webkit-transition: 0.1s;
+    transition: 0.1s;
+    box-shadow: 0 2px 3px #ccc;
+    position: relative;
+  }
+  .submit_button:hover {
+    display: inline-block;
+    background-color: #59c7cb;
+    color: white;
+    font-size: 100%;
+    padding: 1em 1.8em;
+    border-style: none;
+    outline-style: none;
+    border-radius: 0.4em;
+    border-bottom: 0.25em solid #027575;
+    -moz-transition: 0.1s;
+    -webkit-transition: 0.1s;
+    transition: 0.1s;
+    box-shadow: 0 2px 3px #ccc;
+    position: relative;
+  }
+  
+  .submit_button:active {
+    background-color: #59c7cb;
+    border-bottom-width: 0;
+    margin-top: 0.2em;
+  }
 
 .order_now {
   margin-right: 0px;
@@ -410,18 +429,16 @@ input[type=number]::-webkit-outer-spin-button {
   right:0;
 }
 
-.add_to_cart_button {
+/* .add_to_cart_button {
   background: #889494;
   color: white;
-  /* border-radius: 1px; */
   width: 100%;
   padding-top: 10px;
   padding-bottom: 10px;
   border: 2px solid white;
   transition: 0.1s;
   font-size: 100%;
-  font-family: "Helvetica Neue", sans-serif;
-  border-radius: 0.4em;
+  border-radius: 0.4em; 
 }  
 .add_to_cart_button:hover {
   background: #59c7cb;
@@ -430,7 +447,45 @@ input[type=number]::-webkit-outer-spin-button {
   width: 80%;
   font-size: 100%;
   border-radius: 0.4em;
-}  
+} */
+.add_to_cart_button {
+  display: inline-block;
+  background-color: #889494;
+  color: white;
+  font-size: 100%;
+  padding: 1em 1.8em;
+  border-style: none;
+  outline-style: none;
+  border-radius: 0.4em;
+  border-bottom: 0.25em solid rgb(94, 94, 94);
+  -moz-transition: 0.1s;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+  box-shadow: 0 2px 3px #ccc;
+  position: relative;
+}
+.add_to_cart_button:hover {
+  display: inline-block;
+  background-color: #59c7cb;
+  color: white;
+  font-size: 100%;
+  padding: 1em 1.8em;
+  border-style: none;
+  outline-style: none;
+  border-radius: 0.4em;
+  border-bottom: 0.25em solid #027575;
+  -moz-transition: 0.1s;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+  box-shadow: 0 2px 3px #ccc;
+  position: relative;
+}
+
+.add_to_cart_button:active {
+  background-color: #59c7cb;
+  border-bottom-width: 0;
+  margin-top: 0.2em;
+}
 
 .remove_button {
   background: none;
