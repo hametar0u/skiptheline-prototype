@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <script defer src="../../node_modules/swup/dist/swup.min.js"></script>
+      <!-- <script defer src="../../node_modules/swup/dist/swup.min.js"></script> -->
       <script defer src="../../public/scripts/scripts.js"></script>
       <link rel="stylesheet" href="../../public/stylesheets/styles.css">
 
@@ -19,7 +19,7 @@
          -->
          
           <h5>Order ID - Item - Price - Amount - Date</h5>
-          <main id="swup" class="transition-wipe">
+          <!-- <main id="swup" class="transition-wipe"> -->
           <% rows.forEach((r) => { %>
               <div class="item_card">
                 <h5><%= r.order_id %> - <%= r.item %> - <%= r.price %> – <%= r.quantity%> – <%= r.date %></h5>
@@ -30,6 +30,6 @@
               </div>
               <!-- there should only be one button per order -->
             <% }); %>
-         </main>
+         <!-- </main> -->
     </body>
 </html>

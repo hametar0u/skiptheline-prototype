@@ -596,6 +596,7 @@ input[type=number]::-webkit-outer-spin-button {
   margin-top: 0.2em;
 }
 
+/*
 .transition-wipe {
   opacity: 1;
   transition: 1000ms;
@@ -629,3 +630,4 @@ html.is-leaving .transition-fade {
   opacity: 0;
   transform: translateX(-300px);
 }
+*/
