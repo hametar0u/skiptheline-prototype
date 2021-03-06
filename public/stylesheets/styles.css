@@ -60,7 +60,7 @@ button:hover {
     background-color:#60D5DA;
     color:white;
     position:fixed;
-    margin-bottom:20px;
+    /* margin-bottom:20px; */
     text-align:left;
     padding-left: 3%;
     display:inline-block;
@@ -73,33 +73,40 @@ button:hover {
   padding-right: 3%;
   display: flex;
   flex-direction: row;
-  margin-top: 8px;
-  width:60%;
+
+  width:70%;
 }
 .navbar_element {
   width: 100%;
   display: flex;
   flex-direction: row;
-  padding:10px;
+  /* padding:10px; */
 }
 .navbar_button {
   background: none;
   color: white;
-  /* border-radius: 1px; */
-  width: 60%;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  /* border: 2px solid white; */
+  transition: 0.1s;
+  font-size: 100%;
+  border-style:none;
+  outline-style: none;
+  padding:10px;
+}  
+.navbar_button:hover {
+  background: #59c7cb;
+  color: white;
+  font-size: 100%;
+}  
+.logout_button {
+  background-color: #889494;
+  color: white;
   transition: 0.1s;
   font-size: 100%;
   border-style:none;
   outline-style: none;
 }  
-.navbar_button:hover {
-  background: #59c7cb;
+.logout_button:hover {
+  background: rgb(94,94,94);
   color: white;
-  /* border: 2px solid white; */
-  width: 60%;
   font-size: 100%;
 }  
 
@@ -565,6 +572,8 @@ input[type=number]::-webkit-outer-spin-button {
 .logo_img {
   display: inline-block;
   width:65px;
+  vertical-align: top;
+  margin-top:7px;
 }
 
 .product_image {
