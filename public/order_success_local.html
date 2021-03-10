@@ -9,6 +9,18 @@
 
   </head>
   <body style="margin-top:25%;">
+    <svg id="fader"></svg>
+    <script>
+      window.addEventListener('pageshow', function(event){
+        // if(!event.persisted){
+        //   console.log("page loaded from cache");
+        //   document.getElementById('fader').style.opacity = 0;
+        //   return;
+        // }
+        document.getElementById('fader').removeAttribute('class', 'fade-in');
+        document.getElementById('fader').setAttribute('class', 'fade-out');
+      });
+    </script>
     <div class="header" style=" background-color: #60D5DA;">
       <h1 style="color: white; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
       <img src="images/logo-teal.png" class="logo_img" style="width:75px;">

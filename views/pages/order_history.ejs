@@ -8,8 +8,6 @@ MUDIT (MATT) JAIN
 SKIP THE LINE
 SUNDAY, APRIL 12, 2020
 -->
-  <!-- <script defer src="../../node_modules/swup/dist/swup.min.js"></script> -->
-  <!-- <script defer src="../../public/scripts/scripts.js"></script> -->
   <link rel="stylesheet" href="stylesheets/styles.css">
 
   <div class="header">
@@ -39,7 +37,18 @@ SUNDAY, APRIL 12, 2020
 </head>
 
 <body>
-  <!-- <main id="swup" class="transition-wipe"> -->
+  <svg id="fader"></svg>
+    <script>
+      window.addEventListener('pageshow', function(event){
+        // if(!event.persisted){
+        //   console.log("page loaded from cache");
+        //   document.getElementById('fader').style.opacity = 0;
+        //   return;
+        // }
+        document.getElementById('fader').removeAttribute('class', 'fade-in');
+        document.getElementById('fader').setAttribute('class', 'fade-out');
+      });
+    </script>
       <table style="margin:auto;">
         <tr>
           <th>Order ID</th>
@@ -60,7 +69,6 @@ SUNDAY, APRIL 12, 2020
           <% }); %>
         <%}%>
       </table>
-    <!-- </main>  -->
 </body>
 
 </html>

@@ -1,13 +1,15 @@
 //Next week
-//set border of the page to a certain amount
-//make the database entries display nice
-//through tables
-//add images
-//change date select message
+//only display cart when there's something inside cart and message otherwise
+//transitions fadeout or wipes <- youtube
+//fix menu page CSS
+//make images more robust
 
-//make an empty row placeholder for cart when there's nothing in it. Alternatively, only display cart when there's something inside cart
-//fix cart position on screen but when I did that it literally just disappeared
+//Tuesday
+//why cart onclick is trolling
+//make order management workable
 
+//Pending
+//mobile compatibility
 
 // IMPROVEMENTS:
 // make the date format readable
@@ -20,7 +22,6 @@
 //Pending:
 //change sendgrid to actual STL email
 //hook front end to back end
-//keyframes and animate to make this crap bougie --kenn's job lmao
 
 // talk about what happens with the club afterwards
 
@@ -31,7 +32,7 @@ const path = require('path');
 const PORT = process.env.PORT || 5000 
 const { Pool } = require('pg');
 var pool;
-var LOCAL_DEV_FLAG = false;
+var LOCAL_DEV_FLAG = true;
 if (LOCAL_DEV_FLAG){
   pool = new Pool ({
     user: 'postgres',
@@ -121,7 +122,8 @@ function checkAdmin(req,res,next) { //for level 1
   var level = 0;
   pool.query(adminQuery, (error,result) => {
     if (error) {
-      return callback(error); //console log error and redirect to client error page
+      console.log(error);
+      res.redirect("/error");
     }
     else {
       console.log("result.rows=",result.rows);
@@ -139,7 +141,7 @@ function checkAdmin(req,res,next) { //for level 1
         }
         else {
           console.log("level 1+ clearance");
-          res.redirect("error.html");
+          return next();
         }
       }
     }

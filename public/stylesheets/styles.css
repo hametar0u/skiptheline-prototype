@@ -1,5 +1,5 @@
 html {
-    text-align: center;
+    /* text-align: center; */
     background-color: White;
     font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
     font-weight: 600;
@@ -8,6 +8,36 @@ html {
 body {
   background-color: white;
   margin-top: 5%;
+}
+
+#fader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999999;
+  /*border-right: 1px solid black;*/
+  box-shadow: 10px 0 5px -2px #888;
+  pointer-events: none;
+  background: #60D5DA;
+  animation-duration: 400ms;
+  animation-timing-function: ease-in-out;
+  transition: all 0.5s;
+}
+
+#fader.fade-out{
+  opacity: 0;
+  animation-name: fadeout;
+}
+
+#fader.fade-in{
+  opacity: 1;
+  animation-name: fadein;
+}
+
+#fader.wipe-left {
+  width: 0%;
 }
 
 h1 {
@@ -20,8 +50,12 @@ h2 {
 }
 h3 {
   font-weight: 450;
+  text-align: center;
 }
 
+p {
+  font-weight: 400;
+}
 
 button {
   background: #889494;
@@ -52,7 +86,6 @@ button:hover {
     padding-bottom: 1%; */
     background-color: white; 
     width:  100%;
-    position:   absolute;
     top:    0;
     left:   0;
     margin: auto;
@@ -65,15 +98,17 @@ button:hover {
     padding-left: 3%;
     display:inline-block;
     z-index: 69;
+    margin-bottom: 30px;
 }
 
 .navbar {
   text-align:right;
   float: right;
+  padding:0px;
   padding-right: 3%;
   display: flex;
   flex-direction: row;
-
+  flex-wrap: nowrap;
   width:70%;
 }
 .navbar_element {
@@ -126,6 +161,7 @@ button:hover {
     border-style: solid;
     border-width: 2px;
     background-color: white;
+    /* -webkit-animation: fadein 2s; */
 }
 
 .loginfields {
@@ -133,6 +169,18 @@ button:hover {
     text-align: center;
     margin:auto;
     width: 85%;
+}
+
+.confirmation_box {
+  width: 60%;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top: 200px;
+}
+
+#code {
+  font-size: 48px;
+  text-align: center;
 }
 
 .dateSelectBox {
@@ -146,6 +194,7 @@ button:hover {
   border-style: solid;
   border-width: 2px;
   background-color: white;
+  /* -webkit-animation: fadein 2s; */
 }
 select {
   width: 100%;
@@ -244,74 +293,11 @@ th {
   font-size: 100%;
   width:97%;
 }
+
 #amount {
   font-weight: 500;
   font-size: 120%;
 }
-
-/* input[type="number"] {
-  -webkit-appearance: textfield;
-  -moz-appearance: textfield;
-  appearance: textfield;
-}
-
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-}
-
-.number-input {
-  border: 0;
-  display: inline-flex;
-}
-
-.number-input,
-.number-input * {
-  box-sizing: border-box;
-}
-
-.number-input button {
-  outline:none;
-  -webkit-appearance: none;
-  background-color: transparent;
-  border: none;
-  align-items: center;
-  justify-content: center;
-  width: 3rem;
-  height: 3rem;
-  cursor: pointer;
-  margin: 0;
-  position: relative;
-  box-shadow: 0px 0px 1px #474747;
-    border-radius: 50%;
-}
-
-.number-input button:before,
-.number-input button:after {
-  display: inline-block;
-  position: absolute;
-  content: '';
-  width: 1rem;
-  height: 2px;
-  background-color: #212121;
-  transform: translate(-50%, -50%);
-}
-.number-input button.plus:after {
-  transform: translate(-50%, -50%) rotate(90deg);
-}
-
-.number-input input[type=number] {
-  font-family: sans-serif;
-  max-width: 5rem;
-  padding: .5rem;
-  border: none;
-  border-width: 0 2px;
-  font-size: 2rem;
-  height: 3rem;
-  font-weight: bold;
-  text-align: center;
-  color:#9be3df;
-} */
 
 .card-body, .card-header, .card-footer {
     text-align: center;
@@ -321,75 +307,6 @@ input[type=number]::-webkit-outer-spin-button {
 #menu_add {
     margin-top: 100px;
 }
-
-.button {
-    font-size: 1em;
-    padding: 5px;
-    color: black;
-    border: 2px solid #01787D;
-    border-radius: 20px/50px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.3s ease-out;
-    background-color: #11BFC7;
-    border-radius: 0.4em;
-  }
-  .button:hover {
-    background: #60D5DA;
-    border-radius: 0.4em;
-  }
-  
-  .overlay {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.7);
-    transition: opacity 500ms;
-    visibility: hidden;
-    opacity: 0;
-  }
-  .overlay:target {
-    visibility: visible;
-    opacity: 1;
-  }
-  
-  .popup {
-    margin: 70px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 5px;
-    width: 30%;
-    position: relative;
-    transition: all 5s ease-in-out;
-    z-index: 100;
-  }
-  
-  .popup h2 {
-    margin-top: 0;
-    color: #333;
-    font-family: Tahoma, Arial, sans-serif;
-  }
-  .popup .close {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    transition: all 200ms;
-    font-size: 30px;
-    font-weight: bold;
-    text-decoration: none;
-    color: #333;
-  }
-  .popup .close:hover {
-    color: #06D85F;
-  }
-  .popup .content {
-    max-height: 30%;
-    overflow: auto;
-  }
-
-
 
 .submit_button {
     display: inline-block;
@@ -431,43 +348,58 @@ input[type=number]::-webkit-outer-spin-button {
   }
 
 .order_now {
-  margin-right: 0px;
+  /* -webkit-animation: fadein 2s; */
+  transition: margin-right .5s;
 }
 
-.cart {
-  position: absolute; 
-  right: -500px; 
+#cart_div {
+  position: fixed;
+  top: 0;
+  right: 0;
   transition: 0.3s;
-  padding: 15px;
-  /* width: 100px; */
+  width: 0;
+  height: 0;
   text-decoration: none;
   font-size: 20px;
   color: black;
   border-radius: 0 5px 5px 0;
-}
-.cart:hover {
-  right:0;
+  background-color: rgb(240,240,240);
+  z-index: 1;
+  overflow: hidden;
+  text-align: center;
+  padding: 20px;
 }
 
-/* .add_to_cart_button {
-  background: #889494;
-  color: white;
-  width: 100%;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border: 2px solid white;
-  transition: 0.1s;
-  font-size: 100%;
-  border-radius: 0.4em; 
-}  
-.add_to_cart_button:hover {
-  background: #59c7cb;
-  color: white;
-  border: 2px solid white;
-  width: 80%;
-  font-size: 100%;
-  border-radius: 0.4em;
-} */
+#cart_arrow {
+  position: fixed;
+  top: 50px;
+  right:0;
+  text-align:right;
+}
+
+#cart_arrow img {
+  width:70px;
+
+}
+
+#close_cart_button {
+  background-color: rgb(240,240,240);
+  position: fixed;
+  font-size: 0;
+  font-weight:200;
+  color: black;
+  text-decoration: none;
+  right:27%;
+  top: 30px;
+  padding-left:20px;
+  padding-right:20px;
+}
+
+#close_cart_div {
+  width:5%;
+  /* right:30%; doesn't do anything; I'm trying to line 3 divs side by side */
+}
+
 .add_to_cart_button {
   display: inline-block;
   background-color: #889494;
@@ -639,3 +571,15 @@ html.is-leaving .transition-fade {
   opacity: 0;
   transform: translateX(-300px);
 }
+
+@-webkit-keyframes fadein {
+  from{ opacity: 0; }
+    to{ opacity: 1; }
+}
+
+@-webkit-keyframes fadeout {
+  from{ opacity: 1; }
+    to{ opacity: 0; }
+}
+
+
