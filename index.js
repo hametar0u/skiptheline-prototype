@@ -1,13 +1,13 @@
 //Next week
 //only display cart when there's something inside cart and message otherwise
 //pages that need CSS fixing:
-//  admin dashboard -- HIGH
 //  order management -- HIGH
 //  menu -- MEDIUM
 //  order now (cart table kinda jank) -- MEDIUM
 //  login failure -- LOW
 //  sign up -- LOW
 //  confirmation code -- LOW
+//  admin dashboard -- LOW
 //better wipe transition -- youtube
 //make images more robust
 
@@ -37,7 +37,7 @@ const path = require('path');
 const PORT = process.env.PORT || 5000 
 const { Pool } = require('pg');
 var pool;
-var LOCAL_DEV_FLAG = true;
+var LOCAL_DEV_FLAG = false;
 if (LOCAL_DEV_FLAG){
   pool = new Pool ({
     user: 'postgres',

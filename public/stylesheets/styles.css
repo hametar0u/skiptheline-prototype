@@ -350,16 +350,23 @@ th {
 }
 
 
-#admin_button_div {
+.admin_panel {
+  margin: auto;
   text-align: center;
-  width: 60%;
+  width: 80%;
+  margin-top: 15%;
+}
+
+.admin_panel_element {
+  width: 30%;
+  display: inline-block;
+  margin: auto 5%;
 }
 
 .admin_button {
-    display: inline-block;
     background-color: #889494;
     color: white;
-    font-size: 100%;
+    font-size: 200%;
     padding: 1em 1.8em;
     border-style: none;
     outline-style: none;
@@ -372,10 +379,8 @@ th {
     position: relative;
   }
   .admin_button:hover {
-    display: inline-block;
     background-color: #59c7cb;
     color: white;
-    font-size: 100%;
     padding: 1em 1.8em;
     border-style: none;
     outline-style: none;
@@ -421,7 +426,7 @@ th {
     border-bottom: 0.25em solid #027575;
     -moz-transition: 0.1s;
     -webkit-transition: 0.1s;
-    transition: 0.1s;
+    transition: 0.1s -ease;
     box-shadow: 0 2px 3px #ccc;
     position: relative;
   }
