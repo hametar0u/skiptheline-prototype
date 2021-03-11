@@ -53,6 +53,10 @@ h3 {
   text-align: center;
 }
 
+p {
+  font-weight: 400;
+}
+
 button {
   background: #889494;
   color: white;
@@ -165,6 +169,56 @@ button:hover {
     text-align: center;
     margin:auto;
     width: 85%;
+}
+
+.confirmation_box {
+  width: 60%;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top: 20%;
+}
+
+#code {
+  font-size: 48px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.code_button {
+  display: inline-block;
+  background-color: #889494;
+  color: white;
+  font-size: 150%;
+  padding: 1.5em 1.8em;
+  border-style: none;
+  outline-style: none;
+  border-radius: 0.4em;
+  border-bottom: 0.25em solid rgb(94, 94, 94);
+  -moz-transition: 0.1s;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+  box-shadow: 0 2px 3px #ccc;
+  position: relative;
+}
+.code_button:hover {
+  display: inline-block;
+  background-color: #59c7cb;
+  color: white;
+  border-style: none;
+  outline-style: none;
+  border-radius: 0.4em;
+  border-bottom: 0.25em solid #027575;
+  -moz-transition: 0.1s;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+  box-shadow: 0 2px 3px #ccc;
+  position: relative;
+}
+
+.code_button:active {
+  background-color: #59c7cb;
+  border-bottom-width: 0;
+  margin-top: 0.2em;
 }
 
 .dateSelectBox {
@@ -331,6 +385,8 @@ th {
     margin-top: 0.2em;
   }
 
+
+
 .order_now {
   /* -webkit-animation: fadein 2s; */
   transition: margin-right .5s;
@@ -483,6 +539,15 @@ th {
   background-color: white;
   padding-left: 3%;
   padding-right: 3%;
+}
+
+#menu_add {
+  background-color: #dbe1e1;
+  width: 30%;
+  display: inline-block;
+  height: 500px;
+  text-align: center;
+  margin: 
 }
 
 .logo_img {

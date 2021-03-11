@@ -6,19 +6,11 @@
     	<script defer src="../public/scripts/scripts.js"></script>
 
 		<link rel="stylesheet" href="stylesheets/styles.css">
-		
-		<style>
-		    html {
-		      font-family: 'Roboto', sans-serif;
-		    } body {
-		      background-color: #11BFC7;
-		      /*background-image: linear-gradient(to bottom, #11BFC7, #47E2D6);*/
-		    }
-		  </style>
+
 	</head>
 	<body>
 		<div class="header">
-     		<h1 style="text-align:center;">SKIP THE LINE</h1>
+     		<h1 style="text-align:center; margin-top:0; margin-bottom:0;">SKIP THE LINE</h1>
     	</div>
 		
 		<!-- <main id="swup" class="transition-wipe"> -->
@@ -29,10 +21,11 @@
 				</p>
 
 				<p>
-					<a href="login.html">Return to login page</a>
+					<form action="/login" method="get">
+						<input class="submit_button" type="submit" value="Return to Login">
+					</form>
 				</p>
 			</div>
-		<!-- </main> -->
 
 	</body>
 </html>

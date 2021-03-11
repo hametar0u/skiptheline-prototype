@@ -1,15 +1,15 @@
 //Next week
 //only display cart when there's something inside cart and message otherwise
-//transitions fadeout or wipes <- youtube
-//fix menu page CSS
+//pages that need CSS fixing:
+//  admin dashboard -- HIGH
+//  menu -- HIGH
+//  order management -- HIGH
+//  order now (cart table kinda jank) -- MEDIUM
+//  login failure -- LOW
+//  sign up -- LOW
+//  confirmation code -- LOW
+//better wipe transition -- youtube
 //make images more robust
-
-//Tuesday
-//why cart onclick is trolling
-//make order management workable
-
-//Pending
-//mobile compatibility
 
 // IMPROVEMENTS:
 // make the date format readable
@@ -17,11 +17,14 @@
 //make pending orders look nice
 
 //problems:
+//no checks against wrong confirmation code
 //stripe receipt email not sending through --  might be the test api key
 
 //Pending:
 //change sendgrid to actual STL email
-//hook front end to back end
+//Integrate React by refactoring the entire code
+//mobile compatibility
+
 
 // talk about what happens with the club afterwards
 
@@ -378,6 +381,7 @@ app.get('/my_secret_page', checkAdmin2, function (req, res) {
 }); 
 
 app.get('/signup', (req, res) => res.render('pages/sign_up.ejs'));
+app.get('/createaccountsuccess', (req, res) => res.render('pages/create_account_success.ejs')); //REMOVE IN PROD
 
 app.post('/createaccount', (req, res) => {
   var usr = req.body.usr;
@@ -557,7 +561,7 @@ app.post('/login',  (req, res) => {
     console.log("sudo user remove in prod");
     req.session.user_id = makeid(10);
     req.session.username = loginUsername;
-    res.redirect("/date_select")
+    res.redirect("/admin_dashboard")
     return;
   }
   else if (loginUsername == "cafAdmin") { //remove
@@ -592,6 +596,8 @@ app.post('/login',  (req, res) => {
     }
   })
 }); 
+
+app.get('/admin_dashboard', checkAdmin, (req, res) => {res.render("pages/admin_dashboard.ejs");});
 
 app.get('/order_now', checkAuth, async (req, res) => {
   var chosenDate = req.session.chosenDate;
