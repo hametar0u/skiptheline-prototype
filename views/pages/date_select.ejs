@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html style="background-color: #60D5DA;">
     <head>
-      <link href="https://fonts.googleapis.com/css2?family=Futura:wght@100;400&display=swap" rel="stylesheet">
-      
-      <script defer src="../../node_modules/swup/dist/swup.min.js"></script>
       <script defer src="../../public/scripts/scripts.js"></script>
       <link rel="stylesheet" href="stylesheets/styles.css">
       
@@ -13,27 +10,31 @@
       </div>
     </head>
     <body style="background-color: #60D5DA;"> 
-
-      <!-- <main id="swup" class="transition-wipe"> -->
-        <div class="dateSelectBox">
-          <h1 >Which Date Would You Like to Order For?</h1>
-          <div class="loginfields">
-            <form action="/date_select" method="POST">
-              <select name="selectDate" id="selectDate" name="selectDate" required>
-                <option disabled selected value> -- select an option -- </option>
-                <% row1.forEach((r) => { %>
-                  <option value="<%=r%>"><%=r.toLocaleDateString()%></option>
-                  <% }); %>
-              </select>
-              <br>
-              <input class="submit_button" type="submit" value="Submit" style="font-size:150%; position: relative; top:300px;">
-            </form>
-            <input type="hidden" value="<%=row2%>" id="orderedDates">
-            <h3 id="sameDateNotice"></h3>
-          </div>
+      <svg id="fader"></svg>
+      <script>
+        window.addEventListener('pageshow', function(event){
+          // document.getElementById('fader').removeAttribute('class', 'fade-in');
+        // document.getElementById('fader').setAttribute('class', 'fade-out');
+          document.getElementById('fader').setAttribute('class', 'wipe-left');
+        });
+      </script>
+      <div class="dateSelectBox">
+        <h1 >Which Date Would You Like to Order For?</h1>
+        <div class="loginfields">
+          <form action="/date_select" method="POST">
+            <select name="selectDate" id="selectDate" name="selectDate" required>
+              <option disabled selected value> -- select an option -- </option>
+              <% row1.forEach((r) => { %>
+                <option value="<%=r%>"><%=r.toLocaleDateString()%></option>
+                <% }); %>
+            </select>
+            <br>
+            <input class="submit_button" type="submit" value="Submit" style="font-size:150%; position: relative; top:300px;">
+          </form>
+          <input type="hidden" value="<%=row2%>" id="orderedDates">
+          <h3 id="sameDateNotice"></h3>
         </div>
-      </main>
-      
+      </div>
     </body>
     <script>
       function checkSameDate() { //the console logs don't execute

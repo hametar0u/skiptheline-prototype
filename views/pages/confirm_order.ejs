@@ -2,37 +2,31 @@
 <html lang="en" style="background-color: #60D5DA;">
 
   <head>
-      <title> Confirm Order - Skip The Line </title>
-      
-      <!-- ADD FONTS-->
-      
+      <title> Confirm Order - Skip The Line </title>   
   <!--INFO:
   MUDIT (MATT) JAIN
   SKIP THE LINE
   SUNDAY, APRIL 12, 2020
   -->
-    <!--
-    <style>
-      html {
-        font-family: 'Roboto', sans-serif;
-      } body {
-        background-color: #11BFC7;
-        /*background-image: linear-gradient(to bottom, #11BFC7, #47E2D6);*/
-      }
-    </style>
-    -->
     <div class="header" style=" background-color: white;">
-        <h1 style="color: #60D5DA; text-align:center; display:inline-block;">SKIP THE LINE</h1>
-        <img src="images/logo-teal.png" class="logo_img" style="width:75px; margin-bottom: 20px;">
+        <h1 style="text-color:#60D5DA; text-align:left; display:inline-block; font-size: 200%;margin-block-start: 0em; margin-block-end: 0em;">SKIP THE LINE</h1>
+        <img src="images/logo-teal.png" class="logo_img" style="width:75px; margin-bottom: 20px; margin-block-start: 0em; margin-block-end: 0em;">
       </div>
     <script src="https://js.stripe.com/v3/"></script>
-    <!-- <script defer src="../../node_modules/swup/dist/swup.min.js"></script> -->
     <script defer src="../../public/scripts/scripts.js"></script>
     <link rel="stylesheet" href="stylesheets/styles.css">
   </head>
       
   <body style="background-color: #60D5DA;">
-    <!-- <main id="swup" class="transition-wipe"> -->
+    <svg id="fader" style="background-color: white;"></svg>
+    <script>
+      window.addEventListener('pageshow', function(event){
+        // document.getElementById('fader').removeAttribute('class', 'fade-in');
+        // document.getElementById('fader').setAttribute('class', 'fade-out');
+        document.getElementById('fader').setAttribute('class', 'wipe-left');
+      });
+    </script>
+    
       <div class="container-fluid">
 
 

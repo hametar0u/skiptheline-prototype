@@ -3,21 +3,14 @@
     <head>
       <!-- <script defer src="../../node_modules/swup/dist/swup.min.js"></script> -->
       <script defer src="../../public/scripts/scripts.js"></script>
-      <link rel="stylesheet" href="../../public/stylesheets/styles.css">
+      <link rel="stylesheet" href="stylesheets/styles.css">
 
 
       <form action="/order_now" method="GET">
         <input type="submit" value="back to order now">
       </form>
     </head>
-    <body> 
-        <!-- 
-            workflow:
-            1. display all pending orders
-            2. have something that can check the order off
-            3. send data back to server
-         -->
-         
+    <body>   
           <h5>Order ID - Item - Price - Amount - Date</h5>
           <!-- <main id="swup" class="transition-wipe"> -->
           <% rows.forEach((r) => { %>

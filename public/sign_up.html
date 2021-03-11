@@ -1,45 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background-color: #60D5DA;">
 
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <!-- <script defer src="../node_modules/swup/dist/swup.min.js"></script> -->
-    <script defer src="../public/scripts/scripts.js"></script>
-    
-    <title> Sign Up - Skip The Line </title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- ADD FONTS-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <title> Sign Up - Skip The Line </title>
+  <link rel="stylesheet" href="stylesheets/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <div class="header" style=" background-color: white;">
+    <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
+    <img src="images/logo-teal.png" class="logo_img" style="width:75px;">
+  </div>
     
 <!--INFO:
 MUDIT (MATT) JAIN
 SKIP THE LINE
 FRIDAY, APRIL 10, 2020
 -->
-<style>
-    html {
-      font-family: 'Roboto', sans-serif;
-    } body {
-      background-color: #11BFC7;
-      /*background-image: linear-gradient(to bottom, #11BFC7, #47E2D6);*/
-    }
-</style>
 </head>
 
-<body>
+<body style="background-color: #60D5DA;">
   <form method="POST" action="/createaccount">
     <div class="container-fluid">
-
-      <div class="header">
-         <h1 style="text-align:center;">SKIP THE LINE</h1>
-      </div>
       
       <!-- <main id="swup" class="transition-wipe"> -->
-          <div style="width:600px;padding-bottom:3%" class='loginbox'>
+          <div class='loginbox'>
             <h1 style="padding-top:5%;padding-bottom:2%;"> Join Today</h1>
 
             <!-- <div class="form-group">
@@ -52,29 +42,25 @@ FRIDAY, APRIL 10, 2020
               <input required type="text" class="form-control" id="lastname" name="lastname">
             </div>   -->
             
-            <div class="form-group">
-              <label for="usr">Student Email</label>
-              <input required type="email" class="form-control" id="usr" name="usr">
+            <div class="loginfields">
+              <p>
+                <input required type="email" class="form-control" id="usr" name="usr" placeholder="Student Email">
+              </p>
+              <p>
+                <input required type="password" class="form-control" id="pwd" name="pwd" placeholder="Password">
+              </p>
+              <p>
+                <input required type="password" class="form-control" id="pwd2" name="pwd2" placeholder="Confirm Password">
+              </p>
             </div>
               
-            <div class="form-group" style="padding-bottom:10px">
-              <label for="pwd">Password</label>
-              <input required type="password" class="form-control" id="pwd" name="pwd">
-            </div> 
-
-            <div class="form-group" style="padding-bottom:10px">
-              <label for="pwd">Confirm Password</label>
-              <input required type="password" class="form-control" id="pwd2" name="pwd2">
-            </div>
-              
-            <input type="submit" value="Register" onclick="return validateform()"><br>
+            <input class="submit_button" type="submit" value="Register" onclick="return validateform()"><br>
             <p>
               <br>
               Already have an account? Login 
               <a href="login.html" role="button">here</a>
             </p>
           </div>
-        <!-- </main> -->
           
       </form>
       

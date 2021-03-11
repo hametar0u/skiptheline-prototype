@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <% include ../partials/header.ejs %>
+        <link rel="stylesheet" href="stylesheets/styles.css">
+        <div class="header">
+            <img src="images/logo.png" class="logo_img">
+            <h1 style="text-align:left; display:inline-block; font-size: 200%;margin-block-start: 0em; margin-block-end: 0em;">SKIP THE LINE</h1>
+            <div class="navbar">
+              <form class="navbar_element" action="/admin_dashboard" method="GET">
+                <input class="navbar_button" type="submit" value="Back to Dashboard">
+              </form>
+              <form class="navbar_element" action="/date_select" method="GET">
+                <input class="navbar_button" type="submit" value="Customer View">
+              </form>
+              <form class="navbar_element" method="POST" action="/logout">
+                <input class="logout_button" type="submit" value="Log Out">
+              </form>
+            </div>
+          </div>
     </head>
     <body>
         <!-- <main id="swup" class="transition-wipe"> -->
             <!--error message here but it didn't work-->
-            <!-- <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            -->
-            <div id="menu_add"> <!-- add form for food type-->
+            <div id="menu_add">
                 <h3>Add Food Menu Item</h3>
                 <form method="POST" action="/menu_add">
                     <label for="menuItemAdd">Item</label>
@@ -60,7 +65,24 @@
             </div>
             <div id="menu">
                 <h2>Food Menu</h2>
-
+                <table style="margin:auto;">
+                    <tr>
+                      <th>Item</th>
+                      <th>Price</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                    </tr>
+                    <% if(row1.fRows != undefined) {%>
+                      <% row1.fRows.forEach(function(r) { %>
+                        <tr>
+                          <td><%= r.item %> </td>
+                          <td><%= r.price %> </td>
+                          <td><%= r.startdate %> </td>
+                          <td><%= r.enddate %> </td>
+                        </tr>
+                      <% }); %>
+                    <%}%>
+                  </table>
                 <ul>
                     <% row1.fRows.forEach(function(r) { %>
                         <li><%= r.item %> - <%= r.price %> - <%= r.startdate %> – <%= r.enddate %></li>

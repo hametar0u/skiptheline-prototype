@@ -2,8 +2,6 @@
 <html lang="en">
 
 <head>
-  <!-- <script defer src="../../node_modules/swup/dist/swup.min.js"></script> -->
-  <!-- <script defer src="../../public/scripts/scripts.js"></script> -->
   <link rel="stylesheet" href="stylesheets/styles.css">
   <div class="header">
     <img src="images/logo.png" class="logo_img">
@@ -39,28 +37,37 @@ SUNDAY, APRIL 12, 2020
 </head>
 
 <body>
-  <!-- <main id="swup" class="transition-wipe"> -->
-    <table style="margin:auto;">
-      <tr>
-        <th>Order ID</th>
-        <th>Item</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Date</th>
-      </tr>
-      <% if(rows != undefined) {%>
-        <% rows.forEach(function(r) { %>
-          <tr>
-            <td><%= r.order_id %> </td>
-            <td><%= r.item %> </td>
-            <td><%= r.price %> </td>
-            <td><%= r.quantity %> </td>
-            <td><%= r.date %> </td>
-          </tr>
-        <% }); %>
-      <%}%>
-    </table>
-  <!-- </main> -->
+  <svg id="fader"></svg>
+    <script>
+      window.addEventListener('pageshow', function(event){
+        document.getElementById('fader').removeAttribute('class', 'fade-in');
+        document.getElementById('fader').setAttribute('class', 'fade-out');
+      });
+    </script>
+    <% if (rows == []) { %>
+      <h1>You Don't Have Any Pending Orders</h1>
+    <%} else {%>
+      <table style="margin:auto;">
+        <tr>
+          <th>Order ID</th>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Date</th>
+        </tr>
+        <% if(rows != undefined) {%>
+          <% rows.forEach(function(r) { %>
+            <tr>
+              <td><%= r.order_id %> </td>
+              <td><%= r.item %> </td>
+              <td><%= r.price %> </td>
+              <td><%= r.quantity %> </td>
+              <td><%= r.date %> </td>
+            </tr>
+          <% }); %>
+        <%}%>
+      </table>
+    <%}%>
 </body>
 
 </html>

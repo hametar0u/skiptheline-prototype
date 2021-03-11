@@ -3,19 +3,19 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript" src="/public/scripts/scripts.js"></script>
-    <!-- <script defer src="../../node_modules/swup/dist/swup.min.js"></script> -->
-    <script defer src="../../public/scripts/scripts.js"></script>
     <link rel="stylesheet" href="stylesheets/styles.css">
 
     <title>Order Now</title>
     
+  
+
+
     <div class="header">
       <img src="images/logo.png" class="logo_img">
       <h1 style="text-align:left; display:inline-block; font-size: 200%;margin-block-start: 0em; margin-block-end: 0em;">SKIP THE LINE</h1>
       <div class="navbar">
-        <form class="navbar_element" action="/order_management" method="GET">
-          <input class="navbar_button" type="submit" value="Order Management">
+        <form class="navbar_element" action="/pending_orders" method="GET">
+          <input class="navbar_button" type="submit" value="Pending Orders">
         </form>
         <form class="navbar_element" action="/order_history" method="GET">
           <input class="navbar_button" type="submit" value="Order History">
@@ -26,20 +26,89 @@
         <form class="navbar_element" action="/order_now" method="GET">
           <input class="navbar_button" type="submit" value="Order Now">
         </form>
-        <form class="navbar_element" action="/pending_orders" method="GET">
-          <input class="navbar_button" type="submit" value="Pending Orders">
-        </form>
         <form class="navbar_element" method="POST" action="/logout">
           <input class="logout_button" type="submit" value="Log Out">
         </form>
       </div>
     </div>
   </head>
-  
-  <body style="margin-top: 150px;">
-    <!-- <main id="swup" class="transition-wipe"> -->
+  <script>
+    function showCart() {
+      document.getElementById("cart_div").style.width = '25%';
+      document.getElementById("cart_div").style.height = '100%';
+      document.getElementById("close_cart_button").style.fontSize = '48px';
+      document.getElementById("order_now_div").style.marginRight = '30%';
+    }
+
+    function hideCart() {
+      document.getElementById("cart_div").style.width = 0;
+      document.getElementById("cart_div").style.height = 0;
+      document.getElementById("close_cart_button").style.fontSize = 0;
+      document.getElementById("order_now_div").style.marginRight = 0;
+    }
+  </script>
+
+  <body>
+  <!-- swipe page transition thing -->
+    <svg id="fader"></svg>
+    <script>
+      window.addEventListener('pageshow', function(event){
+        document.getElementById('fader').removeAttribute('class', 'fade-in');
+        document.getElementById('fader').setAttribute('class', 'fade-out');
+      });
+    </script>
+
+    <!-- cart -->
+    <div id="cart_div" class="cart">
+      <h1>Cart</h1>
+      <table>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Remove</th>
+        </tr>
+        <% if(row4.cartrow != undefined) {%>
+          <% var subtotal = 0; %>
+          <% row4.cartrow.forEach(function(r) { %>
+            <tr>
+              <td style="padding-top: 10px; padding-bottom: 10px;"><%= r.name %> </td>
+              <td style="padding-top: 10px; padding-bottom: 10px;"><%= r.price %> </td>
+              <td style="padding-top: 10px; padding-bottom: 10px;"><%= r.amount %> </td>
+              <form class="order_now_cart" action="/remove_from_cart" method="POST">
+                <td style="padding-top: 10px; padding-bottom: 10px;"><input class="remove_button" type="submit" value="remove" style="font-family: 'Helvetica Neue',sans-serif; font-size:15px"></td>
+                <input type="hidden" value="<%=r.name%>" name="item_name" id="item_name">       
+              </form>
+            </tr>
+            <%subtotal += r.price*r.amount%>
+          <% }); %>
+      </table>
+          <form action="/remove_all_from_cart" method="POST">
+            <input class="remove_all_button" type="submit" value="Remove All" style="font-family: 'Helvetica Neue',sans-serif; font-size:15px">
+          </form>
+          <% subtotal = Math.round((subtotal + Number.EPSILON) * 100) / 100; %>
+          <h2>Subtotal: <%= subtotal %></h2>
+        <% } %>
+
+      <form action="confirm_order" method="GET">
+        <input class="submit_button" type="submit" value="Confirm Order">
+      </form>
+    </div>
+    <!-- close cart button -->
+    <div id="close_cart_div">
+      <a href="javascript:void(0)" id="close_cart_button" onclick="hideCart()" style="text-align: right;">&times;</a>
+    </div>
+
+
+    <!-- main body -->
+    <div id="order_now_div" class="order_now">
+      <!-- open button for the cart -->
+      <div id="cart_arrow">
+        <img id="cart_arrow" src="images/shopping-cart-icon-vector.jpg" alt="&lt;- cart" onclick="showCart()">
+      </div>
+
+      <!-- the rest of the menu item cards -->
       <h3>Showing Results for: <%= row3.chosenDate %></h3>
-      <div class="order_now">
       <h1>Food Items</h1>
         <% var r = row1.fRows; %>
         <% for (var i=0; i<r.length; i++) {%>
@@ -54,70 +123,22 @@
             </form>
           </div>
         <%}%>
-      </div>
-      <div class="order_now">
 
-        <h1>Drink Items</h1>
-        
-        <% row2.dRows.forEach((r) => { %>
-          <div class="item_card">
-            <h2><%=r.item%> - <%=r.price%></h2>
-            <form action="/add_to_cart" method="POST">
-              <img class="product_image" src="images/<%=r.item%>.jpg">
-              <input type="hidden" value="<%=r.item%>" name="item_name" id="item_name">
-              <label id="amount" for="item_quantity">Amount</label>
-              <input name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
-              <!-- <div class="number-input">
-                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" ></button>
-                <input class="item_quantity" min="0" name="item_quantity" value="1" type="number">
-                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
-              </div> -->
-              <input class="add_to_cart_button" id="item_submit" type="submit" value="Add To Cart">
-            </form>
-          </div>
-    
-        <% }); %>
-      </div>
-      <div class="cart">
-        <div class="cart_arrow" style="display:inline-block;">
-          <img src="images/Unknown.png" style="width:70px;">
+      <h1>Drink Items</h1>
+      
+      <% row2.dRows.forEach((r) => { %>
+        <div class="item_card">
+          <h2><%=r.item%> - <%=r.price%></h2>
+          <form action="/add_to_cart" method="POST">
+            <img class="product_image" src="images/<%=r.item%>.jpg">
+            <input type="hidden" value="<%=r.item%>" name="item_name" id="item_name">
+            <label id="amount" for="item_quantity">Amount</label>
+            <input name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
+            <input class="add_to_cart_button" id="item_submit" type="submit" value="Add To Cart">
+          </form>
         </div>
-        <div style="display:inline-block;">
-          <h1>Cart</h1>
-          <table style="margin:auto;">
-            <tr>
-              <th>Item</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Remove</th>
-            </tr>
-            <% if(row4.cartrow != undefined) {%>
-              <% var subtotal = 0; %>
-              <% row4.cartrow.forEach(function(r) { %>
-                <tr>
-                  <td><%= r.name %> </td>
-                  <td><%= r.price %> </td>
-                  <td><%= r.amount %> </td>
-                  <form class="order_now_cart" action="/remove_from_cart" method="POST">
-                    <td><input class="remove_button" type="submit" value="remove" style="font-family: 'Helvetica Neue',sans-serif; font-size:15px"></td>
-                    <input type="hidden" value="<%=r.name%>" name="item_name" id="item_name">       
-                  </form>
-                </tr>
-                <%subtotal += r.price*r.amount%>
-                <% }); %>
-              </table>
-              <form action="/remove_all_from_cart" method="POST">
-                <input class="remove_all_button" type="submit" value="Remove All" style="font-family: 'Helvetica Neue',sans-serif; font-size:15px">
-              </form>
-              <% subtotal = Math.round((subtotal + Number.EPSILON) * 100) / 100; %>
-              <h2>Subtotal: <%= subtotal %></h2>
-              <% } %>
-              
-              <form action="confirm_order" method="GET">
-                <input class="submit_button" type="submit" value="Confirm Order">
-              </form>
-        </div>
-      </div>
-    <!-- </main> -->
+  
+      <% }); %>
+    </div>
   </body>
-  </html>
+</html>

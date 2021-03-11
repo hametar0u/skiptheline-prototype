@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" style="background-color: #60D5DA;">
-<head>
+  <head>
 
   <!--<script type="text/javascript">
     var window.parentPage = true;
@@ -12,7 +12,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   
-  <script defer src="../node_modules/swup/dist/swup.min.js"></script>
   <script defer src="../public/scripts/scripts.js"></script>
   
   <title> Log In - Skip The Line </title>
@@ -20,39 +19,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-</head>
-    
-<body style="background-color:#60D5DA;">
-
+  </head>
+  
+  <body style="background-color:#60D5DA;">
+    <svg id="fader"></svg>
+    <script>
+      window.addEventListener('pageshow', function(event){
+        // document.getElementById('fader').removeAttribute('class', 'fade-in');
+        // document.getElementById('fader').setAttribute('class', 'fade-out');
+        document.getElementById('fader').setAttribute('class', 'wipe-left');
+      });
+    </script>
     <div class="header" style=" background-color: white;">
      <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
      <img src="images/logo-teal.png" class="logo_img" style="width:75px;">
     </div>
     
-    <main id="swup" class="transition-wipe">
-      <div class='loginbox'>
-        <h1 class='logintext'>Log In</h1>
+    <div class='loginbox'>
+      <h1 class='logintext'>Log In</h1>
 
-        <div class='loginfields'>
-          <form method="POST" action="/login">
-            <p>
-                <input required type="text" name="username" id="username"
-                placeholder="Email" >
-            </p>
-            <p>
-                <input required type="password" name="password" id="password" placeholder="Password">
-            </p>
-                <!-- <input class="submit_button" type="submit" value="Login"> -->
-                <input class="submit_button" type="submit" value="Login">
-
-                
-          </form>
-        
-          <p style="text-align: center; padding-top:20px; padding-bottom:0%;"> Don't have an account? <br> 
-          Sign up <a href="sign_up.html"> here </a></p>
-        </div>
+      <div class='loginfields'>
+        <form method="POST" action="/login">
+          <p>
+              <input required type="text" name="username" id="username"
+              placeholder="Email" >
+          </p>
+          <p>
+              <input required type="password" name="password" id="password" placeholder="Password">
+          </p>
+              <input class="submit_button" type="submit" value="Login">
+        </form>
+      
+        <p style="text-align: center; padding-top:20px; padding-bottom:0%;"> Don't have an account? <br> 
+        Sign up <a href="sign_up.html"> here </a></p>
       </div>
-    </main>
-</body>
+    </div>
+  </body>
+  <script>
 
+  </script>
 </html>
