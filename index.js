@@ -1,6 +1,5 @@
 //Next week
 //only display cart when there's something inside cart and message otherwise
-<<<<<<< HEAD
 //pages that need CSS fixing:
 //  admin dashboard -- HIGH
 //  menu -- HIGH
@@ -11,18 +10,6 @@
 //  confirmation code -- LOW
 //better wipe transition -- youtube
 //make images more robust
-=======
-//transitions fadeout or wipes <- youtube
-//fix menu page CSS
-//make images more robust
-
-//Tuesday
-//why cart onclick is trolling
-//make order management workable
-
-//Pending
-//mobile compatibility
->>>>>>> e3859f50e75ebf960f78635a43d7edaaa3149b85
 
 // IMPROVEMENTS:
 // make the date format readable
@@ -35,13 +22,9 @@
 
 //Pending:
 //change sendgrid to actual STL email
-<<<<<<< HEAD
 //Integrate React by refactoring the entire code
 //mobile compatibility
 
-=======
-//hook front end to back end
->>>>>>> e3859f50e75ebf960f78635a43d7edaaa3149b85
 
 // talk about what happens with the club afterwards
 
