@@ -37,7 +37,7 @@ const path = require('path');
 const PORT = process.env.PORT || 5000 
 const { Pool } = require('pg');
 var pool;
-var LOCAL_DEV_FLAG = false;
+var LOCAL_DEV_FLAG = true;
 if (LOCAL_DEV_FLAG){
   pool = new Pool ({
     user: 'postgres',
