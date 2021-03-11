@@ -2,8 +2,8 @@
 //only display cart when there's something inside cart and message otherwise
 //pages that need CSS fixing:
 //  admin dashboard -- HIGH
-//  menu -- HIGH
 //  order management -- HIGH
+//  menu -- MEDIUM
 //  order now (cart table kinda jank) -- MEDIUM
 //  login failure -- LOW
 //  sign up -- LOW
@@ -18,6 +18,8 @@
 
 //problems:
 //no checks against wrong confirmation code
+//although orders on the same date get the same order ID they don't combine into a single item
+//order management not one card per order -- test code in default template.html
 //stripe receipt email not sending through --  might be the test api key
 
 //Pending:
@@ -35,7 +37,7 @@ const path = require('path');
 const PORT = process.env.PORT || 5000 
 const { Pool } = require('pg');
 var pool;
-var LOCAL_DEV_FLAG = false;
+var LOCAL_DEV_FLAG = true;
 if (LOCAL_DEV_FLAG){
   pool = new Pool ({
     user: 'postgres',

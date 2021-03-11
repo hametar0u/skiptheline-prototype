@@ -1,28 +1,78 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <!-- <script defer src="../../node_modules/swup/dist/swup.min.js"></script> -->
       <script defer src="../../public/scripts/scripts.js"></script>
       <link rel="stylesheet" href="stylesheets/styles.css">
-
-
-      <form action="/order_now" method="GET">
-        <input type="submit" value="back to order now">
-      </form>
+      <div class="header">
+        <img src="images/logo.png" class="logo_img">
+        <h1 style="text-align:left; display:inline-block; font-size: 200%;margin-block-start: 0em; margin-block-end: 0em;">SKIP THE LINE</h1>
+        <div class="navbar">
+          <form class="navbar_element" action="/admin_dashboard" method="GET">
+            <input class="navbar_button" type="submit" value="Back to Dashboard">
+          </form>
+          <form class="navbar_element" action="/date_select" method="GET">
+            <input class="navbar_button" type="submit" value="Customer View">
+          </form>
+          <form class="navbar_element" method="POST" action="/logout">
+            <input class="logout_button" type="submit" value="Log Out">
+          </form>
+      </div>
+    </div>
+    <!-- 
+    IMPROVEMENTS:
+    - Group orders on separate days under separate headings
+    - Make the Order ID the main focus
+    - the weird grid-like format from my original looks pretty cool ngl
+    -->
     </head>
     <body>   
-          <h5>Order ID - Item - Price - Amount - Date</h5>
-          <!-- <main id="swup" class="transition-wipe"> -->
-          <% rows.forEach((r) => { %>
-              <div class="item_card">
-                <h5><%= r.order_id %> - <%= r.item %> - <%= r.price %> – <%= r.quantity%> – <%= r.date %></h5>
+        <table style="margin:auto;">
+          <tr>
+            <th>Order ID</th>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Date</th>
+            <th>Complete Order</th>
+          </tr>
+          <% if(rows != undefined) {%>
+            <% rows.forEach(function(r) { %>
+              <tr>
+                <td><%= r.order_id %> </td>
+                <td><%= r.item %> </td>
+                <td><%= r.price %> </td>
+                <td><%= r.quantity %> </td>
+                <td><%= r.date %> </td>
                 <form action="/fulfill_order" method="POST">
                   <input type="hidden" value="<%=r.order_id%>" name="order_id" id="order_id">
-                  <input id="item_submit" type="submit" value="Complete Order">
+                  <td><input class="remove_button" id="item_submit" type="submit" value="Complete Order"></td>
+                </form>
+              </tr>
+            <% }); %>
+          <%}%>
+        </table>
+          <% rows.forEach((r) => { %>
+              <div class="item_card">
+                <h2><%= r.order_id%></h2>
+                <h3><%= r.date%></h3>
+                <table style="margin:auto;" class="order_management_table">
+                  <tr>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                  </tr>
+                  <tr>
+                    <td><%= r.item %> </td>
+                    <td><%= r.price %> </td>
+                    <td><%= r.quantity %> </td>
+                  </tr>
+                </table>
+                <form action="/fulfill_order" method="POST">
+                  <input type="hidden" value="<%=r.order_id%>" name="order_id" id="order_id">
+                  <td><input class="remove_button" id="item_submit" type="submit" value="Complete Order"></td>
                 </form>
               </div>
               <!-- there should only be one button per order -->
-            <% }); %>
-         <!-- </main> -->
+          <% }); %>
     </body>
 </html>

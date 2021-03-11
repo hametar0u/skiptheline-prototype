@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../public/stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/styles.css">
     <title>admin dashboard
     </title>
@@ -21,11 +20,15 @@
       </div>
 </head>
 <body>
-    <form action="/menu">
-        <input class="submit_button" type="submit" value="Edit Menu">
-    </form>
-    <form action="/order_management">
-        <input type="submit" class="submit_button" value="Manage Orders">
-    </form>
+    <div id="admin_button_div">
+
+        <form action="/menu">
+            <input class="admin_button" type="submit" value="Edit Menu">
+            <!-- these classes disappear and I don't know why -->
+        </form>
+        <form action="/order_management">
+            <input class="admin_button" type="submit"  value="Manage Orders">
+        </form>
+    </div>
 </body>
 </html>

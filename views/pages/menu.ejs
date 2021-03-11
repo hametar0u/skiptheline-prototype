@@ -16,57 +16,41 @@
                 <input class="logout_button" type="submit" value="Log Out">
               </form>
             </div>
-          </div>
+        </div>
     </head>
-    <body>
+    <body style="text-align: center;">
         <!-- <main id="swup" class="transition-wipe"> -->
             <!--error message here but it didn't work-->
-            <div id="menu_add">
-                <h3>Add Food Menu Item</h3>
+            <div id="menu_add" class="menu_action">
+                <h2>Add Food Menu Item</h2>
                 <form method="POST" action="/menu_add">
-                    <label for="menuItemAdd">Item</label>
-                    <input class="loginfields" required type="text" name="menuItemAdd" id="menuItemAdd" placeholder="Item">
-
-                    <label for="itemPrice">Price</label>
-                    <input required type="number" step="0.05" min="0" name="menuItemPrice" id="itemPrice" placeholder="0.00">
-                    
-                    <label for="menuItemStartDate">Start Date For Which it is Available</label>
-                    <input class="loginfields" required type="date" name="menuItemStartDate" id="menuItemStartDate">
-
-                    <h3>
-                        End Date For Which it is Available
-                    </h3>
-                    <input class="loginfields" required type="date" name="menuItemEndDate" id="menuItemEndDate">
-
-                    <input class="submit_button" type="submit" value="Add Menu Item">
+                    <input class="menufields" required type="text" name="menuItemAdd" id="menuItemAdd" placeholder="Item">
+                    <input class="menufields" required type="number" step="0.05" min="0" name="menuItemPrice" id="itemPrice" placeholder="0.00">
+                    <h3 style="margin-block-start: 0em;margin-block-end: 0em;">Available Starting:</h3>
+                    <input class="menufields" required type="date" name="menuItemStartDate" id="menuItemStartDate">
+                    <h3 style="margin-block-start: 0em;margin-block-end: 0em;">To:</h3>
+                    <input class="menufields" required type="date" name="menuItemEndDate" id="menuItemEndDate">
+                    <input class="submit_button" type="submit" value="Add Menu Item" style="margin-bottom: 1.5em; width: 75%;">
                 </form> <!--add multiple simultaneous add options-->
             </div>
-            <div id="menu_add"> <!-- add form for food type-->
-                <h3>Add Drink Menu Item</h3>
+            <div id="menu_add" class="menu_action"> <!-- add form for food type-->
+                <h2>Add Drink Menu Item</h2>
                 <form method="POST" action="/drink_menu_add">
-                    <label for="drinkMenuItemAdd">Item</label>
-                    <input required type="text" name="drinkMenuItemAdd" id="drinkMenuItemAdd" placeholder="Item">
-
-                    <label for="drinkItemPrice">Price</label>
-                    <input required type="number" step="0.05" min="0" name="drinkMenuItemPrice" id="drinkItemPrice" placeholder="0.00">
-                
-
-                    <input class="submit_button" type="submit" value="Add Drink Menu Item">
+                    <input class="menufields" required type="text" name="drinkMenuItemAdd" id="drinkMenuItemAdd" placeholder="Item">
+                    <input class="menufields" required type="number" step="0.05" min="0" name="drinkMenuItemPrice" id="drinkItemPrice" placeholder="0.00">
+                    <input class="submit_button" type="submit" value="Add Drink Menu Item" style="margin-bottom: 1.5em; width: 75%;">
                 </form> <!--add multiple simultaneous add options-->
             </div>
-            <div id="menu_remove">
-                <h3>Remove Food Menu Item For a Certain Date Range</h3>
+            <div id="menu_remove" class="menu_action">
+                <h2>Remove Food Menu Item For a Certain Date Range</h2>
                 <form method="POST" action="/menu_remove">
-                    <label for="menuItemRemove">Item</label>
-                    
-                    <input required type="text" name="menuItemRemove" id="menuItemRemove" placeholder="Item">
-                    <label for="menuDateRemove">Date</label>
-                    <input required type="date" name="menuDateRemove" id="menuDateRemove" placeholder="Date">
-                    <input class="submit_button" type="submit" value="Make Menu Item Unavailable">
+                    <input class="menufields" required type="text" name="menuItemRemove" id="menuItemRemove" placeholder="Item">
+                    <input class="menufields" required type="date" name="menuDateRemove" id="menuDateRemove" placeholder="Date">
+                    <input class="submit_button" type="submit" value="Make Menu Item Unavailable" style="margin-bottom: 1.5em; width: 75%;">
                 </form> <!--add toggle availability from table itself-->
             </div>
             <div id="menu">
-                <h2>Food Menu</h2>
+                <h1>Food Menu</h1>
                 <table style="margin:auto;">
                     <tr>
                       <th>Item</th>
@@ -87,7 +71,7 @@
                 </table>
                   
                   
-                <h2>Drink Menu</h2>
+                <h1>Drink Menu</h1>
                 <table style="margin:auto;">
                     <tr>
                     <th>Item</th>
