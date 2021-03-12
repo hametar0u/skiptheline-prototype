@@ -21,7 +21,9 @@
     <body style="text-align: center;">
         <!-- <main id="swup" class="transition-wipe"> -->
             <!--error message here but it didn't work-->
-            <div id="menu_add" class="menu_action">
+        <div class="flex-container">
+
+            <div id="menu_add" class="column">
                 <h2>Add Food Menu Item</h2>
                 <form method="POST" action="/menu_add">
                     <input class="menufields" required type="text" name="menuItemAdd" id="menuItemAdd" placeholder="Item">
@@ -33,7 +35,7 @@
                     <input class="submit_button" type="submit" value="Add Menu Item" style="margin-bottom: 1.5em; width: 75%;">
                 </form> <!--add multiple simultaneous add options-->
             </div>
-            <div id="menu_add" class="menu_action"> <!-- add form for food type-->
+            <div id="menu_add" class="column"> <!-- add form for food type-->
                 <h2>Add Drink Menu Item</h2>
                 <form method="POST" action="/drink_menu_add">
                     <input class="menufields" required type="text" name="drinkMenuItemAdd" id="drinkMenuItemAdd" placeholder="Item">
@@ -41,7 +43,7 @@
                     <input class="submit_button" type="submit" value="Add Drink Menu Item" style="margin-bottom: 1.5em; width: 75%;">
                 </form> <!--add multiple simultaneous add options-->
             </div>
-            <div id="menu_remove" class="menu_action">
+            <div id="menu_remove" class="column">
                 <h2>Remove Food Menu Item For a Certain Date Range</h2>
                 <form method="POST" action="/menu_remove">
                     <input class="menufields" required type="text" name="menuItemRemove" id="menuItemRemove" placeholder="Item">
@@ -49,6 +51,7 @@
                     <input class="submit_button" type="submit" value="Make Menu Item Unavailable" style="margin-bottom: 1.5em; width: 75%;">
                 </form> <!--add toggle availability from table itself-->
             </div>
+        </div>
             <div id="menu">
                 <h1>Food Menu</h1>
                 <table style="margin:auto;">
@@ -57,6 +60,7 @@
                       <th>Price</th>
                       <th>Start Date</th>
                       <th>End Date</th>
+                      <th>Remove</th>
                     </tr>
                     <% if(row1.fRows != undefined) {%>
                       <% row1.fRows.forEach(function(r) { %>
@@ -65,6 +69,10 @@
                           <td><%= r.price %> </td>
                           <td><%= r.startdate %> </td>
                           <td><%= r.enddate %> </td>
+                          <form action="/food_menu_remove" method="POST">
+                            <input type="hidden" value="<%=r.item%>" name="food_item" id="food_item">
+                            <td><input class="remove_button" id="item_submit" type="submit" value="Remove"></td>
+                          </form>
                         </tr>
                       <% }); %>
                     <%}%>
@@ -76,12 +84,17 @@
                     <tr>
                     <th>Item</th>
                     <th>Price</th>
+                    <th>Remove</th>
                     </tr>
                     <% if(row2.dRows != undefined) {%>
                     <% row2.dRows.forEach(function(r) { %>
                         <tr>
                         <td><%= r.item %> </td>
                         <td><%= r.price %> </td>
+                        <form action="/drink_menu_remove" method="POST">
+                            <input type="hidden" value="<%=r.item%>" name="drink_item" id="drink_item">
+                            <td><input class="remove_button" id="item_submit" type="submit" value="Remove"></td>
+                          </form>
                         </tr>
                     <% }); %>
                     <%}%>

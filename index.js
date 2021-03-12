@@ -3,7 +3,7 @@
 //pages that need CSS fixing:
 //  order management -- HIGH
 //  menu -- MEDIUM
-//  order now (cart table kinda jank) -- MEDIUM
+//  order now (cart table kinda jank cuz adding hamburger pushes the table off the screen) -- MEDIUM
 //  login failure -- LOW
 //  sign up -- LOW
 //  confirmation code -- LOW
@@ -1017,6 +1017,32 @@ app.post('/menu_remove', function (req, res) {
   var menuItemRemove = req.body.menuItemRemove; //temporary
   var menuDateRemove = req.body.menuDateRemove;
   var menuRemoveQuery = `DELETE FROM foodmenu WHERE item = '${menuItemRemove}' AND '${menuDateRemove}' >= startdate AND '${menuDateRemove}' <= enddate;`;
+  pool.query(menuRemoveQuery, (error, result) => {
+    if (error) {
+      console.log(error);
+      res.redirect("/error");
+    }
+    else {
+      res.redirect('/menu');
+    }
+  });
+});
+app.post('/food_menu_remove', function (req, res) {
+  var menuItemRemove = req.body.food_item; //temporary
+  var menuRemoveQuery = `DELETE FROM foodmenu WHERE item = '${menuItemRemove}';`;
+  pool.query(menuRemoveQuery, (error, result) => {
+    if (error) {
+      console.log(error);
+      res.redirect("/error");
+    }
+    else {
+      res.redirect('/menu');
+    }
+  });
+});
+app.post('/drink_menu_remove', function (req, res) {
+  var menuItemRemove = req.body.drink_item; //temporary
+  var menuRemoveQuery = `DELETE FROM drinkmenu WHERE item = '${menuItemRemove}';`;
   pool.query(menuRemoveQuery, (error, result) => {
     if (error) {
       console.log(error);

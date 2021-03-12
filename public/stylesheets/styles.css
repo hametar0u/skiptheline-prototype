@@ -64,6 +64,10 @@ button, input, optgroup, select, textarea {
   line-height: inherit;
 }
 
+input[type=submit] {
+  overflow-wrap: break-word;
+}
+
 button {
   background: #889494;
   color: white;
@@ -116,7 +120,7 @@ button:hover {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  width:70%;
+  width:65%;
 }
 .navbar_element {
   width: 100%;
@@ -366,7 +370,8 @@ th {
 .admin_button {
     background-color: #889494;
     color: white;
-    font-size: 200%;
+    font-size: 150%;
+    text-align: center;
     padding: 1em 1.8em;
     border-style: none;
     outline-style: none;
@@ -591,6 +596,22 @@ th {
   background-color: white;
   padding-left: 3%;
   padding-right: 3%;
+}
+
+.flex-container{
+  width: 80%;
+  min-height: 300px;
+  margin: 0 auto;
+  display: -webkit-flex; /* Safari */     
+  display: flex; /* Standard syntax */
+}
+.flex-container .column{
+  margin: auto 1em;
+  padding: 10px;
+  background: #dbdfe5;
+  -webkit-flex: 1; /* Safari */
+  -ms-flex: 1; /* IE 10 */
+  flex: 1; /* Standard syntax */
 }
 
 .menu_action {
