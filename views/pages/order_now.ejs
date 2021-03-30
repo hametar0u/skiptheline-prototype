@@ -108,7 +108,7 @@
       </div>
 
       <!-- the rest of the menu item cards -->
-      <h3>Showing Results for: <%= row3.chosenDate %></h3>
+      <h3>Showing Results for: <%= row3.chosenDate.slice(0,10) %></h3>
       <h1>Food Items</h1>
         <% var r = row1.fRows; %>
         <% for (var i=0; i<r.length; i++) {%>

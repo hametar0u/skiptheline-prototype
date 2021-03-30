@@ -12,6 +12,9 @@
             <form action="/confirmation" method="POST" >
                 <h1>Type Your Confirmation Code Below</h1>
                 <input type="text" id="code" name="code">
+                <% if (confirmed == false) { %>
+                    <p style="color: red; margin-top: 0">Wrong confirmation code. Please try again.</p> 
+                <% } %>
                 <input class="code_button" type="submit" value="submit">
             </form> 
         </div>

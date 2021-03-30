@@ -12,12 +12,10 @@
 //make images more robust
 
 // IMPROVEMENTS:
-// make the date format readable
+// make the date format readable -- partially solved except pending orders/order history
 //check if the db queries on the order now have already been run and if so just don't run it
 
 //problems:
-//no checks against wrong confirmation code
-//although orders on the same date get the same order ID they don't combine into a single item
 //order management not one card per order -- test code in default template.html
 //stripe receipt email not sending through --  might be the test api key
 
@@ -38,7 +36,7 @@ const path = require('path');
 const PORT = process.env.PORT || 5000 
 const { Pool } = require('pg');
 var pool;
-var LOCAL_DEV_FLAG = false;
+var LOCAL_DEV_FLAG = true;
 if (LOCAL_DEV_FLAG){
   pool = new Pool ({
     user: 'postgres',
@@ -436,7 +434,7 @@ app.post('/createaccount', (req, res) => {
         });
       
         req.session.confcode = confcode;
-        res.render("pages/confirmation_code.ejs");
+        res.render("pages/confirmation_code.ejs", {"confirmed": true});
       }
     }
   });
@@ -499,7 +497,7 @@ app.post('/confirmation', (req, res) => {
     //go to SQL table and change boolean to 1
   }
   else {
-    res.redirect("/error");
+    res.render("pages/confirmation_code.ejs", {"confirmed": false});
   }
 });
 
@@ -703,6 +701,7 @@ app.post('/date_select', async (req,res) => {
   var chosenDate = new Date(req.body.selectDate);
   chosenDate = chosenDate.toISOString();
   var dateObject = {'chosenDate': chosenDate};
+  console.log(dateObject);
 
   if (req.session.chosenDate != chosenDate) {
     cart.clearItems();
