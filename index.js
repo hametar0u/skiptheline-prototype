@@ -14,7 +14,6 @@
 // IMPROVEMENTS:
 // make the date format readable
 //check if the db queries on the order now have already been run and if so just don't run it
-//make pending orders look nice
 
 //problems:
 //no checks against wrong confirmation code
@@ -23,8 +22,10 @@
 //stripe receipt email not sending through --  might be the test api key
 
 //Pending:
+//edit/forgot password
 //change sendgrid to actual STL email
 //Integrate React by refactoring the entire code
+//random idea for security but we should log all the actions of admin and sudo accounts (ehem mihoyo)
 //mobile compatibility
 
 
@@ -377,6 +378,7 @@ app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => res.redirect('login.html'));
 app.get('/login', (req, res) => res.redirect('login.html'));
+app.get('/test', (req, res) => res.redirect('test_page.html'));
 
 app.get('/my_secret_page', checkAdmin2, function (req, res) {
   res.send('if you are viewing this page it means the function works');
@@ -495,6 +497,9 @@ app.post('/confirmation', (req, res) => {
     });
     console.log("create account query complete");
     //go to SQL table and change boolean to 1
+  }
+  else {
+    res.redirect("/error");
   }
 });
 
