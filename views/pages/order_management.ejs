@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <head>
+  <head>
       <script defer src="../../public/scripts/scripts.js"></script>
       <link rel="stylesheet" href="stylesheets/styles.css">
       <div class="header">
@@ -21,58 +21,72 @@
     <!-- 
     IMPROVEMENTS:
     - Group orders on separate days under separate headings
-    - Make the Order ID the main focus
-    - the weird grid-like format from my original looks pretty cool ngl
     -->
-    </head>
-    <body>   
-        <table style="margin:auto;">
-          <tr>
-            <th>Order ID</th>
-            <th>Item</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Date</th>
-            <th>Complete Order</th>
-          </tr>
-          <% if(rows != undefined) {%>
-            <% rows.forEach(function(r) { %>
+
+  </head>
+  <body>    
+    <% if(rows != undefined) {%>
+      <h1 style="text-align: left;"><%= rows[0].date.toString().slice(0,15) %></h1>
+      <div class="row">
+        <div class="item_card">
+          <h2><%= rows[0].order_id%></h2>
+          <form action="/fulfill_order" method="POST">
+            <input type="hidden" value="<%=rows[0].order_id%>" name="order_id" id="order_id">
+            <input class="remove_button" id="item_submit" type="submit" value="Complete Order">
+          </form>
+          <table>
+            <tr>
+              <th>Item</th>
+              <th>Price</th>
+              <th>Quantity</th>
+            </tr>
+            <tr>
+              <td><%= rows[0].item %> </td>
+              <td><%= rows[0].price %> </td>
+              <td><%= rows[0].quantity %> </td>
+            </tr>
+         
+  
+      <% for ( var i=1; i<rows.length; i++ ) { %> 
+        <% var today = rows[i].date.toString().slice(0,15); %> 
+        <% var yesterday = rows[i-1].date.toString().slice(0,15); %> 
+        <!-- if the order IDs are different make a new item card -->
+        <% if ( rows[i].order_id != rows[i-1].order_id ) { %> 
+          </table>
+        </div>
+        <!-- if the dates are different make a new row -->
+          <% if ( today != yesterday ) { %> 
+      </div>
+            <h1 style="text-align: left;"><%= today%></h1>
+            <div class="row">
+          <% } %>
+          <div class="item_card">
+            <h2><%= rows[i].order_id%></h2>
+            <form action="/fulfill_order" method="POST">
+              <input type="hidden" value="<%=rows[i].order_id%>" name="order_id" id="order_id">
+              <input class="remove_button" id="item_submit" type="submit" value="Complete Order">
+            </form>
+            <table>
               <tr>
-                <td><%= r.order_id %> </td>
-                <td><%= r.item %> </td>
-                <td><%= r.price %> </td>
-                <td><%= r.quantity %> </td>
-                <td><%= r.date %> </td>
-                <form action="/fulfill_order" method="POST">
-                  <input type="hidden" value="<%=r.order_id%>" name="order_id" id="order_id">
-                  <td><input class="remove_button" id="item_submit" type="submit" value="Complete Order"></td>
-                </form>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Quantity</th>
               </tr>
-            <% }); %>
-          <%}%>
-        </table>
-          <% rows.forEach((r) => { %>
-              <div class="item_card">
-                <h2><%= r.order_id%></h2>
-                <h3><%= r.date%></h3>
-                <table style="margin:auto;" class="order_management_table">
-                  <tr>
-                    <th>Item</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                  </tr>
-                  <tr>
-                    <td><%= r.item %> </td>
-                    <td><%= r.price %> </td>
-                    <td><%= r.quantity %> </td>
-                  </tr>
-                </table>
-                <form action="/fulfill_order" method="POST">
-                  <input type="hidden" value="<%=r.order_id%>" name="order_id" id="order_id">
-                  <td><input class="remove_button" id="item_submit" type="submit" value="Complete Order"></td>
-                </form>
-              </div>
-              <!-- there should only be one button per order -->
-          <% }); %>
-    </body>
+              <tr>
+                <td><%= rows[i].item %> </td>
+                <td><%= rows[i].price %> </td>
+                <td><%= rows[i].quantity %> </td>
+              </tr>
+        <% } else { %>
+          <tr>
+            <td><%= rows[i].item %> </td>
+            <td><%= rows[i].price %> </td>
+            <td><%= rows[i].quantity %> </td>
+          </tr>
+        <% } %>
+        </div>
+      </div>
+    <% } %>
+  <% } %> 
+  </body>
 </html>

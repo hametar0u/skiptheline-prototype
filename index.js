@@ -18,6 +18,9 @@
 //problems:
 //order management not one card per order -- test code in default template.html
 //stripe receipt email not sending through --  might be the test api key
+//order ID not tested for duplicates
+//missing complete order button on the last item -- moved to before the table but does it look jank?
+//the selected date is one more than the date actually selected
 
 //Pending:
 //edit/forgot password
@@ -602,6 +605,70 @@ app.post('/login',  (req, res) => {
   })
 }); 
 
+app.get('/edit_password', (req,res) => {
+  res.render('pages/edit_password.ejs', {'pwd_correct': 1});
+});
+
+app.post('/edit_password', checkAuth, (req,res) => {
+  var opwd = req.body.opwd;
+  var pwd = req.body.pwd;
+  console.log("opwd= ", opwd);
+  console.log("req.session.username= ", req.session.username); //req.session.usr undefined for whatever reason
+  var pwdConfirmQuery = `select * from users where users.username = '${req.session.username}' AND password = crypt('${opwd}', password)`;
+  req.session.pwd_correct = 0;
+  pool.query(pwdConfirmQuery, (error, result) => {
+    if(error) {
+      console.log(error);
+      res.redirect("/error");
+    }
+    else {
+      var pwd_array = [];
+      for (var i = 0; i<result.rowCount; i++) {
+        console.log(result.rows[i]);
+        pwd_array.push(result.rows[i]['password']); 
+        console.log("result.rows[i]['password'] = ",result.rows[i]['password']); //these aren't printing
+      }
+      console.log("pwd_array = ",pwd_array);
+      for (var i=0; i<pwd_array.length; i++) {
+        if (pwd_array[i]) {
+          req.session.pwd_correct = 1;
+        }
+      }
+      if (req.session.pwd_correct != 1) {
+        console.log("passwords don't match!");
+        res.render('pages/edit_password.ejs', {'pwd_correct': req.session.pwd_correct});
+      }
+      else{
+        var mailOptions = {
+          from: 'kevinlu1248@gmail.com', // sender address //wait can we just change this
+          to: req.session.username, // list of receivers
+          subject: 'Skip The Line Edit Password Confirmation', // Subject line
+          html: `<p>Your password has recently been changed. If this is not you, please log in to confirm immediately.</p>`// plain text body
+        };
+      
+        transporter.sendMail(mailOptions, function (err, info) {
+          if(err)
+            console.log(err)
+          else
+            console.log('Message sent: ' + info);
+        });
+
+        var changePwdQuery = `UPDATE users SET password = crypt('${pwd}', , gen_salt('bf')) WHERE users.username = '${req.session.username}';`;
+        pool.query(changePwdQuery, (error, result) => {
+          if(error) {
+            console.log(error);
+            res.redirect("/error");
+          }
+          else {
+            res.redirect("/");
+          }
+        });
+
+      }
+    }
+  });
+});
+
 app.get('/admin_dashboard', checkAdmin, (req, res) => {res.render("pages/admin_dashboard.ejs");});
 
 app.get('/order_now', checkAuth, async (req, res) => {
@@ -847,8 +914,10 @@ app.get('/order_success', async (req,res) => { //bugged
       var selectedDate = req.session.chosenDate.slice(0,10);
       console.log("rawOrderedDates= ", selectedDate);
 
-      order_id = user_id.toString().concat(selectedDate.slice(2,4),selectedDate.slice(5,7),selectedDate.slice(8,10));
-      order_id = parseInt(order_id); 
+      // order_id = user_id.toString().concat(selectedDate.slice(2,4),selectedDate.slice(5,7),selectedDate.slice(8,10));
+      // order_id = parseInt(order_id); 
+      order_id = makeconfcode(15); //no prevention for duplicates rn  
+
 
       console.log("req session cart 891= ", cart_contents);
       cart_contents.forEach(cart_element => {
@@ -926,7 +995,7 @@ app.get('/order_history', checkAuth, function (req, res) {
 });
 
 app.get('/order_management', checkAdmin, function (req, res) {
-  order_query = `SELECT user_id,order_id,date,item,price,quantity FROM orders NATURAL JOIN order_details WHERE orders.complete = '0' ORDER BY date, user_id;`;
+  order_query = `SELECT user_id,order_id,date,item,price,quantity FROM orders NATURAL JOIN order_details WHERE orders.complete = '0' ORDER BY date, user_id, order_id;`;
   pool.query(order_query, (error, result) => {
     if (error) {
       console.log(error);
