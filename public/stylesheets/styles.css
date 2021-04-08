@@ -284,11 +284,19 @@ input {
 @media only screen and (max-width: 768px) {
   .loginbox {
     width: 95%;
+    margin-top: 30%;
   }
   .loginfields {
     width: 80%;
   }
+  .dateSelectBox {
+    margin-top: 30%;
+    padding-left: 15%;
+    padding-right: 15%;
+    font-size: 90%;
+  }
 }
+
 
 .btn {
     background-color:#60D5DA;
@@ -474,9 +482,8 @@ th {
   text-align:right;
 }
 
-#cart_arrow img {
-  width:70px;
-
+.cartArrowImg {
+  width: 70px;
 }
 
 #close_cart_button {

@@ -10,6 +10,13 @@
       </div>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      @media only screen and (max-width: 768px) {
+        h1.dateSelectHeading {
+          font-size: 20px;
+        }
+      }
+    </style>
     </head>
     <body style="background-color: #60D5DA;"> 
       <svg id="fader"></svg>
@@ -21,7 +28,7 @@
         });
       </script>
       <div class="dateSelectBox">
-        <h1 >Which Date Would You Like to Order For?</h1>
+        <h1 class="dateSelectHeading">Which Date Would You Like to Order For?</h1>
         <div class="loginfields">
           <form action="/date_select" method="POST">
             <select name="selectDate" id="selectDate" name="selectDate" required>

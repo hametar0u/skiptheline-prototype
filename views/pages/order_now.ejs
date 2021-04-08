@@ -34,23 +34,150 @@
         </form>
       </div>
     </div>
+  <style>
+      .navDrop {
+        display: none;
+      }
+      .closeNavButton {
+        display: none;
+      }
+      #open_nav_button {
+        display: none;
+      }
+      .navDropdown {
+        display: none;
+      }
+      .openNavDiv {
+        display: none;
+      }
+    @media only screen and (max-width: 768px) {
+      .navbar {
+        display: none;
+      }
+      
+      .navbar_element {
+        background-color: #60D5DA;
+        padding: 5%;
+      }
+      
+      .navDropdown {
+        display: hidden;
+        position: fixed;
+        top: 0%;
+        left: 0;
+        background-color: #60D5DA;
+        text-align: center;
+      }
+
+      .openNavDiv {
+        display: inline-block;
+        position: fixed;
+        top: 50px;
+        left: 50px;
+        width: 50px;
+
+      }
+
+      #order_now_div {
+        margin-top: 35%;
+      }
+
+      .item_card {
+        width: 80%;
+      }
+      h1.orderNowHeading {
+        margin-top: 15%;
+      }
+      .cart {
+        margin-top: 0%;
+        
+      }
+
+      #cart_div {
+        font-size: 12px;
+      }
+
+      .closeCartDiv {
+        top: -100px;
+      }
+
+      .closeCartButton {
+        margin-top: 0%;
+        width: 5%;
+        margin-right: 20px;
+      }
+      
+      .cartArrow {
+        position: fixed;
+        top: 100px;
+        width: 50%;
+      }
+
+      .cartArrowImg {
+        margin-top: -4%;
+        width: 20%;
+      }
+
+      .closeNavButton {
+        display: hidden;
+        position: absolute;
+        top: 0;
+        left: 100px;
+        background-color:#60D5DA;
+      }
+
+      #open_nav_button {
+        display: inline-block;
+        font-size: 16px;
+        width: 215%;
+        text-align: center;
+        margin-left: -105%;
+        margin-top: -30%;
+        border-radius: 0;
+      }
+      
+    }
+
+  </style>
   </head>
   <script>
     function showCart() {
-      document.getElementById("cart_div").style.width = '25%';
-      document.getElementById("cart_div").style.height = '100%';
+      if (window.innerWidth <= 768) {
+        document.getElementById("cart_div").style.width = '81%';
+        document.getElementById("cart_div").style.height = '100%';
+        document.getElementById("close_cart_button").style.marginRight = '62%';
+      } else {
+        document.getElementById("cart_div").style.width = '23%';
+        document.getElementById("cart_div").style.height = '100%';
+        // document.getElementById("order_now_div").style.marginRight = '30%';
+        document.getElementById("close_cart_button").style.marginRight = '-2%';
+      }
+      
+      document.getElementById("cart_div").style.top = "0px";
       document.getElementById("close_cart_button").style.fontSize = '48px';
-      document.getElementById("order_now_div").style.marginRight = '30%';
+      
     }
 
     function hideCart() {
       document.getElementById("cart_div").style.width = 0;
       document.getElementById("cart_div").style.height = 0;
+      document.getElementById("cart_div").style.top = "-100px";
       document.getElementById("close_cart_button").style.fontSize = 0;
       document.getElementById("order_now_div").style.marginRight = 0;
     }
-  </script>
 
+    function showNav() {
+      document.getElementById("navDrop").style.marginTop = "0";
+      document.getElementById("navDrop").style.display = "inline-block";
+      document.getElementById("open_nav_div").style.display = "none";
+    }
+
+    function hideNav() {
+      document.getElementById("navDrop").style.marginTop = "-500%";
+      document.getElementById("open_nav_div").style.display = "inline-block";
+    }
+  </script>
+  
   <body>
   <!-- swipe page transition thing -->
     <svg id="fader"></svg>
@@ -60,6 +187,43 @@
         document.getElementById('fader').setAttribute('class', 'fade-out');
       });
     </script>
+
+    <!-- nav dropdown -->
+    <div id="navDrop" class="navDropdown">
+      <form class="navbar_element" action="/edit_password" method="GET">
+        <input class="navbar_button" type="submit" value="Edit Password">
+      </form>
+      <form class="navbar_element" action="/pending_orders" method="GET">
+        <input class="navbar_button" type="submit" value="Pending Orders">
+      </form>
+      <form class="navbar_element" action="/order_history" method="GET">
+        <input class="navbar_button" type="submit" value="Order History">
+      </form>
+      <form class="navbar_element" action="/date_select" method="GET">
+        <input class="navbar_button" type="submit" value="Date Select">
+      </form>
+      <form class="navbar_element" action="/order_now" method="GET">
+        <input class="navbar_button" type="submit" value="Order Now">
+      </form>
+      <form class="navbar_element" method="POST" action="/logout">
+        <input class="logout_button" type="submit" value="Log Out">
+      </form>
+      
+      <input class="navbar_element" type="button" value="Close" onclick="hideNav()">
+      
+    </div>
+
+    <!-- open dropdown -->
+    <div id="open_nav_div" class="openNavDiv">
+      <!-- <a href="javascript:void(0)"  onclick="showNav()" style="text-align: right;">Open Navbar</a> -->
+      <input class="navbar_element" type="button" value="Open Navbar" id="open_nav_button" onclick="showNav()">
+    </div>
+
+
+    <!-- close cart button -->
+    <div id="close_cart_div" class="closeCartDiv">
+      <a href="javascript:void(0)" id="close_cart_button" class ="closeCartButton" onclick="hideCart()" style="text-align: right;">&times;</a>
+    </div>
 
     <!-- cart -->
     <div id="cart_div" class="cart">
@@ -79,7 +243,7 @@
               <td style="padding-top: 10px; padding-bottom: 10px;"><%= r.price %> </td>
               <td style="padding-top: 10px; padding-bottom: 10px;"><%= r.amount %> </td>
               <form class="order_now_cart" action="/remove_from_cart" method="POST">
-                <td style="padding-top: 10px; padding-bottom: 10px;"><input class="remove_button" type="submit" value="remove" style="font-family: 'Helvetica Neue',sans-serif; font-size:15px"></td>
+                <td style="padding-top: 10px; padding-bottom: 10px;"><input class="remove_button" type="submit" value="remove" style="font-family: 'Helvetica Neue',sans-serif;"></td>
                 <input type="hidden" value="<%=r.name%>" name="item_name" id="item_name">       
               </form>
             </tr>
@@ -87,7 +251,7 @@
           <% }); %>
       </table>
           <form action="/remove_all_from_cart" method="POST">
-            <input class="remove_all_button" type="submit" value="Remove All" style="font-family: 'Helvetica Neue',sans-serif; font-size:15px">
+            <input class="remove_all_button" type="submit" value="Remove All" style="font-family: 'Helvetica Neue',sans-serif;">
           </form>
           <% subtotal = Math.round((subtotal + Number.EPSILON) * 100) / 100; %>
           <h2>Subtotal: <%= subtotal %></h2>
@@ -97,22 +261,19 @@
         <input class="submit_button" type="submit" value="Confirm Order">
       </form>
     </div>
-    <!-- close cart button -->
-    <div id="close_cart_div">
-      <a href="javascript:void(0)" id="close_cart_button" onclick="hideCart()" style="text-align: right;">&times;</a>
-    </div>
+    
 
 
     <!-- main body -->
     <div id="order_now_div" class="order_now">
       <!-- open button for the cart -->
-      <div id="cart_arrow">
-        <img id="cart_arrow" src="images/shopping-cart-icon-vector.jpg" alt="&lt;- cart" onclick="showCart()">
+      <div id="cart_arrow" class="cartArrow">
+        <img id="cart_arrow" src="images/shopping-cart-icon-vector.jpg" alt="&lt;- cart" onclick="showCart()" class="cartArrowImg">
       </div>
 
       <!-- the rest of the menu item cards -->
       <h3>Showing Results for: <%= row3.chosenDate.slice(0,10) %></h3>
-      <h1>Food Items</h1>
+      <h1 class="orderNowHeading">Food Items</h1>
         <% var r = row1.fRows; %>
         <% for (var i=0; i<r.length; i++) {%>
           <div class="item_card">
@@ -127,7 +288,7 @@
           </div>
         <%}%>
 
-      <h1>Drink Items</h1>
+      <h1 class="orderNowHeading">Drink Items</h1>
       
       <% row2.dRows.forEach((r) => { %>
         <div class="item_card">

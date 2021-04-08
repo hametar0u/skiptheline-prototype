@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="stylesheets/styles.css">
   <div class="header">
     <img src="images/logo.png" class="logo_img">
@@ -24,47 +25,156 @@
       </form>
     </div>
   </div>
+  <style>
+    .navDrop {
+      display: none;
+    }
+    .closeNavButton {
+      display: none;
+    }
+    #open_nav_button {
+      display: none;
+    }
+    .navDropdown {
+      display: none;
+    }
+    .openNavDiv {
+      display: none;
+    }
+  @media only screen and (max-width: 768px) {
+    .navbar {
+      display: none;
+    }
     
-<!--INFO:
-MUDIT (MATT) JAIN
-SKIP THE LINE
-SUNDAY, APRIL 12, 2020
--->
+    .navbar_element {
+      background-color: #60D5DA;
+      padding: 5%;
+    }
+    
+    .navDropdown {
+      display: hidden;
+      position: fixed;
+      top: 0%;
+      left: 0;
+      background-color: #60D5DA;
+      text-align: center;
+    }
 
+    .openNavDiv {
+      display: inline-block;
+      position: fixed;
+      top: 50px;
+      left: 50px;
+      width: 50px;
+
+    }
+
+    .closeNavButton {
+      display: hidden;
+      position: absolute;
+      top: 0;
+      left: 100px;
+      background-color:#60D5DA;
+    }
+
+    #open_nav_button {
+      display: inline-block;
+      font-size: 16px;
+      width: 215%;
+      text-align: center;
+      margin-left: -105%;
+      margin-top: -30%;
+      border-radius: 0;
+    }
+    
+    .orderTable {
+      margin-top: 25%;
+      font-size: 10px;
+    }
+
+  }
+
+</style>
 </head>
+<script>
+  function showNav() {
+    document.getElementById("navDrop").style.marginTop = "0";
+    document.getElementById("navDrop").style.display = "inline-block";
+    document.getElementById("open_nav_div").style.display = "none";
+  }
+
+  function hideNav() {
+    document.getElementById("navDrop").style.marginTop = "-500%";
+    document.getElementById("open_nav_div").style.display = "inline-block";
+  }
+</script>
 
 <body>
-  <svg id="fader"></svg>
-    <script>
-      window.addEventListener('pageshow', function(event){
-        document.getElementById('fader').removeAttribute('class', 'fade-in');
-        document.getElementById('fader').setAttribute('class', 'fade-out');
-      });
-    </script>
-    <% if (rows == []) { %>
-      <h1>You Don't Have Any Pending Orders</h1>
-    <%} else {%>
-      <table style="margin:auto;">
-        <tr>
-          <th>Order ID</th>
-          <th>Item</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Date</th>
-        </tr>
-        <% if(rows != undefined) {%>
-          <% rows.forEach(function(r) { %>
-            <tr>
-              <td><%= r.order_id %> </td>
-              <td><%= r.item %> </td>
-              <td><%= r.price %> </td>
-              <td><%= r.quantity %> </td>
-              <td><%= r.date %> </td>
-            </tr>
-          <% }); %>
-        <%}%>
-      </table>
-    <%}%>
+
+  <!-- nav dropdown -->
+  <div id="navDrop" class="navDropdown">
+    <form class="navbar_element" action="/edit_password" method="GET">
+      <input class="navbar_button" type="submit" value="Edit Password">
+    </form>
+    <form class="navbar_element" action="/pending_orders" method="GET">
+      <input class="navbar_button" type="submit" value="Pending Orders">
+    </form>
+    <form class="navbar_element" action="/order_history" method="GET">
+      <input class="navbar_button" type="submit" value="Order History">
+    </form>
+    <form class="navbar_element" action="/date_select" method="GET">
+      <input class="navbar_button" type="submit" value="Date Select">
+    </form>
+    <form class="navbar_element" action="/order_now" method="GET">
+      <input class="navbar_button" type="submit" value="Order Now">
+    </form>
+    <form class="navbar_element" method="POST" action="/logout">
+      <input class="logout_button" type="submit" value="Log Out">
+    </form>
+    
+    <input class="navbar_element" type="button" value="Close" onclick="hideNav()">
+    
+  </div>
+
+  <!-- open dropdown -->
+  <div id="open_nav_div" class="openNavDiv">
+    <!-- <a href="javascript:void(0)"  onclick="showNav()" style="text-align: right;">Open Navbar</a> -->
+    <input class="navbar_element" type="button" value="Open Navbar" id="open_nav_button" onclick="showNav()">
+  </div>
+
+  <div class="orderTable">
+    <svg id="fader"></svg>
+      <script>
+        window.addEventListener('pageshow', function(event){
+          document.getElementById('fader').removeAttribute('class', 'fade-in');
+          document.getElementById('fader').setAttribute('class', 'fade-out');
+        });
+      </script>
+      <% if (rows == []) { %>
+        <h1>You Don't Have Any Pending Orders</h1>
+      <%} else {%>
+        <table style="margin:auto;">
+          <tr>
+            <th>Order ID</th>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Date</th>
+          </tr>
+          <% if(rows != undefined) {%>
+            <% rows.forEach(function(r) { %>
+              <tr>
+                <td><%= r.order_id %> </td>
+                <td><%= r.item %> </td>
+                <td><%= r.price %> </td>
+                <td><%= r.quantity %> </td>
+                <td><%= r.date %> </td>
+              </tr>
+            <% }); %>
+          <%}%>
+        </table>
+      <%}%>
+    </div>
 </body>
 
 </html>
