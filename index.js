@@ -12,20 +12,19 @@
 //make images more robust
 
 // IMPROVEMENTS:
-// only display cart when there's something inside cart and message otherwise
+//only display cart when there's something inside cart and message otherwise
 // make the date format readable -- partially solved except pending orders/order history
-// check if the db queries on the order now have already been run and if so just don't run it
+//check if the db queries on the order now have already been run and if so just don't run it
 // do the same grouping like in order management on pending orders and order history
-// forgot password flow is dogwater
 
 //problems:
-//order ID not tested for duplicates (insert order into db)
-//<a> doesn't work in the edit password confirmation email
 //stripe receipt email not sending through --  might be the test api key
+//order ID not tested for duplicates (insert order into db)
 //missing complete order button on the last item -- moved to before the table but does it look jank?
 //the selected date is one more than the date actually selected -- stopped happening today what the f
 
 //Pending:
+//edit/forgot password -- edit password done; check if email notification sends
 //change sendgrid to actual STL email
 //Integrate React by refactoring the entire code
 //random idea for security but we should log all the actions of admin and sudo accounts (ehem mihoyo)
@@ -41,7 +40,7 @@ const path = require('path');
 const PORT = process.env.PORT || 5000 
 const { Pool } = require('pg');
 var pool;
-var LOCAL_DEV_FLAG = false;
+var LOCAL_DEV_FLAG = true;
 if (LOCAL_DEV_FLAG){
   pool = new Pool ({
     user: 'postgres',
@@ -641,23 +640,12 @@ app.post('/edit_password', checkAuth, (req,res) => {
         res.render('pages/edit_password.ejs', {'pwd_correct': req.session.pwd_correct});
       }
       else{
-        console.log('req.session.username= ', req.session.username);
-        if (LOCAL_DEV_FLAG) {
-          var mailOptions = {
-            from: 'kevinlu1248@gmail.com', // sender address //wait can we just change this
-            to: req.session.username, // list of receivers
-            subject: 'Skip The Line Edit Password Confirmation', // Subject line
-            html: `<p>Your password has recently been changed. If this is not you, please <a src="https://localhost:5000/">log in</a> to change your password immediately.</p>`// plain text body
-          };
-        }
-        else {
-          var mailOptions = {
-            from: 'kevinlu1248@gmail.com', // sender address //wait can we just change this
-            to: req.session.username, // list of receivers
-            subject: 'Skip The Line Edit Password Confirmation', // Subject line
-            html: `<p>Your password has recently been changed. If this is not you, please <a src="https://skipthelinebeta.herokuapp.com/">log in</a> to change your password immediately.</p>`// plain text body
-          }
-        }
+        var mailOptions = {
+          from: 'kevinlu1248@gmail.com', // sender address //wait can we just change this
+          to: req.session.username, // list of receivers
+          subject: 'Skip The Line Edit Password Confirmation', // Subject line
+          html: `<p>Your password has recently been changed. If this is not you, please <a href="http://localhost:5000">log in</a> to confirm immediately.</p>`// plain text body
+        };
       
         transporter.sendMail(mailOptions, function (err, info) {
           if(err)
@@ -678,40 +666,6 @@ app.post('/edit_password', checkAuth, (req,res) => {
         });
 
       }
-    }
-  });
-});
-
-app.get('/forgot_password', (req, res) => {
-  res.render("pages/forgot_password.ejs");
-});
-
-app.post('/forgot_password', (req, res) => {
-  var pwd = req.body.pwd;
-  var usr = req.body.usr;
-
-  var mailOptions = {
-    from: 'kevinlu1248@gmail.com', // sender address //wait can we just change this
-    to: usr, // list of receivers
-    subject: 'Skip The Line Reset Password Confirmation', // Subject line
-    html: `<p>Your password has successfully been changed.</p>`// plain text body
-  }
-
-  transporter.sendMail(mailOptions, function (err, info) {
-    if(err)
-      console.log(err)
-    else
-      console.log('Message sent: ' + info);
-  });
-
-  var changePwdQuery = `UPDATE users SET password = crypt('${pwd}', gen_salt('bf')) WHERE users.username = '${usr}';`;
-  pool.query(changePwdQuery, (error, result) => {
-    if(error) {
-      console.log(error);
-      res.redirect("/error");
-    }
-    else {
-      res.redirect("/");
     }
   });
 });
