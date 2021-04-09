@@ -150,31 +150,63 @@
           document.getElementById('fader').setAttribute('class', 'fade-out');
         });
       </script>
-      <% if (rows == []) { %>
-        <h1>You Don't Have Any Pending Orders</h1>
-      <%} else {%>
-        <table style="margin:auto;">
-          <tr>
-            <th>Order ID</th>
-            <th>Item</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Date</th>
-          </tr>
-          <% if(rows != undefined) {%>
-            <% rows.forEach(function(r) { %>
+    <% if(rows && rows.length) {%>
+      <h1 style="text-align: left;"><%= rows[0].date.toString().slice(0,15) %></h1>
+      <div class="row">
+        <div class="item_card">
+          <h2><%= rows[0].order_id%></h2>
+          <table>
+            <tr>
+              <th>Item</th>
+              <th>Price</th>
+              <th>Quantity</th>
+            </tr>
+            <tr>
+              <td><%= rows[0].item %> </td>
+              <td><%= rows[0].price %> </td>
+              <td><%= rows[0].quantity %> </td>
+            </tr>
+          
+
+      <% for ( var i=1; i<rows.length; i++ ) { %> 
+        <% var today = rows[i].date.toString().slice(0,15); %> 
+        <% var yesterday = rows[i-1].date.toString().slice(0,15); %> 
+        <!-- if the order IDs are different make a new item card -->
+        <% if ( rows[i].order_id != rows[i-1].order_id ) { %> 
+          </table>
+        </div>
+        <!-- if the dates are different make a new row -->
+          <% if ( today != yesterday ) { %> 
+      </div>
+            <h1 style="text-align: left;"><%= today%></h1>
+            <div class="row">
+          <% } %>
+          <div class="item_card">
+            <h2><%= rows[i].order_id%></h2>
+            <table>
               <tr>
-                <td><%= r.order_id %> </td>
-                <td><%= r.item %> </td>
-                <td><%= r.price %> </td>
-                <td><%= r.quantity %> </td>
-                <td><%= r.date %> </td>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Quantity</th>
               </tr>
-            <% }); %>
-          <%}%>
-        </table>
-      <%}%>
-    </div>
+              <tr>
+                <td><%= rows[i].item %> </td>
+                <td><%= rows[i].price %> </td>
+                <td><%= rows[i].quantity %> </td>
+              </tr>
+        <% } else { %>
+          <tr>
+            <td><%= rows[i].item %> </td>
+            <td><%= rows[i].price %> </td>
+            <td><%= rows[i].quantity %> </td>
+          </tr>
+        <% } %>
+        </div>
+      </div>
+    <% } %>
+  <% } else { %>
+    <h1>You Don't Have Any Pending Orders!</h1>
+  <% } %>  
 </body>
 
 </html>

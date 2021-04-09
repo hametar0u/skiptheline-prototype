@@ -40,7 +40,7 @@ const path = require('path');
 const PORT = process.env.PORT || 5000 
 const { Pool } = require('pg');
 var pool;
-var LOCAL_DEV_FLAG = false;
+var LOCAL_DEV_FLAG = true;
 if (LOCAL_DEV_FLAG){
   pool = new Pool ({
     user: 'postgres',
@@ -666,6 +666,40 @@ app.post('/edit_password', checkAuth, (req,res) => {
         });
 
       }
+    }
+  });
+});
+
+app.get('/forgot_password', (req, res) => {
+  res.render("pages/forgot_password.ejs");
+});
+
+app.post('/forgot_password', (req, res) => {
+  var pwd = req.body.pwd;
+  var usr = req.body.usr;
+
+  var mailOptions = {
+    from: 'kevinlu1248@gmail.com', // sender address //wait can we just change this
+    to: usr, // list of receivers
+    subject: 'Skip The Line Reset Password Confirmation', // Subject line
+    html: `<p>Your password has successfully been changed.</p>`// plain text body
+  }
+
+  transporter.sendMail(mailOptions, function (err, info) {
+    if(err)
+      console.log(err)
+    else
+      console.log('Message sent: ' + info);
+  });
+
+  var changePwdQuery = `UPDATE users SET password = crypt('${pwd}', gen_salt('bf')) WHERE users.username = '${usr}';`;
+  pool.query(changePwdQuery, (error, result) => {
+    if(error) {
+      console.log(error);
+      res.redirect("/error");
+    }
+    else {
+      res.redirect("/");
     }
   });
 });
