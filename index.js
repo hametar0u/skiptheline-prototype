@@ -1,7 +1,7 @@
 //Kenn's to do list
 //make CSS of all pages scalable and also can be seen on mobile
 //pages that need CSS fixing:
-//  order management -- HIGH
+// navbar mobile -- HIGH
 //  menu -- MEDIUM
 //  order now (cart table kinda jank cuz adding hamburger pushes the table off the screen) -- MEDIUM
 //  login failure -- LOW

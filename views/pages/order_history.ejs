@@ -9,31 +9,10 @@ SKIP THE LINE
 SUNDAY, APRIL 12, 2020
 -->
   <link rel="stylesheet" href="stylesheets/styles.css">
+  <!-- navbar -->
+  <% include ../partials/nav.ejs %>
 
-  <div class="header">
-    <img src="images/logo.png" class="logo_img">
-    <h1 style="text-align:left; display:inline-block; font-size: 200%;margin-block-start: 0em; margin-block-end: 0em;">SKIP THE LINE</h1>
-    <div class="navbar">
-      <form class="navbar_element" action="/order_management" method="GET">
-        <input class="navbar_button" type="submit" value="Order Management">
-      </form>
-      <form class="navbar_element" action="/order_history" method="GET">
-        <input class="navbar_button" type="submit" value="Order History">
-      </form>
-      <form class="navbar_element" action="/date_select" method="GET">
-        <input class="navbar_button" type="submit" value="Date Select">
-      </form>
-      <form class="navbar_element" action="/order_now" method="GET">
-        <input class="navbar_button" type="submit" value="Order Now">
-      </form>
-      <form class="navbar_element" action="/pending_orders" method="GET">
-        <input class="navbar_button" type="submit" value="Pending Orders">
-      </form>
-      <form class="navbar_element" method="POST" action="/logout">
-        <input class="logout_button" type="submit" value="Log Out">
-      </form>
-    </div>
-  </div>
+  
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     .navDrop {
