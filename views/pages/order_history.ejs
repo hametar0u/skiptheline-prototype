@@ -36,6 +36,7 @@ SUNDAY, APRIL 12, 2020
   </div>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    /* hide nav dropdown stuff when not mobile view */
     .navDrop {
       display: none;
     }
@@ -52,10 +53,12 @@ SUNDAY, APRIL 12, 2020
       display: none;
     }
   @media only screen and (max-width: 768px) {
+    /* hide navbar when in mobile */
     .navbar {
       display: none;
     }
     
+    /*styling of navbar dropdown items */
     .navbar_element {
       background-color: #60D5DA;
       padding: 5%;
@@ -107,14 +110,14 @@ SUNDAY, APRIL 12, 2020
 </head>
 <script>
   function showNav() {
-    document.getElementById("navDrop").style.marginTop = "0";
-    document.getElementById("navDrop").style.display = "inline-block";
-    document.getElementById("open_nav_div").style.display = "none";
+    document.getElementById("navDrop").style.marginTop = "0"; //shove it to the top/bring it back to visible
+    document.getElementById("navDrop").style.display = "inline-block"; //show the nav dropdown menu
+    document.getElementById("open_nav_div").style.display = "none"; //hide the nav open button
   }
 
   function hideNav() {
-    document.getElementById("navDrop").style.marginTop = "-500%";
-    document.getElementById("open_nav_div").style.display = "inline-block";
+    document.getElementById("navDrop").style.marginTop = "-500%"; //shove it offscreen
+    document.getElementById("open_nav_div").style.display = "inline-block"; //show the open nav button
   }
 </script>
 <body>
