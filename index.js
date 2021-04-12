@@ -1,14 +1,15 @@
 //Kenn's to do list
 //make CSS of all pages scalable and also can be seen on mobile
 //pages that need CSS fixing:
-// navbar mobile -- HIGH
-// put close buttons on cart and dropdown menu in the same place
+// turn dropdown and cart buttons into x
 //  menu -- MEDIUM
 //  order now (cart table kinda jank cuz adding hamburger pushes the table off the screen) -- MEDIUM
 //  login failure -- LOW
 //  sign up -- LOW
 //  confirmation code -- LOW
 //  admin dashboard -- LOW
+// navbar mobile -- LOW
+// calendar glowing select bootstrap style -- LOW
 //better wipe transition -- https://www.youtube.com/watch?v=yoO0OGuEeHs -- doesn't have to be as bougie but
 //make images more robust
 
@@ -800,7 +801,13 @@ app.post('/date_select', async (req,res) => {
   console.log("req.session.pricelist = ", req.session.pricelist);
   console.log("line 522 session cart ",req.session.cart);
   //date stuff
-  var chosenDate = new Date(req.body.selectDate);
+  var chosenDate;
+  if (req.body.isDesktop == 0) {
+    chosenDate = new Date(req.body.selectDate);
+  }
+  else {
+    chosenDate = new Date(req.body.calendarSelection);
+  }
   chosenDate = chosenDate.toISOString();
   var dateObject = {'chosenDate': chosenDate};
   console.log(dateObject);
