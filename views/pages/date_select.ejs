@@ -3,6 +3,7 @@
     <head>
       <script defer src="../../public/scripts/scripts.js"></script>
       <link rel="stylesheet" href="stylesheets/styles.css">
+      <script src="CalendarPickerJS-master/CalendarPicker.js"></script>
       
       <div class="header" style=" background-color: white;">
         <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
@@ -29,6 +30,9 @@
       </script>
       <div class="dateSelectBox">
         <h1 class="dateSelectHeading">Which Date Would You Like to Order For?</h1>
+        
+        <div id="myCalendarWrapper"></div>
+
         <div class="loginfields">
           <form action="/date_select" method="POST">
             <select name="selectDate" id="selectDate" name="selectDate" required>

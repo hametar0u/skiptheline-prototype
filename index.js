@@ -2,6 +2,7 @@
 //make CSS of all pages scalable and also can be seen on mobile
 //pages that need CSS fixing:
 // navbar mobile -- HIGH
+// put close buttons on cart and dropdown menu in the same place
 //  menu -- MEDIUM
 //  order now (cart table kinda jank cuz adding hamburger pushes the table off the screen) -- MEDIUM
 //  login failure -- LOW
@@ -15,7 +16,6 @@
 //only display cart when there's something inside cart and message otherwise
 // make the date format readable -- partially solved except pending orders/order history
 //check if the db queries on the order now have already been run and if so just don't run it
-// do the same grouping like in order management on pending orders and order history
 
 //problems:
 //stripe receipt email not sending through --  might be the test api key
