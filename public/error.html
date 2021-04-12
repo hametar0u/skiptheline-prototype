@@ -9,17 +9,32 @@
 
     <title>Document</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
-    <div class="header" style=" background-color: #60D5DA;">
-        <h1 style="color: white; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
-        <img src="images/logo-teal.png" class="logo_img" style="width:75px;">
+    <div class="header" style=" background-color:#60D5DA;">
+        <h1 style="color: white; text-align:center; display:inline; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
+        <img src="images/logo.png" class="logo_img" style="width:75px; vertical-align: top;">
     </div>
+    <style>
+        .backButton {
+            text-align: center;
+        }
+
+        .submit_button {
+            width: 20%;
+        }
+        @media only screen and (max-width: 768px) {
+            .submit_button {
+                width: 100%;
+            }
+        
+        }
+    </style>
 </head>
 <body>
     
     <h1 style="margin-top:25%; font-size:300%">500: Something Went Wrong!</h1>
     <!-- <main id="swup" class="transition-wipe"></main> -->
-        <form action="/" method="GET">
-            <input class="submit_button" type="submit" value="Back to Login" style="font-size:200%; width:20%; padding:20px; text-align:center">
+        <form action="/" method="GET" class="backButton">
+            <input class="submit_button" type="submit" value="Back to Login" style="font-size:200%; padding:20px; text-align:center">
         </form>
     <!-- </main>  -->
 </body>

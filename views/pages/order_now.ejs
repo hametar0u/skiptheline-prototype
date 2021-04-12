@@ -163,10 +163,17 @@
         document.getElementById("close_cart_button").style.marginRight = '62%';
 
         } else {
+          // slide cart into correct position:
           document.getElementById("cart_div").style.width = '23%';
           document.getElementById("cart_div").style.height = '100%';
+          document.getElementById("cart_div").style.paddingTop = '2%';
+          document.getElementById("cart_div").style.paddingLeft = '3%';
+          document.getElementById("cart_div").style.paddingRight = '3%';
+          document.getElementById("cart_div").style.marginRight = '-2%';
           // document.getElementById("order_now_div").style.marginRight = '30%';
-          document.getElementById("close_cart_button").style.marginRight = '-2%';
+          //close button position
+          document.getElementById("close_cart_button").style.marginRight = '0%';
+          document.getElementById("close_cart_button").style.marginTop = '0.5%';
         }
         
         document.getElementById("cart_div").style.top = "0px";
@@ -239,7 +246,7 @@
       <table>
         <tr>
           <th>Item</th>
-          <th>Price</th>
+          <!-- <th>Price</th> -->
           <th>Quantity</th>
           <th>Remove</th>
         </tr>
@@ -248,10 +255,10 @@
           <% row4.cartrow.forEach(function(r) { %>
             <tr>
               <td style="padding-top: 10px; padding-bottom: 10px;"><%= r.name %> </td>
-              <td style="padding-top: 10px; padding-bottom: 10px;"><%= r.price %> </td>
+              <!-- <td style="padding-top: 10px; padding-bottom: 10px;"><%= r.price %> </td> -->
               <td style="padding-top: 10px; padding-bottom: 10px;"><%= r.amount %> </td>
               <form class="order_now_cart" action="/remove_from_cart" method="POST">
-                <td style="padding-top: 10px; padding-bottom: 10px;"><input class="remove_button" type="submit" value="remove" style="font-family: 'Helvetica Neue',sans-serif;"></td>
+                <td style="padding-top: 10px; padding-bottom: 10px;"><input class="remove_button" type="submit" value="X" style="font-family: 'Helvetica Neue',sans-serif;"></td>
                 <input type="hidden" value="<%=r.name%>" name="item_name" id="item_name">       
               </form>
             </tr>
