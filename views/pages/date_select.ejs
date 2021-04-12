@@ -3,7 +3,7 @@
     <head>
       <!-- <script defer src="../../public/scripts/scripts.js"></script> -->
       <link rel="stylesheet" href="stylesheets/styles.css">
-      
+
       <!-- calendar -->
       <link rel="stylesheet" href="CalendarPicker.style.css">
       <script src="CalendarPicker.js"></script>
@@ -18,19 +18,29 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-       .loginfields {
+       .loginfields, #mobileForm {
         display: none;
       } 
+      #desktopForm {
+        display: inline;
+      }
+
       @media only screen and (max-width: 768px) {
         h1.dateSelectHeading {
           font-size: 20px;
-        }
-         .loginfields {
+        } /*
+         .loginfields, #mobileForm {
           display: inline;
-        }
-        .showcase-wrapper, .myCalendarWrapper, .example, #calendar-wrapper, #current-date, #example {
+         } */
+
+         #myCalendarWrapper, #showcase-wrapper {
+           display: inline;
+         }
+
+         /*
+        .showcase-wrapper, .myCalendarWrapper, .example, #calendar-wrapper, #current-date, #example, #desktopForm {
           display: none;
-        } 
+        }  */
       }
     </style>
     </head>
@@ -57,33 +67,43 @@
         <div id="showcase-wrapper">
           <div id="myCalendarWrapper"></div>
             
-            <!-- <div id="example">
+             <div id="example">
                 <h3>currentValue:
                     <p id="current-date"></p>
                 </h3>
-                <h3>currentValue.toDateSring():
+                <h3>currentValue.toDateString():
                     <p id="current-datestring"></p>
                 </h3>
-            </div> -->
+            </div> 
         </div>
  
+        <!--
+          <div class="loginfields">
+             <div id="mobileForm">
+              <form action="/date_select" method="POST">
+                <input type="hidden" value="1" id="isDesktop">
+                  <select name="selectDate" id="selectDate" name="selectDate" required>
+                    <option disabled selected value> -- select an option -- </option>
+                    <% row1.forEach((r) => { %>
+                      <option value="<%=r%>"><%=r.toLocaleDateString()%></option>
+                      <% }); %>
+                  </select>
+                  <br>
+                  <input type="hidden" value="<%=row2%>" id="orderedDates">
+                  
+                  <h3 id="sameDateNotice"></h3>
+            </div>
+            <input class="submit_button" type="submit" value="Submit" style="font-size:150%; position: relative; top:0px;">
+            </form> 
+        </div> -->
 
-        <div class="loginfields">
-          <form action="/date_select" method="POST">
-            <select name="selectDate" id="selectDate" name="selectDate" required>
-              <option disabled selected value> -- select an option -- </option>
-              <% row1.forEach((r) => { %>
-                <option value="<%=r%>"><%=r.toLocaleDateString()%></option>
-                <% }); %>
-            </select>
-            <br>
-          <input type="hidden" value="<%=row2%>" id="orderedDates">
-          <input type="hidden" value="" id="calendarSelection">
-          <input type="hidden" value="1" id="isDesktop">
-          <h3 id="sameDateNotice"></h3>
-        </div>
-        <input class="submit_button" type="submit" value="Submit" style="font-size:150%; position: relative; top:0px;">
-      </form>
+          <div id="desktopForm">
+            <form action="/date_select" method="POST">
+            
+              <input type="hidden" value="" id="calendarSelection" name="calendarSelection">
+              <input class="submit_button" type="submit" value="Submit" style="font-size:150%; position: relative; top:0px;">
+            </form>
+          </div>
       </div>
     </body>
     <script>
@@ -97,30 +117,30 @@
 
       console.log(isDesktop);
 
-      function checkSameDate() { //the console logs don't execute
-        var rawSelectedDate = document.getElementById("selectDate").value;
-        var rawOrderedDates = document.getElementById("orderedDates").value;
-        rawOrderedDates = rawOrderedDates.split(",");
-        var selectedDate = rawSelectedDate.slice(0,15);
-        console.log("rawOrderedDates= ", rawOrderedDates);
-        for (var i = 0; i < rawOrderedDates.length; i++) {
-          var orderedDate = rawOrderedDates[i].slice(0,15);
-          console.log("selectedDate= ",selectedDate);
-          //console.log("orderedDate= ",orderedDate);
-          if (selectedDate == orderedDate) {
-            document.getElementById("sameDateNotice").innerHTML = "You already have an order placed on the selected date. Your current order will have a different order ID. If you wish to proceed, click submit.";
-            return;
-          }
-        }
-        document.getElementById("sameDateNotice").innerHTML = "";
-        return;
-      }
+      // function checkSameDate() { //the console logs don't execute
+      //   var rawSelectedDate = document.getElementById("selectDate").value;
+      //   var rawOrderedDates = document.getElementById("orderedDates").value;
+      //   rawOrderedDates = rawOrderedDates.split(",");
+      //   var selectedDate = rawSelectedDate.slice(0,15);
+      //   console.log("rawOrderedDates= ", rawOrderedDates);
+      //   for (var i = 0; i < rawOrderedDates.length; i++) {
+      //     var orderedDate = rawOrderedDates[i].slice(0,15);
+      //     console.log("selectedDate= ",selectedDate);
+      //     //console.log("orderedDate= ",orderedDate);
+      //     if (selectedDate == orderedDate) {
+      //       document.getElementById("sameDateNotice").innerHTML = "You already have an order placed on the selected date. Your current order will have a different order ID. If you wish to proceed, click submit.";
+      //       return;
+      //     }
+      //   }
+      //   document.getElementById("sameDateNotice").innerHTML = "";
+      //   return;
+      // }
 
+
+      
+      //document.getElementById("selectDate").addEventListener("change",checkSameDate);
 
       // calendar
-      document.getElementById("selectDate").addEventListener("change",checkSameDate);
-
-
       const nextYear = new Date().getFullYear() + 1;
       const maxdate = new Date();
       maxdate.setDate(maxdate.getDate() + 9);

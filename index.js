@@ -800,16 +800,20 @@ app.post('/date_select', async (req,res) => {
   console.log("req.session.pricelist = ", req.session.pricelist);
   console.log("line 522 session cart ",req.session.cart);
   //date stuff
-  var chosenDate;
-  if (req.body.isDesktop == 0) {
-    chosenDate = new Date(req.body.selectDate);
-  }
-  else {
-    chosenDate = new Date(req.body.calendarSelection);
-  }
+  var chosenDate = new Date(req.body.calendarSelection);
+  // if (req.body.isDesktop == 0) {
+  //   chosenDate = new Date(req.body.selectDate);
+  // }
+  // else {
+  //   chosenDate = new Date(req.body.calendarSelection);
+  // }req.body.isDesktop
+  console.log("isDesktop: ", req.body.isDesktop);
+  console.log("selectdate: ", req.body.selectDate);
+  console.log("calendar selection: ", req.body.calendarSelection);
   chosenDate = chosenDate.toISOString();
   var dateObject = {'chosenDate': chosenDate};
   console.log(dateObject);
+
 
   if (req.session.chosenDate != chosenDate) {
     cart.clearItems();
