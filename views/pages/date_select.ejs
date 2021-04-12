@@ -4,6 +4,7 @@
       <script defer src="../../public/scripts/scripts.js"></script>
       <link rel="stylesheet" href="stylesheets/styles.css">
       
+      
       <div class="header" style=" background-color: white;">
         <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
         <img src="images/logo-teal.png" class="logo_img" style="width:75px;">
@@ -11,10 +12,19 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+      /* .loginfields {
+        display: none;
+      } */
       @media only screen and (max-width: 768px) {
         h1.dateSelectHeading {
           font-size: 20px;
         }
+        /* .loginfields {
+          display: inline;
+        }
+        .showcase-wrapper {
+          display: none;
+        } */
       }
     </style>
     </head>
@@ -27,7 +37,9 @@
           document.getElementById('fader').setAttribute('class', 'wipe-left');
         });
       </script>
-      <div class="dateSelectBox">
+      
+      <!-- display dropdown on mobile -->
+      <div class="dateSelectBox"> 
         <h1 class="dateSelectHeading">Which Date Would You Like to Order For?</h1>
         <div class="loginfields">
           <form action="/date_select" method="POST">
@@ -66,5 +78,6 @@
       }
 
       document.getElementById("selectDate").addEventListener("change",checkSameDate);
+
     </script>
 </html>
