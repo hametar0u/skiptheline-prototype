@@ -24,6 +24,9 @@
       #desktopForm {
         display: inline;
       }
+      #myCalendarWrapper, #showcase-wrapper, #calendar-wrapper {
+        display: inline;
+      }
 
       @media only screen and (max-width: 768px) {
         h1.dateSelectHeading {
@@ -32,10 +35,10 @@
          .loginfields, #mobileForm {
           display: inline;
          } */
+         .showcase-wrapper, .myCalendarWrapper, .example, #calendar-wrapper, #calendar-grid, #calendar {
+            display: inline;
+          }
 
-         #myCalendarWrapper, #showcase-wrapper {
-           display: inline;
-         }
 
          /*
         .showcase-wrapper, .myCalendarWrapper, .example, #calendar-wrapper, #current-date, #example, #desktopForm {
@@ -112,7 +115,7 @@
       
       if (window.innerWidth <= 768) {
         isDesktop = 0;
-        document.getElementById("isDesktop").value = isDesktop;
+        // document.getElementById("isDesktop").value = isDesktop;
       }
 
       console.log(isDesktop);
