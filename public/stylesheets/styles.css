@@ -651,7 +651,7 @@ th {
 .logo_img {
   display: inline-block;
   width:65px;
-  vertical-align: top;
+  /* vertical-align: top; */
   margin-top:7px;
 }
 

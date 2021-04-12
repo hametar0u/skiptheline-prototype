@@ -1,25 +1,41 @@
 <!-- NAVBAR -->
-<div class="header">
-  <img src="images/logo.png" class="logo_img">
-  <h1 style="text-align:left; display:inline-block; font-size: 200%;margin-block-start: 0em; margin-block-end: 0em;">SKIP THE LINE</h1>
-  <div class="navbar">
-    <form class="navbar_element" action="/order_management" method="GET">
-      <input class="navbar_button" type="submit" value="Order Management">
-    </form>
-    <form class="navbar_element" action="/order_history" method="GET">
-      <input class="navbar_button" type="submit" value="Order History">
-    </form>
-    <form class="navbar_element" action="/date_select" method="GET">
-      <input class="navbar_button" type="submit" value="Date Select">
-    </form>
-    <form class="navbar_element" action="/order_now" method="GET">
-      <input class="navbar_button" type="submit" value="Order Now">
-    </form>
-    <form class="navbar_element" action="/pending_orders" method="GET">
-      <input class="navbar_button" type="submit" value="Pending Orders">
-    </form>
-    <form class="navbar_element" method="POST" action="/logout">
-      <input class="logout_button" type="submit" value="Log Out">
-    </form>
+<div class="header" id="header">
+  <!-- open dropdown -->
+<div id="open_nav_div" class="openNavDiv">
+  <!-- <a href="javascript:void(0)"  onclick="showNav()" style="text-align: right;">Open Navbar</a> -->
+  <!-- <input class="navbar_element" type="button" value="Open Navbar" id="open_nav_button" onclick="showNav()"> -->
+  <img src="images/menu_icon.png" alt="Open Navbar" onclick="showNav()" class="menu_icon">
+</div>
+<img id="logo_img" src="images/logo.png" class="logo_img">
+  <!-- open button for the cart -->
+  <div id="cart_arrow" class="cartArrowNav">
+    <img id="cart_arrow" src="images/shopping-cart-icon-vector.png" alt="&lt;- cart" onclick="showCart()" class="cartArrowImg">
   </div>
+
+<div class="headerDesktop">
+  <h1 style="text-align:left; display:inline-block; font-size: 200%;margin-block-start: 0em; margin-block-end: 0em;">SKIP THE LINE</h1>
+</div>
+<div class="navbar">
+  <form class="navbar_element" action="/edit_password" method="GET">
+    <input class="navbar_button" type="submit" value="Edit Password">
+  </form>
+  <form class="navbar_element" action="/order_management" method="GET">
+    <input class="navbar_button" type="submit" value="Order Management">
+  </form>
+  <form class="navbar_element" action="/order_history" method="GET">
+    <input class="navbar_button" type="submit" value="Order History">
+  </form>
+  <form class="navbar_element" action="/date_select" method="GET">
+    <input class="navbar_button" type="submit" value="Date Select">
+  </form>
+  <form class="navbar_element" action="/order_now" method="GET">
+    <input class="navbar_button" type="submit" value="Order Now">
+  </form>
+  <form class="navbar_element" action="/pending_orders" method="GET">
+    <input class="navbar_button" type="submit" value="Pending Orders">
+  </form>
+  <form class="navbar_element" method="POST" action="/logout">
+    <input class="logout_button" type="submit" value="Log Out">
+  </form>
+</div>
 </div>

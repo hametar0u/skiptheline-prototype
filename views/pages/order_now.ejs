@@ -26,31 +26,56 @@
       .openNavDiv {
         display: none;
       }
+      .menu_icon {
+        display: none;
+      }
+      .cartArrowDesktop {
+        display: inline;
+      }
+      
+      .cartArrowNav {
+        display: none;
+      }
+      .headerDesktop {
+        display: inline;
+      }
+
+      .cartArrowDesktopImg {
+        width: 5%;
+      }
     @media only screen and (max-width: 768px) {
       .navbar {
         display: none;
       }
-      
+      .headerDesktop {
+        display: none;
+      } 
+      .cartArrowDesktop {
+        display: none;
+      }
       .navbar_element {
-        background-color: #60D5DA;
-        padding: 5%;
+        background-color: #53bcc0;
+        padding-top: 2%;
+        padding-bottom: 2%;
+        font-size: 24px;
       }
       
       .navDropdown {
         display: hidden;
         position: fixed;
-        top: 0%;
+        top: 4%;
         left: 0;
-        background-color: #60D5DA;
+        background-color: #53bcc0;
         text-align: center;
+        width: 110%;
       }
 
       .openNavDiv {
-        display: inline-block;
-        position: fixed;
+        display: inline;
         top: 50px;
+        left: 50px;
         width: 50px;
-
+        z-index: 10;
       }
 
       #order_now_div {
@@ -83,14 +108,15 @@
       }
       
       .cartArrow {
-        position: fixed;
-        top: 100px;
-        width: 50%;
+        position: absolute;
+        top: 10px;
+        z-index: 10;
       }
 
       .cartArrowImg {
-        margin-top: -4%;
-        width: 20%;
+        margin-top: -15%;
+        width: 15%;
+        z-index: 10;
       }
 
       .closeNavButton {
@@ -98,7 +124,7 @@
         position: absolute;
         top: 0;
         left: 100px;
-        background-color:#60D5DA;
+        background-color:#53bcc0;
       }
 
       #open_nav_button {
@@ -110,14 +136,43 @@
         margin-top: -30%;
         border-radius: 0;
       }
-      
+
+    .menu_icon {
+      display: inline;
+      right: -12%;
+      width: 10%;
+      vertical-align: bottom;
     }
+
+    h1 {
+      font-size: 24px;
+    }
+
+    .logo_img {
+      margin-left: 27%;
+      display: inline;
+      z-index: 15;
+    }
+
+    .logout_button {
+      width: 120%;
+      margin-right: 10%;
+      padding-top: 2%;
+      padding-bottom: 2%;
+      vertical-align: center;
+    }
+
+      
+  }
 
   </style>
   </head>
   <script>
     function showCart() {
+      
+      
       if (window.innerWidth <= 768) {
+        hideNav();
         document.getElementById("cart_div").style.width = '81%';
         document.getElementById("cart_div").style.height = '100%';
         document.getElementById("close_cart_button").style.marginRight = '62%';
@@ -142,14 +197,21 @@
     }
 
     function showNav() {
+      hideCart();
+      document.getElementById("cart_arrow").style.display = "none";
       document.getElementById("navDrop").style.marginTop = "0";
       document.getElementById("navDrop").style.display = "inline-block";
       document.getElementById("open_nav_div").style.display = "none";
+      document.getElementById("logo_img").style.marginLeft = "38.2%";
+      document.getElementById("header").style.backgroundColor = "#53bcc0";
     }
 
     function hideNav() {
+      document.getElementById("cart_arrow").style.display = "inline";
+      document.getElementById("logo_img").style.marginLeft = "27%";
       document.getElementById("navDrop").style.marginTop = "-500%";
-      document.getElementById("open_nav_div").style.display = "inline-block";
+      document.getElementById("open_nav_div").style.display = "inline";
+      document.getElementById("header").style.backgroundColor = "#60D5DA";
     }
   </script>
   
@@ -164,34 +226,7 @@
     </script>
 
     <!-- nav dropdown -->
-    <div id="navDrop" class="navDropdown">
-      <form class="navbar_element" action="/edit_password" method="GET">
-        <input class="navbar_button" type="submit" value="Edit Password">
-      </form>
-      <form class="navbar_element" action="/pending_orders" method="GET">
-        <input class="navbar_button" type="submit" value="Pending Orders">
-      </form>
-      <form class="navbar_element" action="/order_history" method="GET">
-        <input class="navbar_button" type="submit" value="Order History">
-      </form>
-      <form class="navbar_element" action="/date_select" method="GET">
-        <input class="navbar_button" type="submit" value="Date Select">
-      </form>
-      <form class="navbar_element" action="/order_now" method="GET">
-        <input class="navbar_button" type="submit" value="Order Now">
-      </form>
-      <form class="navbar_element" method="POST" action="/logout">
-        <input class="logout_button" type="submit" value="Log Out">
-      </form>
-      
-      <input class="navbar_element" type="button" value="Close" onclick="hideNav()">
-      
-    </div>
-
-    <!-- open dropdown -->
-    <div id="open_nav_div" class="openNavDiv">
-      <img src="images/menu_icon.png" alt="Open Navbar" onclick="showNav()" class="menu_icon">
-    </div>
+    <% include ../partials/navDrop.ejs %>
 
 
     <!-- close cart button -->
@@ -241,8 +276,8 @@
     <!-- main body -->
     <div id="order_now_div" class="order_now">
       <!-- open button for the cart -->
-      <div id="cart_arrow" class="cartArrow">
-        <img id="cart_arrow" src="images/shopping-cart-icon-vector.jpg" alt="&lt;- cart" onclick="showCart()" class="cartArrowImg">
+      <div id="cart_arrow" class="cartArrowDesktop">
+        <img id="cart_arrow" src="images/shopping-cart-icon-vector.png" alt="&lt;- cart" onclick="showCart()" class="cartArrowDesktopImg">
       </div>
 
       <!-- the rest of the menu item cards -->
