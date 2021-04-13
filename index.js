@@ -4,6 +4,7 @@
 
 // turn dropdown and cart buttons into x
 // date select calendar formatting
+// mobile menu position kinda jank and doesn't scale with screen size -- MEDIUM
 //  menu -- MEDIUM
 //  order now (cart table kinda jank cuz adding hamburger pushes the table off the screen) -- MEDIUM
 //  confirmation code -- LOW
@@ -22,6 +23,7 @@
 //problems:
 //stripe receipt email not sending through --  might be the test api key
 //order ID not tested for duplicates (insert order into db)
+//sometimes the pricelist cookie gets wiped and the app crashes when adding to cart
 //missing complete order button on the last item -- moved to before the table but does it look jank?
 //toggling between dropdown and calendar doesn't work
 //the selected date is one more than the date actually selected -- stopped happening today what the f
@@ -32,9 +34,6 @@
 //Integrate React by refactoring the entire code
 //random idea for security but we should log all the actions of admin and sudo accounts (ehem mihoyo)
 //mobile compatibility
-
-
-// talk about what happens with the club afterwards
 
 
 const express = require('express');
