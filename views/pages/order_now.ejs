@@ -11,9 +11,9 @@
     <% include ../partials/nav.ejs %>
 
   <style>
-      .navdrop, .closeNavButton, #open_nav_button, 
+      .navdrop, .closeNavButton, #open_nav_button, #close_menu_button, 
       .navDropdown, .openNavDiv, .menu_icon, 
-      .cartArrowNav {
+      .cartArrowNav, .cartArrowImg {
         display: none;
       }
       
@@ -79,7 +79,7 @@
         margin-right: 20px;
       }
       
-      .cartArrowNav {
+      .cartArrowNav, #close_menu_button {
         display: inline;
       }
 
@@ -179,8 +179,9 @@
           document.getElementById("cart_div").style.marginRight = '-2%';
           // document.getElementById("order_now_div").style.marginRight = '30%';
           //close button position
-          document.getElementById("close_cart_button").style.marginRight = '0%';
-          document.getElementById("close_cart_button").style.marginTop = '0.5%';
+          document.getElementById("close_cart_button").style.marginRight = '-1%';
+          document.getElementById("close_cart_button").style.marginTop = '3.3%';
+          document.getElementById("cart_arrow").style.display = "none";
         }
         
         document.getElementById("cart_div").style.top = "0px";
@@ -195,7 +196,7 @@
         document.getElementById("close_cart_button").style.fontSize = 0;
         document.getElementById("order_now_div").style.marginRight = 0;
         document.getElementById("cart_arrow").style.display = 'inline';
-        document.getElementById("close_menu_button").style.fontSize = "0px";
+        // document.getElementById("close_menu_button").style.fontSize = "0px";
 
         cartStatus = 0;
       }
@@ -213,8 +214,9 @@
         document.getElementById("navDrop").style.display = "inline-block";
         document.getElementById("close_nav_div").style.display = "inline";
         document.getElementById("open_nav_div").style.display = "none";
-        document.getElementById("logo_img").style.marginLeft = "27%";
+        document.getElementById("logo_img").style.marginLeft = "38.2%";
         document.getElementById("header").style.backgroundColor = "#53bcc0";
+        document.getElementById("close_cart_button").style.marginRight = "10%";
 
         menuStatus = 1;
 
