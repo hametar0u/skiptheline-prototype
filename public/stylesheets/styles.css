@@ -496,16 +496,20 @@ th {
 }
 
 #close_cart_button {
-  background-color: rgb(240,240,240);
   position: fixed;
   font-size: 0;
   font-weight:200;
   color: black;
   text-decoration: none;
-  right:27%;
-  top: 30px;
+  right:1%;
+  top: -10px;
   padding-left:20px;
   padding-right:20px;
+  z-index: 70;
+}
+#close_cart_button:hover {
+  background-color: rgb(87, 87, 87);
+  color: white;
 }
 
 #close_cart_div {
@@ -513,6 +517,18 @@ th {
   /* right:30%; doesn't do anything; I'm trying to line 3 divs side by side */
 }
 
+#close_menu_button {
+  position: fixed;
+  font-size: 48px;
+  font-weight:200;
+  color: black;
+  text-decoration: none;
+  left:1%;
+  top: -10px;
+  padding-left:20px;
+  padding-right:20px;
+  z-index: 70;
+}
 .add_to_cart_button {
   display: inline-block;
   background-color: #889494;

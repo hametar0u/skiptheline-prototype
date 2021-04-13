@@ -74,14 +74,14 @@
 #calendar #calendar-grid time.selected,
 #calendar #calendar-grid time.selected:focus {
     outline: none;
-    border: 2px solid #93c7ff;
+    border: 5px solid #93c7ff;
     box-sizing: inherit;
 }
 
 #calendar #calendar-grid time.disabled,
 #calendar #calendar-grid time.disabled:focus {
     outline: none;
-    border: 2px solid transparent;
+    border: 5px solid transparent;
     box-sizing: inherit;
     cursor: not-allowed;
     background-color: rgba(30, 39, 51, 0.2);

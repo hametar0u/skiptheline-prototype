@@ -3,12 +3,14 @@
 //pages that need CSS fixing:
 
 // turn dropdown and cart buttons into x
+// date select calendar formatting
 //  menu -- MEDIUM
 //  order now (cart table kinda jank cuz adding hamburger pushes the table off the screen) -- MEDIUM
 //  confirmation code -- LOW
 //  admin dashboard -- LOW
 // navbar mobile -- LOW
 // calendar glowing select bootstrap style -- LOW
+// order quantity on order now page: select? -- LOW
 //better wipe transition -- https://www.youtube.com/watch?v=yoO0OGuEeHs -- doesn't have to be as bougie but
 //make images more robust
 
@@ -21,6 +23,7 @@
 //stripe receipt email not sending through --  might be the test api key
 //order ID not tested for duplicates (insert order into db)
 //missing complete order button on the last item -- moved to before the table but does it look jank?
+//toggling between dropdown and calendar doesn't work
 //the selected date is one more than the date actually selected -- stopped happening today what the f
 
 //Pending:

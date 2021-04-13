@@ -27,6 +27,7 @@
       .navbar, .headerDesktop, .cartArrowDesktop, .closeCartDiv {
         display: none;
       }
+
       .navbar_element {
         background-color: #53bcc0;
         padding-top: 2%;
@@ -42,6 +43,7 @@
         background-color: #53bcc0;
         text-align: center;
         width: 110%;
+        z-index: 1;
       }
 
       .openNavDiv {
@@ -154,13 +156,18 @@
             toggleMenu();
           }
           
-        document.getElementById("cart_div").style.width = '84%';
-        document.getElementById("cart_div").style.height = '100%';
-        document.getElementById("cart_div").style.paddingTop = '12%';
-        document.getElementById("cart_div").style.paddingLeft = '10%';
-        document.getElementById("cart_div").style.paddingRight = '10%';
-        document.getElementById("cart_div").style.marginRight = '-2.5%';
-        document.getElementById("close_cart_button").style.marginRight = '62%';
+          document.getElementById("cart_div").style.width = '84%';
+          document.getElementById("cart_div").style.height = '100%';
+          document.getElementById("cart_div").style.paddingTop = '12%';
+          document.getElementById("cart_div").style.paddingLeft = '10%';
+          document.getElementById("cart_div").style.paddingRight = '10%';
+          document.getElementById("cart_div").style.marginRight = '-2.5%';
+          document.getElementById("cart_arrow").style.display = 'none';
+          document.getElementById("close_cart_div").style.display = 'inline';
+          document.getElementById("close_cart_div").style.top = '0';
+          document.getElementById("close_cart_button").style.display = 'inline';
+          document.getElementById("close_cart_button").style.marginRight = '0';
+          document.getElementById("close_cart_button").style.fontSize = '48px';
 
         } else {
           // slide cart into correct position:
@@ -181,15 +188,17 @@
 
         cartStatus = 1;
 
-       } else if (cartStatus == 1) {
-          document.getElementById("cart_div").style.width = 0;
-          document.getElementById("cart_div").style.height = 0;
-          document.getElementById("cart_div").style.top = "-100px";
-          document.getElementById("close_cart_button").style.fontSize = 0;
-          document.getElementById("order_now_div").style.marginRight = 0;
+      } else if (cartStatus == 1) {
+        document.getElementById("cart_div").style.width = 0;
+        document.getElementById("cart_div").style.height = 0;
+        document.getElementById("cart_div").style.top = "-100px";
+        document.getElementById("close_cart_button").style.fontSize = 0;
+        document.getElementById("order_now_div").style.marginRight = 0;
+        document.getElementById("cart_arrow").style.display = 'inline';
+        document.getElementById("close_menu_button").style.fontSize = "0px";
 
-          cartStatus = 0;
-        }
+        cartStatus = 0;
+      }
     }
     
     function toggleMenu() {
@@ -202,7 +211,8 @@
         //document.getElementById("cart_arrow").style.display = "none";
         document.getElementById("navDrop").style.marginTop = "0";
         document.getElementById("navDrop").style.display = "inline-block";
-        //document.getElementById("open_nav_div").style.display = "none";
+        document.getElementById("close_nav_div").style.display = "inline";
+        document.getElementById("open_nav_div").style.display = "none";
         document.getElementById("logo_img").style.marginLeft = "27%";
         document.getElementById("header").style.backgroundColor = "#53bcc0";
 
@@ -213,6 +223,7 @@
         document.getElementById("logo_img").style.marginLeft = "27%";
         document.getElementById("navDrop").style.marginTop = "-500%";
         document.getElementById("open_nav_div").style.display = "inline";
+        document.getElementById("close_nav_div").style.display = "none";
         document.getElementById("header").style.backgroundColor = "#60D5DA";
         
         menuStatus = 0;
@@ -235,14 +246,12 @@
     <% include ../partials/navDrop.ejs %>
 
 
-    <!-- close cart button -->
-    <div id="close_cart_div" class="closeCartDiv">
-      <a href="javascript:void(0)" id="close_cart_button" class ="closeCartButton" onclick="toggleCart()" style="text-align: right;">&times;</a>
-    </div>
+  
 
     <!-- cart -->
     <div id="cart_div" class="cart">
       <h1>Cart</h1>
+    
       <table>
         <tr>
           <th>Item</th>
@@ -281,9 +290,13 @@
 
     <!-- main body -->
     <div id="order_now_div" class="order_now">
-      <!-- open button for the cart -->
+      <!-- open cart button -->
       <div id="cart_arrow" class="cartArrowDesktop">
         <img id="cart_arrow" src="images/shopping-cart-icon-vector.png" alt="&lt;- cart" onclick="toggleCart()" class="cartArrowDesktopImg">
+      </div>
+      <!-- close cart button -->
+      <div id="close_cart_div" class="closeCartDiv">
+        <a href="javascript:void(0)" id="close_cart_button" class ="closeCartButton" onclick="toggleCart()" style="text-align: right;">&times;</a>
       </div>
 
       <!-- the rest of the menu item cards -->
