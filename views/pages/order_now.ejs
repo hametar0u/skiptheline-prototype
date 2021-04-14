@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="html">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -219,6 +219,7 @@
         document.getElementById("logo_img").style.marginLeft = "38.2%";
         document.getElementById("header").style.backgroundColor = "#53bcc0";
         document.getElementById("close_cart_button").style.marginRight = "10%";
+          
 
         menuStatus = 1;
 
@@ -236,7 +237,7 @@
    
   </script>
   
-  <body>
+  <body id="body">
   <!-- swipe page transition thing -->
     <svg id="fader"></svg>
     <script>
@@ -308,7 +309,7 @@
       <h1 class="orderNowHeading">Food Items</h1>
         <% var r = row1.fRows; %>
         <% for (var i=0; i<r.length; i++) {%>
-          <div class="item_card">
+          <div class="item_card" id="item_card">
             <h2><%=r[i].item%> - <%=r[i].price%></h2>
             <img class="product_image" src="images/<%=r[i].item%>.jpg">
             <form action="/add_to_cart" method="POST">
@@ -323,7 +324,7 @@
       <h1 class="orderNowHeading">Drink Items</h1>
       
       <% row2.dRows.forEach((r) => { %>
-        <div class="item_card">
+        <div class="item_card" id="item_card">
           <h2><%=r.item%> - <%=r.price%></h2>
           <form action="/add_to_cart" method="POST">
             <img class="product_image" src="images/<%=r.item%>.jpg">
