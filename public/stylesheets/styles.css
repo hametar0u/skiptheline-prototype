@@ -485,7 +485,7 @@ th {
 }
 
 #cart_arrow {
-  position: fixed;
+  /* position: fixed;  */
   top: 50px;
   right:0;
   text-align:right;
