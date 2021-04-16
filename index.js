@@ -5,6 +5,7 @@
 // turn dropdown and cart buttons into x
 // date select calendar formatting
 // mobile menu position kinda jank and doesn't scale with screen size -- MEDIUM
+// order success mobile scaling -- MEDIUm
 //  menu -- MEDIUM
 //  order now (cart table kinda jank cuz adding hamburger pushes the table off the screen) -- MEDIUM
 //  confirmation code -- LOW

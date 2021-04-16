@@ -107,6 +107,7 @@ button:hover {
     /* margin-bottom:20px; */
     text-align:left;
     padding-left: 3%;
+    padding-right: 3%;
     display:inline-block;
     z-index: 69;
     margin-bottom: 30px;
@@ -487,12 +488,13 @@ th {
 #cart_arrow {
   /* position: fixed;  */
   top: 50px;
-  right:0;
+  margin-right: 5%;
   text-align:right;
 }
 
 .cartArrowImg {
   width: 70px;
+  float: right;
 }
 
 #close_cart_button {
@@ -665,7 +667,8 @@ th {
 }
 
 .logo_img {
-  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
   width:65px;
   /* vertical-align: top; */
   margin-top:7px;
