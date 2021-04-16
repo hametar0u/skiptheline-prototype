@@ -23,7 +23,6 @@
 
 //problems:
 //stripe receipt email not sending through --  might be the test api key
-//order ID not tested for duplicates (insert order into db)
 //sometimes the pricelist cookie gets wiped and the app crashes when adding to cart
 //missing complete order button on the last item -- moved to before the table but does it look jank?
 //toggling between dropdown and calendar doesn't work
@@ -939,34 +938,44 @@ app.post("/create-checkout-session", async (req, res) => {
 
 //https://stripe.com/docs/testing for card information
 
-app.get('/order_success', async (req,res) => { //bugged
+app.get('/order_success', async (req,res) => { //bugged sometimes; result.rows undefined
   var user_id,order_id;
   var username = req.session.username;
   var cart_contents = req.session.cart
   console.log("req session cart 869= ", cart_contents);
 
-  var userIdRetrieveQuery = `SELECT user_id FROM users WHERE "username" = '${username}';`;
-  //console.log("retrieve ID query = ",userIdRetrieveQuery);
-  pool.query(userIdRetrieveQuery, (err,res) => {
+  var order_id = makeconfcode(7);
+
+  var orderIdRetrieveQuery = "SELECT order_id from order_details;";
+  pool.query(orderIdRetrieveQuery, (err,res) => {
     if(err) {
       console.log('user id retrieve error = ',err);
       console.log(err);
       res.redirect("/error");
     }
     else {
-      console.log('user id retrieve 200 OK, result = ',res.rows);
+      console.log('res.rows line 972 = ', res.rows);
+      while (order_id in res.rows || order_id[0] == 0) {
+        order_id = makeconfcode(7);
+      }
+    }
+  });
 
-      user_id = res.rows[0].user_id
-
+  var userIdRetrieveQuery = `SELECT user_id FROM users WHERE "username" = '${username}';`;
+  //console.log("retrieve ID query = ",userIdRetrieveQuery);
+  pool.query(userIdRetrieveQuery, (err,result) => {
+    if(err) {
+      console.log('user id retrieve error = ',err);
+      console.log(err);
+      res.redirect("/error");
+    }
+    else {
+      console.log('user id retrieve 200 OK, result = ',result.rows);
+      user_id = result.rows[0].user_id
+      
       var orderDatabaseQuery = "INSERT INTO order_details VALUES";
       var selectedDate = req.session.chosenDate.slice(0,10);
       console.log("rawOrderedDates= ", selectedDate);
-
-      // order_id = user_id.toString().concat(selectedDate.slice(2,4),selectedDate.slice(5,7),selectedDate.slice(8,10));
-      // order_id = parseInt(order_id); 
-      order_id = makeconfcode(15); //no prevention for duplicates rn  
-
-
       console.log("req session cart 891= ", cart_contents);
       cart_contents.forEach(cart_element => {
         orderDatabaseQuery+=`('${order_id}','${cart_element.name}','${cart_element.price}','${cart_element.amount}','${cart_element.date}'),`
@@ -984,30 +993,31 @@ app.get('/order_success', async (req,res) => { //bugged
         }
       });
         
-        var orderJoinQuery = `INSERT INTO orders("user_id", "order_id", "complete") VALUES('${res.rows[0].user_id}','${order_id}','0');`;
-        //console.log("order join query = ",orderJoinQuery);
-        pool.query(orderJoinQuery, (err,res) => {
-          if(err) {
-            console.log('order join error = ',err);
-            console.log(err);
-            res.redirect("/error");
-          }
-          else {
-            console.log('order join 200 OK'); //after this point it hangs
-          }
-        });
+      var orderJoinQuery = `INSERT INTO orders("user_id", "order_id", "complete") VALUES('${user_id}','${order_id}','0');`;
+      console.log("order join query = ",orderJoinQuery);
+      pool.query(orderJoinQuery, (err,res) => {
+        if(err) {
+          console.log('order join error = ',err);
+          console.log(err);
+          res.redirect("/error");
+        }
+        else {
+          console.log('order join 200 OK');
+        }
+      });
+     
+      console.log("userIDretrievequery complete");
+      cart.clearItems(); //clear cart on order success
+      req.session.cart = cart.getItems(); 
+      
+      if (LOCAL_DEV_FLAG) {
+        res.redirect('/order_success_local.html');
+      }
+      else{
+        res.redirect('/order_success.html');
+      }
     }
   });
-  console.log("userIDretrievequery complete");
-  cart.clearItems(); //clear cart on order success
-  req.session.cart = cart.getItems(); 
-  
-  if (LOCAL_DEV_FLAG) {
-    res.redirect('/order_success_local.html');
-  }
-  else{
-    res.redirect('/order_success.html');
-  }
 });
 
 

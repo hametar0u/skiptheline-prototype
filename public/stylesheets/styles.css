@@ -490,6 +490,7 @@ th {
   top: 50px;
   margin-right: 5%;
   text-align:right;
+  float: right;
 }
 
 .cartArrowImg {

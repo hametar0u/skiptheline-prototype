@@ -57,11 +57,11 @@ function CalendarPicker(element, options) {
 
     // Hard-coded list of all days.
     this.listOfAllDaysAsText = [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
+        'M',
+        'Tu',
+        'W',
+        'Th',
+        'F',
     ];
 
     // Hard-coded list of all months.
