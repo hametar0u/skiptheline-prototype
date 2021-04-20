@@ -717,14 +717,18 @@ app.post('/forgot_password', (req, res) => {
 //if email is in db then generate link and send the email
 //else alert and point towards sign up
 
-app.get('/:resetpwdlink', (req, res) => {
-  //console.log('req.params = ', req.params, '--- req.session.resetpwdlink = ', req.session.resetpwdlink);
-  if (req.params.resetpwdlink == req.session.resetpwdlink) {
-    res.render('pages/reset_password.ejs');
-  }
-  else {
-    res.redirect('/');
-  }
+// app.get('/:resetpwdlink', (req, res) => {
+//   //console.log('req.params = ', req.params, '--- req.session.resetpwdlink = ', req.session.resetpwdlink);
+//   if (req.params.resetpwdlink == req.session.resetpwdlink) {
+//     res.render('pages/reset_password.ejs');
+//   }
+//   else {
+//     res.redirect('/');
+//   }
+// });
+
+app.get('/reset_password', (req, res) => {
+  res.render('pages/reset_password.ejs');
 });
 
 app.post('/reset_password', (req, res) => {
