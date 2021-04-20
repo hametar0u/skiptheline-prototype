@@ -29,7 +29,7 @@
 //the selected date is one more than the date actually selected -- stopped happening today what the f
 
 //Pending:
-//edit/forgot password -- edit password done; check if email notification sends
+//forgot password --> generate temp link to email body and use the temp link as the check.
 //change sendgrid to actual STL email
 //Integrate React by refactoring the entire code
 //random idea for security but we should log all the actions of admin and sudo accounts (ehem mihoyo)
@@ -428,7 +428,7 @@ app.post('/createaccount', (req, res) => {
         var mailOptions = {
           from: 'kevinlu1248@gmail.com', // sender address
           to: req.session.usr, // list of receivers
-          subject: 'Skip The Line Confirmation Code', // Subject line
+          subject: `${confcode}' is your Skip The Line Confirmation Code`, // Subject line
           html: `<p>Your confirmation code is: '${confcode}'</p>`// plain text body
         };
       
@@ -673,10 +673,61 @@ app.post('/edit_password', checkAuth, (req,res) => {
 });
 
 app.get('/forgot_password', (req, res) => {
-  res.render("pages/forgot_password.ejs");
+  res.render('pages/forgot_password.ejs');
 });
 
 app.post('/forgot_password', (req, res) => {
+  var usr = req.body.username;
+  var userIDretrievequery = `SELECT * FROM users where username = '${usr}';`;
+  pool.query(userIDretrievequery, (error, result) => {
+    if(error) {
+      console.log(error);
+      res.redirect("/error");
+    }
+    else {
+      if (result && result.length) {
+        console.log('user does not match');
+        res.render('pages/forgot_password.ejs');
+      }
+      else {
+        var resetpwdlink = makeid(24);
+        req.session.resetpwdlink = resetpwdlink;
+        console.log('req.session.resetpwdlink = ', req.session.resetpwdlink);
+
+        var mailOptions = {
+          from: 'kevinlu1248@gmail.com', // sender address //wait can we just change this
+          to: usr, // list of receivers
+          subject: 'Skip The Line Reset Password Link', // Subject line
+          html: `<p>Click <a href="http://localhost:5000/${resetpwdlink}">here</a> to reset your password. <br><br> Skip the Line Team </p>`// plain text body
+        }
+      
+        transporter.sendMail(mailOptions, function (err, info) {
+          if(err)
+            console.log(err)
+          else
+            console.log('Message sent: ' + info);
+        });
+        res.render('pages/forgot_password.ejs');
+      }
+    }
+  });
+});
+
+//provide email address to send link
+//if email is in db then generate link and send the email
+//else alert and point towards sign up
+
+app.get('/:resetpwdlink', (req, res) => {
+  //console.log('req.params = ', req.params, '--- req.session.resetpwdlink = ', req.session.resetpwdlink);
+  if (req.params.resetpwdlink == req.session.resetpwdlink) {
+    res.render('pages/reset_password.ejs');
+  }
+  else {
+    res.redirect('/');
+  }
+});
+
+app.post('/reset_password', (req, res) => {
   var pwd = req.body.pwd;
   var usr = req.body.usr;
 
