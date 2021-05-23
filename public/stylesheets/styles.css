@@ -64,8 +64,17 @@ button, input, optgroup, select, textarea {
   line-height: inherit;
 }
 
-input[type=submit] {
+input[type='submit'] {
   overflow-wrap: break-word;
+}
+
+input[type="number"] {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
 }
 
 button {
@@ -144,6 +153,10 @@ button:hover {
   font-size: 100%;
 }  
 
+#settings_div {
+  display:none;
+}
+
 #navDrop {
   transition: 0.2s;
 }
@@ -198,7 +211,6 @@ button:hover {
   margin-right:auto;
   margin-top: 20%;
 }
-
 #code {
   font-size: 48px;
   text-align: center;
@@ -240,6 +252,23 @@ button:hover {
   background-color: #59c7cb;
   border-bottom-width: 0;
   margin-top: 0.2em;
+}
+
+#resend_confirmation_button {
+  color: blue;
+	background: none;
+	margin: 0;
+	padding: 0;
+	border: none;
+	cursor: pointer;
+}
+
+#resend_confirmation_button span {
+	text-decoration: underline;
+}
+#resend_confirmation_button:hover span,
+#resend_confirmation_button:focus span {
+	color: black;
 }
 
 .dateSelectBox {
@@ -505,7 +534,7 @@ th {
   color: black;
   text-decoration: none;
   right:1%;
-  top: -10px;
+  top: -1%;
   padding-left:20px;
   padding-right:20px;
   z-index: 70;
@@ -673,6 +702,10 @@ th {
   width:65px;
   /* vertical-align: top; */
   margin-top:7px;
+}
+
+#settings_icon {
+  width: 3%;
 }
 
 .product_image {

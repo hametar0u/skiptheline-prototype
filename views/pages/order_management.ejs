@@ -29,7 +29,7 @@
       <h1 style="text-align: left;"><%= rows[0].date.toString().slice(0,15) %></h1>
       <div class="row">
         <div class="item_card">
-          <h2><%= rows[0].order_id%></h2>
+          <h2>Order ID: <%= rows[0].order_id%></h2>
           <form action="/fulfill_order" method="POST">
             <input type="hidden" value="<%=rows[0].order_id%>" name="order_id" id="order_id">
             <input class="remove_button" id="item_submit" type="submit" value="Complete Order">
@@ -61,7 +61,7 @@
             <div class="row">
           <% } %>
           <div class="item_card">
-            <h2><%= rows[i].order_id%></h2>
+            <h2>Order ID: <%= rows[i].order_id%></h2>
             <form action="/fulfill_order" method="POST">
               <input type="hidden" value="<%=rows[i].order_id%>" name="order_id" id="order_id">
               <input class="remove_button" id="item_submit" type="submit" value="Complete Order">

@@ -1,12 +1,24 @@
-//Kenn's to do list
-//make CSS of all pages scalable and also can be seen on mobile
-//pages that need CSS fixing:
+/*
 
-// turn dropdown and cart buttons into x
+Immediate TO DO
+// style +/- buttons
+// url-ify images thru discord
+
+
+Done
+
+
+For next session 
+// disable invert colors for dark mode
+
+UI / cosmetics
+// showing results for [date] bigger
+// highlight tab you're currently on + disable the button
+// X button spacing -- doesn't scale well
 // date select calendar formatting
+//make email not look so basic
 // mobile menu position kinda jank and doesn't scale with screen size -- MEDIUM
-// order success mobile scaling -- MEDIUm
-//  menu -- MEDIUM
+// order success mobile scaling -- MEDIUM
 //  order now (cart table kinda jank cuz adding hamburger pushes the table off the screen) -- MEDIUM
 //  confirmation code -- LOW
 //  admin dashboard -- LOW
@@ -16,25 +28,25 @@
 //better wipe transition -- https://www.youtube.com/watch?v=yoO0OGuEeHs -- doesn't have to be as bougie but
 //make images more robust
 
-// IMPROVEMENTS:
-//only display cart when there's something inside cart and message otherwise
+IMPROVEMENTS:
 // make the date format readable -- partially solved except pending orders/order history
 //check if the db queries on the order now have already been run and if so just don't run it
+// check if current password and new password is the same
+// revert edit password changes if not owner
 
-//problems:
+problems:
+//can't attach images to emails although theoretically you can
+//back to login in reset password goes to the 500 page
 //stripe receipt email not sending through --  might be the test api key
 //sometimes the pricelist cookie gets wiped and the app crashes when adding to cart
-//missing complete order button on the last item -- moved to before the table but does it look jank?
-//toggling between dropdown and calendar doesn't work
 //the selected date is one more than the date actually selected -- stopped happening today what the f
 
-//Pending:
-//forgot password --> generate temp link to email body and use the temp link as the check.
+Pending:
 //change sendgrid to actual STL email
 //Integrate React by refactoring the entire code
 //random idea for security but we should log all the actions of admin and sudo accounts (ehem mihoyo)
-//mobile compatibility
 
+*/
 
 const express = require('express');
 const fetch = require('node-fetch');
@@ -66,6 +78,7 @@ const sgTransport = require('nodemailer-sendgrid-transport');
 const { isNullOrUndefined } = require('util');
 const fs = require('fs');
 const { callbackPromise } = require('nodemailer/lib/shared'); 
+const { appengine } = require('googleapis/build/src/apis/appengine');
 
 var stripe;
 if (LOCAL_DEV_FLAG){
@@ -118,7 +131,7 @@ function makeconfcode(length) {
 async function checkAuth(req, res, next) {
   if (!req.session.user_id) {
     console.log('You are not authorized to view this page');
-    res.redirect("login.html");
+    res.redirect("unauthorized.html");
   }
   else {
     console.log("check auth success")
@@ -147,7 +160,7 @@ function checkAdmin(req,res,next) { //for level 1
         console.log("level = ",level)
         if (level == 0) {
           console.log("you don't have level 1+ clearance");
-          res.redirect("login.html");
+          res.redirect("unauthorized.html");
         }
         else {
           console.log("level 1+ clearance");
@@ -182,7 +195,7 @@ function checkAdmin2(req,res,next) { //for level 2
         }
         else {
           console.log("you don't have level 2 clearance");
-          res.redirect("error.html");
+          res.redirect("unauthorized.html");
         }
       }
     }
@@ -429,7 +442,57 @@ app.post('/createaccount', (req, res) => {
           from: 'kevinlu1248@gmail.com', // sender address
           to: req.session.usr, // list of receivers
           subject: `${confcode}' is your Skip The Line Confirmation Code`, // Subject line
-          html: `<p>Your confirmation code is: '${confcode}'</p>`// plain text body
+          html: `
+          <style>
+            html {
+              text-align:center;
+              font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+            }
+            p {
+              color: white;
+              font-size: 20px;
+            }
+            h1 {
+              color: white;
+              font-size: 40px; 
+              font-weight: 500;
+            }
+
+            .header {
+              /* padding-top: 2%;
+              padding-bottom: 1%; */
+              background-color: white; 
+              width:  100%;
+              top:    0;
+              left:   0;
+              margin: auto;
+              font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+              background-color:#60D5DA;
+              color:white;
+              position:fixed;
+              /* margin-bottom:20px; */
+              text-align:center;
+              padding-left: 3%;
+              padding-right: 3%;
+              display:inline-block;
+              z-index: 69;
+              margin-bottom: 30px;
+            }
+            #what {
+              padding-top: 30px;
+              background-color: black;
+              width: 100%;
+            }
+          </style>
+          <div class="header" style=" background-color: #60D5DA;">
+            <h1 style="color: white; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
+          </div>
+          <div id="what">
+            <h1>Testing out HTML functionality</h1><br>
+            <p>Your confirmation code is: '${confcode}'</p><br>
+          </div>
+          
+          `// plain text body
         };
       
         transporter.sendMail(mailOptions, function (err, info) {
@@ -448,7 +511,81 @@ app.post('/createaccount', (req, res) => {
   // var firstname = req.body.firstname;
   // var lastname = req.body.lastname;
 });
- 
+
+app.post('/resend_confirmation', (req, res) => {
+  var usr = req.session.usr;
+  req.session.usr = usr; 
+  req.session.pwd = req.body.pwd;
+  var confcode = makeconfcode(6);
+  
+  var mailOptions = {
+    from: 'kevinlu1248@gmail.com', // sender address
+    to: req.session.usr, // list of receivers
+    subject: `${confcode}' is your Skip The Line Confirmation Code`, // Subject line
+    html: `
+    <style>
+      html {
+        text-align:center;
+        font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+      }
+      p {
+        color: white;
+        font-size: 20px;
+      }
+      h1 {
+        color: white;
+        font-size: 40px; 
+        font-weight: 500;
+      }
+
+      .header {
+        /* padding-top: 2%;
+        padding-bottom: 1%; */
+        background-color: white; 
+        width:  100%;
+        top:    0;
+        left:   0;
+        margin: auto;
+        font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+        background-color:#60D5DA;
+        color:white;
+        position:fixed;
+        /* margin-bottom:20px; */
+        text-align:center;
+        padding-left: 3%;
+        padding-right: 3%;
+        display:inline-block;
+        z-index: 69;
+        margin-bottom: 30px;
+      }
+      #what {
+        padding-top: 30px;
+        background-color: black;
+        width: 100%;
+      }
+    </style>
+    <div class="header" style=" background-color: #60D5DA;">
+      <h1 style="color: white; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
+    </div>
+    <div id="what">
+      <h1>Testing out HTML functionality</h1><br>
+      <p>Your confirmation code is: '${confcode}'</p><br>
+    </div>
+    
+    `// plain text body
+  };
+
+  transporter.sendMail(mailOptions, function (err, info) {
+    if(err)
+      console.log(err)
+    else
+      console.log('Message sent: ' + info);
+  });
+
+  req.session.confcode = confcode;
+  res.render("pages/confirmation_code.ejs", {"confirmed": true});
+});
+
 app.post('/confirmation', (req, res) => {
   var codeconf = req.body.code;
   if (codeconf == req.session.confcode) {
@@ -642,11 +779,14 @@ app.post('/edit_password', checkAuth, (req,res) => {
         res.render('pages/edit_password.ejs', {'pwd_correct': req.session.pwd_correct});
       }
       else{
+        var resetpwdlink = makeid(24);
+        req.session.resetpwdlink = resetpwdlink;
+
         var mailOptions = {
           from: 'kevinlu1248@gmail.com', // sender address //wait can we just change this
           to: req.session.username, // list of receivers
-          subject: 'Skip The Line Edit Password Confirmation', // Subject line
-          html: `<p>Your password has recently been changed. If this is not you, please <a href="http://localhost:5000">log in</a> to confirm immediately.</p>`// plain text body
+          subject: 'Skip The Line Edit Password Alert', // Subject line
+          html: `<p>Your password has recently been changed. If this is not you, please <a href="http://localhost:5000/reset_password/${resetpwdlink}">click here</a> to reset your password immediately.</p>`// plain text body
         };
       
         transporter.sendMail(mailOptions, function (err, info) {
@@ -663,7 +803,7 @@ app.post('/edit_password', checkAuth, (req,res) => {
             res.redirect("/error");
           }
           else {
-            res.redirect("/");
+            res.redirect("/password_change_success");
           }
         });
 
@@ -673,11 +813,12 @@ app.post('/edit_password', checkAuth, (req,res) => {
 });
 
 app.get('/forgot_password', (req, res) => {
-  res.render('pages/forgot_password.ejs');
+  res.render('pages/forgot_password.ejs', {'messageStatus': 0});
 });
 
 app.post('/forgot_password', (req, res) => {
   var usr = req.body.username;
+  var messageStatus = 0;
   var userIDretrievequery = `SELECT * FROM users where username = '${usr}';`;
   pool.query(userIDretrievequery, (error, result) => {
     if(error) {
@@ -685,9 +826,12 @@ app.post('/forgot_password', (req, res) => {
       res.redirect("/error");
     }
     else {
-      if (result && result.length) {
+      console.log("result.rows - ", result.rows);
+      if ( result.rows.length == 0) {
         console.log('user does not match');
-        res.render('pages/forgot_password.ejs');
+        console.log('messageStatus - ', messageStatus);
+        messageStatus = 1;
+        res.render('pages/forgot_password.ejs', {'messageStatus': messageStatus});
       }
       else {
         var resetpwdlink = makeid(24);
@@ -698,16 +842,23 @@ app.post('/forgot_password', (req, res) => {
           from: 'kevinlu1248@gmail.com', // sender address //wait can we just change this
           to: usr, // list of receivers
           subject: 'Skip The Line Reset Password Link', // Subject line
-          html: `<p>Click <a href="http://localhost:5000/${resetpwdlink}">here</a> to reset your password. <br><br> Skip the Line Team </p>`// plain text body
+          html: `<p>Click <a href="http://localhost:5000/reset_password/${resetpwdlink}">here</a> to reset your password. <br><br> Skip the Line Team </p>`// plain text body
         }
       
         transporter.sendMail(mailOptions, function (err, info) {
-          if(err)
+          if(err) {
             console.log(err)
-          else
-            console.log('Message sent: ' + info);
+            res.redirect('/error');
+          }
+          else {
+            console.log('Message sent: ' + info); 
+            messageStatus = 2;
+            req.session.resetPwdUsr = usr;
+            console.log('messageStatus - ', messageStatus);
+            res.render('pages/forgot_password.ejs', {'messageStatus': messageStatus, 'email': usr});
+            messageStatus = 0;
+          }
         });
-        res.render('pages/forgot_password.ejs');
       }
     }
   });
@@ -717,23 +868,23 @@ app.post('/forgot_password', (req, res) => {
 //if email is in db then generate link and send the email
 //else alert and point towards sign up
 
-// app.get('/:resetpwdlink', (req, res) => {
-//   //console.log('req.params = ', req.params, '--- req.session.resetpwdlink = ', req.session.resetpwdlink);
-//   if (req.params.resetpwdlink == req.session.resetpwdlink) {
-//     res.render('pages/reset_password.ejs');
-//   }
-//   else {
-//     res.redirect('/');
-//   }
-// });
-
-app.get('/reset_password', (req, res) => {
-  res.render('pages/reset_password.ejs');
+app.get('/reset_password/:resetpwdlink', (req, res) => {
+  //console.log('req.params = ', req.params, '--- req.session.resetpwdlink = ', req.session.resetpwdlink);
+  if (req.params.resetpwdlink == req.session.resetpwdlink) {
+    res.render('pages/reset_password.ejs');
+  }
+  else {
+    res.redirect('/error');
+  }
 });
+
+// app.get('/reset_password', (req, res) => {
+//   res.render('pages/reset_password.ejs');
+// });
 
 app.post('/reset_password', (req, res) => {
   var pwd = req.body.pwd;
-  var usr = req.body.usr;
+  var usr = req.session.resetPwdUsr;
 
   var mailOptions = {
     from: 'kevinlu1248@gmail.com', // sender address //wait can we just change this
@@ -756,9 +907,18 @@ app.post('/reset_password', (req, res) => {
       res.redirect("/error");
     }
     else {
-      res.redirect("/");
+      res.redirect("/password_change_success");
     }
   });
+});
+
+app.get('/password_change_success', (req, res) => {
+  if (LOCAL_DEV_FLAG) {
+    res.redirect('password_change_success_local.html');
+  }
+  else {
+    res.redirect('password_change_success.html');
+  }
 });
 
 app.get('/admin_dashboard', checkAdmin, (req, res) => {res.render("pages/admin_dashboard.ejs");});

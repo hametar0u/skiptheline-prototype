@@ -45,7 +45,11 @@
                         <p style="color: red; margin-top: 0">Wrong confirmation code. Please try again.</p> 
                     <% } %>
                     <input class="code_button" type="submit" value="Submit">
-                </form> 
+                </form>
+                <p>Didn't get the code?</p> 
+                <form action="/resend_confirmation" method="POST" style="display:inline;">
+                    <input type="submit" id="resend_confirmation_button" value="resend confirmation">
+                </form>
             </div>
         </div>
     </body>
