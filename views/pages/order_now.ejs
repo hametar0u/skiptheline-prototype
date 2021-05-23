@@ -35,6 +35,14 @@
         float: left;
         left: auto;
       }
+
+      .plusButton {
+        width: 30%;
+      }
+        
+      .minusButton {
+        width: 30%;
+      }
       
     @media only screen and (max-width: 768px) {
       .navbar, .headerDesktop, .cartArrowDesktop, .closeCartDiv {
@@ -160,7 +168,7 @@
       vertical-align: center;
     }
 
-      
+
   }
 
   </style>
@@ -358,9 +366,9 @@
               <input type="hidden" value="<%=r[i].item%>" name="item_name" id="item_name">       
               <div class="number_input">
                 <label id="amount" for="item_quantity">Amount</label>
-                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
-                <input style="font-size:100%; width:97%;" name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
-                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+                <input style="font-size:100%; width:97%;margin-bottom: 5%;" name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
+                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minusButton">-</button>
+                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plusButton">+</button>
               </div>
               <input class="add_to_cart_button" id="item_submit" type="submit" value="Add To Cart">
             </form>
