@@ -77,12 +77,11 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
   -webkit-appearance: none;
 }
 
-button {
+/* button {
   background: #889494;
   color: white;
-  /* border-radius: 1px; */
+   border-radius: 1px; 
   width: 60%;
-  /* border: 2px solid white; */
   transition: 0.1s;
   font-size: 100%;
   padding: 10px;
@@ -92,13 +91,12 @@ button {
 button:hover {
   background-color: #59c7cb;
   color: white;
-  /* border: 2px solid white; */
   width: 50%;
   font-size: 100%;
   padding: 10px;
   font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
   border-radius: 0.4em;
-}  
+}   */
 
 
 .header {
@@ -400,6 +398,22 @@ th {
     z-index: 0;
 }
 
+.increment_button {
+  font-size: 36px;
+  font-weight: 350;
+  line-height: 50px;
+  height: 50px;
+  width: 50px;
+  background-color: white;
+  border: 3px solid black;
+  border-radius: 50%;
+}
+
+.increment_button:hover {
+  background-color: black;
+  color: white;
+  transition: 0.2s;
+}
 
 .admin_panel {
   margin: auto;

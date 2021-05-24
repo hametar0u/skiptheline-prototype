@@ -358,9 +358,13 @@
               <input type="hidden" value="<%=r[i].item%>" name="item_name" id="item_name">       
               <div class="number_input">
                 <label id="amount" for="item_quantity">Amount</label>
-                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+                <div class="button_container">
+                  <button class="increment_button" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+                </div>
                 <input style="font-size:100%; width:97%;" name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
-                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+                <div class="button_container">
+                  <button class="increment_button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+                </div>
               </div>
               <input class="add_to_cart_button" id="item_submit" type="submit" value="Add To Cart">
             </form>
