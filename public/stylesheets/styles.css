@@ -408,10 +408,9 @@ th {
 }
 
 .increment_button {
-  display:inline-block;
-  font-size: 36px;
+  font-size: 250%;
+  vertical-align: top;
   font-weight: 350;
-  line-height: 50px;
   height: 50px;
   width: 50px;
   background-color: white;
