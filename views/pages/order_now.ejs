@@ -372,7 +372,7 @@
             <form action="/add_to_cart" method="POST">
               <input type="hidden" value="<%=r[i].item%>" name="item_name" id="item_name">       
               <div class="number_input">
-                <label id="amount" for="item_quantity">Amount</label>
+                <label id="amount" for="item_quantity">Amount</label> <br>
                 <button class="increment_button" onclick="this.parentNode.querySelector('input[type=number]').stepDown()" style="font-size: 200%;">-</button>
                 <input class="item_quantity" name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
                 <button class="increment_button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
@@ -391,8 +391,12 @@
             <img class="product_image" src="images/<%=r.item%>.jpg">
             <input type="hidden" value="<%=r.item%>" name="item_name" id="item_name">
             <div class="number_input">
-              <label id="amount" for="item_quantity">Amount</label>
-              <input name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
+              <div class="number_input">
+                <label id="amount" for="item_quantity">Amount</label> <br>
+                <button class="increment_button" onclick="this.parentNode.querySelector('input[type=number]').stepDown()" style="font-size: 200%;">-</button>
+                <input class="item_quantity" name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
+                <button class="increment_button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+              </div>
             </div>
             <input class="add_to_cart_button" id="item_submit" type="submit" value="Add To Cart">
           </form>

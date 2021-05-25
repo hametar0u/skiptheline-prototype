@@ -1,17 +1,33 @@
 /*
 
 Immediate TO DO
-// style +/- buttons
-// url-ify images thru discord
-
+// sign up page after account exists is fucked
 
 Done
+// url-ify images thru discord
+https://cdn.discordapp.com/attachments/845815813865078824/846761425170202644/Chicken_Rice.jpg
+https://cdn.discordapp.com/attachments/845815813865078824/846761429771091998/Chocolate_Milk.jpg
+https://cdn.discordapp.com/attachments/845815813865078824/846761430820061254/Dasani_Water.jpg
+https://cdn.discordapp.com/attachments/845815813865078824/846761432158437406/Fiji_Water.jpg
+https://cdn.discordapp.com/attachments/845815813865078824/846761433161007124/Hamburger.jpg
+https://cdn.discordapp.com/attachments/845815813865078824/846761434649722920/logo-teal.png
+https://cdn.discordapp.com/attachments/845815813865078824/846761436159934494/logo.png
+https://cdn.discordapp.com/attachments/845815813865078824/846761437565026384/menu_icon.png
+https://cdn.discordapp.com/attachments/845815813865078824/846761438683987988/Orange_Juice.jpg
+https://cdn.discordapp.com/attachments/845815813865078824/846761440413351986/Orange.jpg
+https://cdn.discordapp.com/attachments/845815813865078824/846761489443323984/shopping-cart-icon-vector.png
+https://cdn.discordapp.com/attachments/845815813865078824/846761497395724298/Smoothie.jpg
+https://cdn.discordapp.com/attachments/845815813865078824/846761510088867880/Special.png
+https://cdn.discordapp.com/attachments/845815813865078824/846761513921675294/Unknown.png
+https://cdn.discordapp.com/attachments/845815813865078824/846762274399322122/settings_icon.png
+// style +/- buttons
 
 
 For next session 
 // disable invert colors for dark mode
 
 UI / cosmetics
+// gear icon aspect ratio wack + doesn't scale at all
 // showing results for [date] bigger
 // highlight tab you're currently on + disable the button
 // X button spacing -- doesn't scale well
@@ -566,13 +582,22 @@ app.post('/resend_confirmation', (req, res) => {
     </style>
     <div class="header" style=" background-color: #60D5DA;">
       <h1 style="color: white; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
+      <img src="cid:logo">
     </div>
     <div id="what">
       <h1>Testing out HTML functionality</h1><br>
       <p>Your confirmation code is: '${confcode}'</p><br>
+      <img src="cid:logo">
     </div>
     
-    `// plain text body
+    `,// plain text body
+    attachments: [
+      {
+        filename:'logo-teal.png',
+        path:'https://cdn.discordapp.com/attachments/845815813865078824/846761434649722920/logo-teal.png',
+        cid: 'logo'
+      }
+    ]
   };
 
   transporter.sendMail(mailOptions, function (err, info) {

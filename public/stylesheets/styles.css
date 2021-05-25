@@ -385,7 +385,7 @@ th {
 #item_quantity {
   display: inline-block;
   font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
-  font-size: 100%;
+  font-size: 200%;
   width:40%;
   height: 50px;
   text-align: center;
