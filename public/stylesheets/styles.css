@@ -253,7 +253,7 @@ button:hover {
 }
 
 #resend_confirmation_button {
-  color: blue;
+  color: #007bff;
 	background: none;
 	margin: 0;
 	padding: 0;
@@ -261,12 +261,9 @@ button:hover {
 	cursor: pointer;
 }
 
-#resend_confirmation_button span {
-	text-decoration: underline;
-}
-#resend_confirmation_button:hover span,
-#resend_confirmation_button:focus span {
-	color: black;
+#resend_confirmation_button:hover {
+  text-decoration: underline;
+  color: rgb(33,88,173);
 }
 
 .dateSelectBox {
