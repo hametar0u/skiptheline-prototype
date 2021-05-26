@@ -220,8 +220,8 @@
           document.getElementById("cart_div").style.marginRight = '-2%';
           // document.getElementById("order_now_div").style.marginRight = '30%';
           //close button position
-          document.getElementById("close_cart_button").style.marginRight = '0%';
-          document.getElementById("close_cart_button").style.marginTop = '3.3%';
+          document.getElementById("close_cart_button").style.marginRight = '-1.2%';
+          document.getElementById("close_cart_button").style.marginTop = '3.9%';
           document.getElementById("cart_arrow").style.display = "none";
         }
         
@@ -309,6 +309,10 @@
 
     <!-- cart -->
     <div id="cart_div" class="cart">
+      <!-- close cart button -->
+      <div id="close_cart_div" class="closeCartDiv">
+        <a href="javascript:void(0)" id="close_cart_button" class ="closeCartButton" onclick="toggleCart()" style="text-align: right;">&times;</a>
+      </div>
       <h1>Cart</h1>
       <% if (row4.cartrow.length != 0) { %> 
       <table>
@@ -356,10 +360,7 @@
       <div id="cart_arrow" class="cartArrowDesktop">
         <img id="cart_arrow" src="images/shopping-cart-icon-vector.png" alt="&lt;- cart" onclick="toggleCart()" class="cartArrowDesktopImg">
       </div>
-      <!-- close cart button -->
-      <div id="close_cart_div" class="closeCartDiv">
-        <a href="javascript:void(0)" id="close_cart_button" class ="closeCartButton" onclick="toggleCart()" style="text-align: right;">&times;</a>
-      </div>
+      
 
       <!-- the rest of the menu item cards -->
       <h2 style="text-align: center;">Showing Results for: <%= row3.chosenDate.slice(0,10) %></h2>
