@@ -1,7 +1,9 @@
 /*
 
 Immediate TO DO
+// highlight tab you're currently on + disable the button -- how do you track the page you're on?
 // sign up page after account exists is fucked
+// showing results for [date] bigger
 
 Done
 // url-ify images thru discord
@@ -28,8 +30,6 @@ For next session
 
 UI / cosmetics
 // gear icon aspect ratio wack + doesn't scale at all
-// showing results for [date] bigger
-// highlight tab you're currently on + disable the button
 // X button spacing -- doesn't scale well
 // date select calendar formatting
 //make email not look so basic

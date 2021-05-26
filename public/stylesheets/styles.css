@@ -386,6 +386,9 @@ th {
   width:40%;
   height: 50px;
   text-align: center;
+  border: 1px solid #889494;
+  border-radius: 0;
+  padding: 0;
 }
 
 #amount {
@@ -404,19 +407,40 @@ th {
   display: inline-block;
 }
 
-.increment_button {
+.increment_button_right {
+  color: #889494;
   font-size: 250%;
   vertical-align: top;
   font-weight: 350;
-  height: 50px;
+  height: 52px;
   width: 50px;
   background-color: white;
-  border: 3px solid black;
-  border-radius: 50%;
+  border: 1px solid #889494;
+  border-top-right-radius: 14%;
+  border-bottom-right-radius: 14%;
 }
 
-.increment_button:hover {
-  background-color: black;
+.increment_button_right:hover {
+  background-color: #889494;
+  color: white;
+  transition: 0.2s;
+}
+
+.increment_button_left {
+  color: #889494;
+  font-size: 250%;
+  vertical-align: top;
+  font-weight: 350;
+  height: 52px;
+  width: 50px;
+  background-color: white;
+  border: 1px solid #889494;
+  border-top-left-radius: 14%;
+  border-bottom-left-radius: 14%;
+}
+
+.increment_button_left:hover {
+  background-color: #889494;
   color: white;
   transition: 0.2s;
 }

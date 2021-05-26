@@ -362,7 +362,7 @@
       </div>
 
       <!-- the rest of the menu item cards -->
-      <h3>Showing Results for: <%= row3.chosenDate.slice(0,10) %></h3>
+      <h2 style="text-align: center;">Showing Results for: <%= row3.chosenDate.slice(0,10) %></h2>
       <h1 class="orderNowHeading">Food Items</h1>
         <% var r = row1.fRows; %>
         <% for (var i=0; i<r.length; i++) {%>
@@ -373,9 +373,9 @@
               <input type="hidden" value="<%=r[i].item%>" name="item_name" id="item_name">       
               <div class="number_input">
                 <label id="amount" for="item_quantity">Amount</label> <br>
-                <button class="increment_button" onclick="this.parentNode.querySelector('input[type=number]').stepDown()" style="font-size: 200%;">-</button>
+                <button class="increment_button_left" onclick="this.parentNode.querySelector('input[type=number]').stepDown()" style="font-size: 200%;">-</button>
                 <input class="item_quantity" name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
-                <button class="increment_button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+                <button class="increment_button_right" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
               </div>
               <input class="add_to_cart_button" id="item_submit" type="submit" value="Add To Cart">
             </form>
