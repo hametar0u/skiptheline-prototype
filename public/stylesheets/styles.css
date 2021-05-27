@@ -383,6 +383,7 @@ th {
   display: inline-block;
   font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
   font-size: 200%;
+  color: rgb(67, 66, 66);
   width:40%;
   height: 50px;
   text-align: center;

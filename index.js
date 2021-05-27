@@ -1,9 +1,7 @@
 /*
 
 Immediate TO DO
-// highlight tab you're currently on + disable the button -- how do you track the page you're on?
 // sign up page after account exists is fucked
-// showing results for [date] bigger
 
 Done
 // url-ify images thru discord
@@ -23,12 +21,15 @@ https://cdn.discordapp.com/attachments/845815813865078824/846761510088867880/Spe
 https://cdn.discordapp.com/attachments/845815813865078824/846761513921675294/Unknown.png
 https://cdn.discordapp.com/attachments/845815813865078824/846762274399322122/settings_icon.png
 // style +/- buttons
+// showing results for [date] bigger
+// half of this: highlight tab you're currently on + disable the button
 
 
 For next session 
 // disable invert colors for dark mode
 
 UI / cosmetics
+// item_quantity active wack as hell; can't change it with #item_quantity:active
 // gear icon aspect ratio wack + doesn't scale at all
 // X button spacing -- doesn't scale well
 // date select calendar formatting
