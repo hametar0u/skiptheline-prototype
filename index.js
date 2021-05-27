@@ -960,7 +960,7 @@ app.get('/order_now', checkAuth, async (req, res) => {
     const drinkResults = { 'dRows': (drinkResult) ? drinkResult.rows : null};
     const cart = { 'cartrow': req.session.cart };
     console.log("cart in date select post = ", cart);
-    res.render('pages/order_now.ejs', {row3: dateObject, row1: foodResults, row2: drinkResults, row4: cart} );
+    res.render('pages/order_now.ejs', {row3: dateObject, row1: foodResults, row2: drinkResults, row4: cart, page: 'order_now'} );
     client.release();
   } 
   catch (err) {
@@ -1071,7 +1071,7 @@ app.post('/date_select', async (req,res) => {
     const drinkResults = { 'dRows': (drinkResult) ? drinkResult.rows : null};
     const cartObject = { 'cartrow': req.session.cart };
     console.log("cart in date select post = ", cart);
-    res.render('pages/order_now.ejs', {row3: dateObject, row1: foodResults, row2: drinkResults, row4: cartObject} );
+    res.render('pages/order_now.ejs', {row3: dateObject, row1: foodResults, row2: drinkResults, row4: cartObject, page: 'order_now'} );
     client.release();
   } 
   catch (err) {
@@ -1270,7 +1270,7 @@ app.get('/pending_orders', checkAuth, function (req, res) {
     }
     else {
       console.log("result.rows = ",result.rows);
-      res.render('pages/pending_orders.ejs',result);
+      res.render('pages/pending_orders.ejs',{result: result, page: 'pending_orders'});
     }
   });
   
@@ -1287,7 +1287,7 @@ app.get('/order_history', checkAuth, function (req, res) {
     }
     else {
       console.log(result.rows);
-      res.render('pages/order_history.ejs',result);
+      res.render('pages/order_history.ejs',{'result': result, page: 'order_history'});
     }
   });
 });

@@ -8,16 +8,16 @@
       <input class="navbar_button" type="submit" value="Order Management">
     </form> -->
     <form class="navbar_element" action="/pending_orders" method="GET">
-      <input class="navbar_button" type="submit" value="Pending Orders">
+      <input class="navbar_button pending_orders" type="submit" value="Pending Orders">
     </form>
     <form class="navbar_element" action="/order_history" method="GET">
-      <input class="navbar_button" type="submit" value="Order History">
+      <input class="navbar_button order_history" type="submit" value="Order History">
     </form>
     <form class="navbar_element" action="/date_select" method="GET">
       <input class="navbar_button" type="submit" value="Date Select">
     </form>
     <form class="navbar_element" action="/order_now" method="GET">
-      <input class="navbar_button" type="submit" value="Order Now">
+      <input class="navbar_button order_now" type="submit" value="Order Now">
     </form>
     <form class="navbar_element" method="POST" action="/logout">
       <input class="logout_button" type="submit" value="Log Out">
@@ -25,4 +25,10 @@
     
     <!-- <input class="navbar_element" type="button" value="Close" onclick="hideNav()" style="border-top-width: 0; border-left-width: 0; border-right-width: 0;"> -->
     
-  </div>
+</div>
+
+<script>
+  //disables the navbutton for the page you're currently on
+  document.getElementsByClassName("<%= page %>").disabled = true;
+  document.getElementsByClassName("<%= page %>").style.background = "#408e91";
+</script>

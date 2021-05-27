@@ -394,9 +394,9 @@
             <div class="number_input">
               <div class="number_input">
                 <label id="amount" for="item_quantity">Amount</label> <br>
-                <button class="increment_button" onclick="this.parentNode.querySelector('input[type=number]').stepDown()" style="font-size: 200%;">-</button>
+                <button class="increment_button_left" onclick="this.parentNode.querySelector('input[type=number]').stepDown()" style="font-size: 200%;">-</button>
                 <input class="item_quantity" name="item_quantity" id="item_quantity" type="number" step="1" min=0 value=0>
-                <button class="increment_button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+                <button class="increment_button_right" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
               </div>
             </div>
             <input class="add_to_cart_button" id="item_submit" type="submit" value="Add To Cart">
