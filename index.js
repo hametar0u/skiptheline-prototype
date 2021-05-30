@@ -1,7 +1,7 @@
 /*
 
 Immediate TO DO
-// sign up page after account exists is fucked
+//cors
 
 Done
 // url-ify images thru discord
@@ -23,15 +23,14 @@ https://cdn.discordapp.com/attachments/845815813865078824/846762274399322122/set
 // style +/- buttons
 // showing results for [date] bigger
 // half of this: highlight tab you're currently on + disable the button
+// sign up page after account exists is fucked
 
 
 For next session 
 // disable invert colors for dark mode
 
 UI / cosmetics
-// item_quantity active wack as hell; can't change it with #item_quantity:active
 // gear icon aspect ratio wack + doesn't scale at all
-// X button spacing -- doesn't scale well
 // date select calendar formatting
 //make email not look so basic
 // mobile menu position kinda jank and doesn't scale with screen size -- MEDIUM
@@ -52,16 +51,24 @@ IMPROVEMENTS:
 // revert edit password changes if not owner
 
 problems:
-//can't attach images to emails although theoretically you can
 //back to login in reset password goes to the 500 page
 //stripe receipt email not sending through --  might be the test api key
 //sometimes the pricelist cookie gets wiped and the app crashes when adding to cart
 //the selected date is one more than the date actually selected -- stopped happening today what the f
 
 Pending:
+// GUI for uploading images
 //change sendgrid to actual STL email
 //Integrate React by refactoring the entire code
 //random idea for security but we should log all the actions of admin and sudo accounts (ehem mihoyo)
+
+
+menu page
+- use input on menu already to rename imgs
+- enforce jpg images
+- input type file
+- todo: how to designate destination file 
+
 
 */
 

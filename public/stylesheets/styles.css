@@ -392,6 +392,11 @@ th {
   padding: 0;
 }
 
+#item_quantity:focus {
+  outline: none;
+  border: 1px solid #686868;
+}
+
 #amount {
   font-weight: 500;
   font-size: 120%;
@@ -750,7 +755,9 @@ th {
 }
 
 #settings_icon {
-  width: 3%;
+  width: 30px;
+  height: 100%;
+  object-fit: cover;
 }
 
 .product_image {
