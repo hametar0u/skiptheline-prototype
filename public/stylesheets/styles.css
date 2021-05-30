@@ -329,10 +329,6 @@ input {
     padding-right: 15%;
     font-size: 90%;
   }
-
-  h1 {
-    font-size: 24px;
-  }
 }
 
 
@@ -981,5 +977,3 @@ html.is-leaving .transition-fade {
   from{ opacity: 1; }
     to{ opacity: 0; }
 }
-
-
