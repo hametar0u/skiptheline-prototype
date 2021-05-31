@@ -48,3 +48,22 @@
 </div>
 </div>
 
+<script>
+  console.log("page: ", <%= page %>);
+  if (screen.width < 768) {
+    console.log("screen width < 768")
+    document.getElementById("navbar").classList.remove("navbar");
+    document.getElementById("navbar").classList.add("navDropdown"); 
+  }
+  else {
+    console.log("screen width >= 768")
+    document.getElementById("navbar").classList.remove("navDropdown");
+    document.getElementById("navbar").classList.add("navbar"); 
+  }
+
+  //disables the navbutton for the page you're currently on
+  console.log("page: ", <%= page %> );
+  document.getElementById("<%= page %>").disabled = true;
+  document.getElementById("<%= page %>").style.background = "#408e91";
+  //console.log("get eleemtn by class = ", document.getElementsByClassName("<%= page %>"));
+</script>

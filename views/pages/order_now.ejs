@@ -307,28 +307,11 @@
     <!-- navbar -->
     <% include ../partials/nav.ejs %>
 
-    <script>
-      if (screen.width < 768) {
-        console.log("screen width < 768")
-        document.getElementsById("navbar").classList.remove("navbar");
-        document.getElementsById("navbar").classList.add("navDropdown"); 
-      }
-      else {
-        console.log("screen width >= 768")
-        document.getElementsById("navbar").classList.remove("navDropdown");
-        document.getElementsById("navbar").classList.add("navbar"); 
-      }
-    </script>
+  
 
 
 
-    <script>
-      //disables the navbutton for the page you're currently on
-      console.log("page: ", <%= page %> );
-      document.getElementById("<%= page %>").disabled = true;
-      document.getElementById("<%= page %>").style.background = "#408e91";
-      //console.log("get eleemtn by class = ", document.getElementsByClassName("<%= page %>"));
-    </script>
+   
 
     <!-- cart -->
     <div id="cart_div" class="cart">
