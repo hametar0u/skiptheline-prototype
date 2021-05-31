@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/mobile.css">
 
     <title>Order Now</title>
     
@@ -45,7 +46,8 @@
       .number_input {
         margin-top: 1.9%;
       }
-      
+    
+    /*
     @media only screen and (max-width: 768px) {
       .cartArrowDesktop, .closeCartDiv {
         display: none;
@@ -175,7 +177,9 @@
     }
 
   }
+  */
 
+  
   </style>
   </head>
   <script>
@@ -299,8 +303,11 @@
       });
     </script>
 
-    <!-- navbar -->
+    <!--Nav dropdown-->
+    <% include ../partials/navDrop.ejs %>
 
+
+    <!-- navbar -->
     <% include ../partials/nav.ejs %>
 
     <script>
