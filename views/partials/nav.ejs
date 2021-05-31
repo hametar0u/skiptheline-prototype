@@ -11,7 +11,7 @@
   <a href="javascript:void(0)" id="close_menu_button" class ="closeCartButton" onclick="toggleMenu()" style="text-align: left;">&times;</a>
 </div>
   <!-- open button for the cart -->
-  <div id="cart_arrow" class="cartArrowNav">
+  <div id="cart_arrow_nav" class="cartArrowNav">
     <img id="cart_arrow" src="images/shopping-cart-icon-vector.png" alt="&lt;- cart" onclick="toggleCart()" class="cartArrowImg">
   </div>
 
@@ -37,15 +37,20 @@
   <form class="navbar_element" method="POST" action="/logout">
     <input class="logout_button" type="submit" value="Log Out">
   </form>
+  <div style="position: relative; top: 0; right: 0;">
+    <img class="settings_icon" id="settings_icon" src="images/settings_icon.png" alt="settings" onclick="toggleSettings()">
+  </div>
 </div>
-<div style="position: relative; top: 0; right: 0;">
-  <img class="settings_icon" id="settings_icon" src="images/settings_icon.png" alt="settings" onclick="toggleSettings()">
 </div>
 <div id="settings_div" class="settings_div">
-  <form action="/edit_password" method="GET">
+  <form action="/edit_password" method="GET" style="
+  background-color: #60D5DA;
+  width: 23%;
+  margin-left: 80%;
+  margin-top: -1.4%;
+">
     <input class="navbar_button" type="submit" value="Edit Password">
   </form>
-</div>
 </div>
 
 <script>
