@@ -66,4 +66,142 @@
   document.getElementById("<%= page %>").disabled = true;
   document.getElementById("<%= page %>").style.background = "#408e91";
   //console.log("get eleemtn by class = ", document.getElementsByClassName("<%= page %>"));
+
+
+  /*
+  var menuStatus = 0;
+
+  function toggleMenu() {
+    if (menuStatus == 0) {
+      
+      //document.getElementById("cart_arrow").style.display = "none";
+      document.getElementById("navDrop").style.marginTop = "0";
+      document.getElementById("navDrop").style.display = "inline-block";
+      //document.getElementById("open_nav_div").style.display = "none";
+      document.getElementById("logo_img").style.marginLeft = "27%";
+      document.getElementById("header").style.backgroundColor = "#53bcc0";
+
+      menuStatus = 1;
+
+    } else if (menuStatus == 1) {
+      document.getElementById("logo_img").style.marginLeft = "27%";
+      document.getElementById("navDrop").style.marginTop = "-500%";
+      document.getElementById("open_nav_div").style.display = "inline";
+      document.getElementById("header").style.backgroundColor = "#60D5DA";
+      
+      menuStatus = 0;
+    }
+  }
+ 
+  */
+
+  var cartStatus = 0;
+    var menuStatus = 0;
+    var settingStatus = 0;
+
+    function toggleCart() {
+      if (cartStatus == 0) {
+        
+        if (window.innerWidth <= 768) {
+          if (menuStatus == 1) {
+            toggleMenu();
+          }
+          
+          document.getElementById("cart_div").style.width = '84%';
+          document.getElementById("cart_div").style.height = '100%';
+          document.getElementById("cart_div").style.paddingTop = '12%';
+          document.getElementById("cart_div").style.paddingLeft = '10%';
+          document.getElementById("cart_div").style.paddingRight = '10%';
+          document.getElementById("cart_div").style.marginRight = '-2.5%';
+          document.getElementById("cart_arrow").style.display = 'none';
+          document.getElementById("close_cart_div").style.display = 'inline';
+          document.getElementById("close_cart_div").style.top = '0';
+          document.getElementById("close_cart_button").style.display = 'inline';
+          document.getElementById("close_cart_button").style.marginRight = '0';
+          document.getElementById("close_cart_button").style.fontSize = '48px';
+
+        } else {
+          if (settingStatus == 1) {
+            toggleSettings();
+          }
+
+          // slide cart into correct position:
+          document.getElementById("cart_div").style.width = '23%';
+          document.getElementById("cart_div").style.height = '100%';
+          document.getElementById("cart_div").style.paddingTop = '2%';
+          document.getElementById("cart_div").style.paddingLeft = '3%';
+          document.getElementById("cart_div").style.paddingRight = '3%';
+          document.getElementById("cart_div").style.marginRight = '-2%';
+          // document.getElementById("order_now_div").style.marginRight = '30%';
+          //close button position
+          document.getElementById("close_cart_button").style.marginRight = '-1.2%';
+          document.getElementById("close_cart_button").style.marginTop = '3.9%';
+          document.getElementById("cart_arrow").style.display = "none";
+        }
+        
+        document.getElementById("cart_div").style.top = "0px";
+        document.getElementById("close_cart_button").style.fontSize = '48px';
+
+        cartStatus = 1;
+
+      } else if (cartStatus == 1) {
+        document.getElementById("cart_div").style.width = 0;
+        document.getElementById("cart_div").style.height = 0;
+        document.getElementById("cart_div").style.top = "-100px";
+        document.getElementById("close_cart_button").style.fontSize = 0;
+        document.getElementById("order_now_div").style.marginRight = 0;
+        document.getElementById("cart_arrow").style.display = 'inline';
+        // document.getElementById("close_menu_button").style.fontSize = "0px";
+
+        cartStatus = 0;
+      }
+    }
+    
+    function toggleMenu() {
+      if (menuStatus == 0) {
+        
+        if (cartStatus == 1) {
+          toggleCart();
+        }
+        
+        //document.getElementById("cart_arrow").style.display = "none";
+        document.getElementById("navDrop").style.marginTop = "0";
+        document.getElementById("navDrop").style.display = "inline-block";
+        document.getElementById("close_nav_div").style.display = "inline";
+        document.getElementById("open_nav_div").style.display = "none";
+        document.getElementById("logo_img").style.marginLeft = "38.2%";
+        document.getElementById("header").style.backgroundColor = "#53bcc0";
+        document.getElementById("close_cart_button").style.marginRight = "10%";
+          
+
+        menuStatus = 1;
+
+      } else if (menuStatus == 1) {
+        document.getElementById("cart_arrow").style.display = "inline";
+        document.getElementById("logo_img").style.marginLeft = "27%";
+        document.getElementById("navDrop").style.marginTop = "-500%";
+        document.getElementById("open_nav_div").style.display = "inline";
+        document.getElementById("close_nav_div").style.display = "none";
+        document.getElementById("header").style.backgroundColor = "#60D5DA";
+        
+        menuStatus = 0;
+      }
+    }
+    
+    function toggleSettings() {
+      if (settingStatus == 0) {
+        if (cartStatus == 1) {  //(doesn't close when I open settings)
+          toggleCart();
+        } 
+        
+        document.getElementById("settings_div").style.display = "inline";
+        settingStatus = 1;
+
+      } else if (settingStatus == 1) {
+        document.getElementById("settings_div").style.display = "none";
+        settingStatus = 0;
+      }
+    }
+
+
 </script>

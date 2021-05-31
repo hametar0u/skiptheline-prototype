@@ -1,5 +1,3 @@
-
-
 .navDropdown {
     display: hidden;
     position: fixed;
@@ -9,120 +7,129 @@
     text-align: center;
     width: 110%;
     z-index: 1;
-}
+  }
 
 @media only screen and (max-width: 768px) {
-
+    .closeNavButton, #open_nav_button, #close_menu_button, 
+      .openNavDiv, .menu_icon, 
+      .cartArrowNav, .cartArrowImg {
+        display: inline;
+      } 
+    
     .cartArrowDesktop, .closeCartDiv {
-        display: none;
+      display: none;
     }
 
     .navbar_element {
-        background-color: #53bcc0;
-        padding-top: 2%;
-        padding-bottom: 2%;
-        font-size: 24px;
+      background-color: #53bcc0;
+      padding-top: 2%;
+      padding-bottom: 2%;
+      font-size: 24px;
     }
-
+    
     .openNavDiv {
-        display: inline;
-        top: 50px;
-        left: 50px;
-        width: 50px;
-        z-index: 10;
+      display: inline;
+      top: 50px;
+      left: 50px;
+      width: 50px;
+      z-index: 10;
     }
 
     #settings_div {
-        display:none;
+      display: none;
     }
 
     #order_now_div {
-        margin-top: 35%;
+      margin-top: 35%;
     }
 
     .item_card {
-        width: 80%;
+      width: 80%;
     }
     h1.orderNowHeading {
-        margin-top: 15%;
+      margin-top: 15%;
     }
     .cart {
-        margin-top: 0%;
-        
+      margin-top: 0%;
+      
     }
 
     #cart_div {
-        font-size: 12px;
+      font-size: 12px;
     }
 
     .closeCartButton {
-        margin-top: 0%;
-        width: 5%;
-        margin-right: 20px;
+      margin-top: 0%;
+      width: 5%;
+      margin-right: 20px;
     }
-
+    
     .cartArrowNav, #close_menu_button {
-        display: inline;
+      display: inline;
     }
 
-    .cartArrow  {
-        right: 0;
-        top: 10px;
-        z-index: 10;
+    .cartArrow {
+      right: 0;
+      top: 10px;
+      z-index: 10;
+    }
+    
+    #cart_arrow {
+      position: unset;
+      width: 35%;
+      float: right;
     }
 
-    #cart_arrow  {
-        position: unset;
-        width: 35%;
-        float: right;
+    .cartArrowImg {
+      display: inline;
+      z-index: 10;
     }
 
-    .cartArrowImg  {
-        display: inline;
-        z-index: 10;
+    .closeNavButton {
+      display: hidden;
+      position: absolute;
+      top: 0;
+      left: 100px;
+      background-color:#53bcc0;
     }
 
-    .closeNavButton  {
-        display: hidden;
-        position: absolute;
-        top: 0;
-        left: 100px;
-        background-color:#53bcc0;
+    #open_nav_button {
+      display: inline-block;
+      font-size: 16px;
+      width: 215%;
+      text-align: center;
+      margin-left: -105%;
+      margin-top: -30%;
+      border-radius: 0;
     }
 
-    #open_nav_button  {
-        display: inline-block;
-        font-size: 16px;
-        width: 215%;
-        text-align: center;
-        margin-left: -105%;
-        margin-top: -30%;
-        border-radius: 0;
-    }
-
-    .menu_icon  {
+  .menu_icon {
     display: inline;
     right: -12%;
     width: 10%;
     vertical-align: bottom;
-    }
+  }
 
-    .logo_img  {
+  h1 {
+    font-size: 24px;
+  }
+
+  .logo_img {
     display: inline;
     z-index: 15;
     margin-left: 27%;    
-    }
+  }
 
-    .logout_button  {
+  .logout_button {
     width: 120%;
     margin-right: 10%;
     padding-top: 2%;
     padding-bottom: 2%;
     vertical-align: center;
-    }
+  }
 
-    #item_quantity  {
+  #item_quantity {
     width: 25%;
-    }
+  }
 
 }
