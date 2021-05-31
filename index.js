@@ -2,6 +2,10 @@
 
 Immediate TO DO
 //cors
+//use regex to check file name regardless of extension -- or just use jpg for best results
+// half of this: highlight tab you're currently on + disable the button
+//js import error cannot start react
+//fix email up
 
 Done
 // url-ify images thru discord
@@ -20,10 +24,6 @@ https://cdn.discordapp.com/attachments/845815813865078824/846761497395724298/Smo
 https://cdn.discordapp.com/attachments/845815813865078824/846761510088867880/Special.png
 https://cdn.discordapp.com/attachments/845815813865078824/846761513921675294/Unknown.png
 https://cdn.discordapp.com/attachments/845815813865078824/846762274399322122/settings_icon.png
-// style +/- buttons
-// showing results for [date] bigger
-// half of this: highlight tab you're currently on + disable the button
-// sign up page after account exists is fucked
 
 
 For next session 

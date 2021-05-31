@@ -304,7 +304,7 @@
     </script>
 
     <!--Nav dropdown-->
-    <% include ../partials/navDrop.ejs %>
+    <%// include ../partials/navDrop.ejs %>
 
 
     <!-- navbar -->
@@ -327,6 +327,7 @@
 
     <script>
       //disables the navbutton for the page you're currently on
+      console.log("page: ", <%= page %> );
       document.getElementById("<%= page %>").disabled = true;
       document.getElementById("<%= page %>").style.background = "#408e91";
       //console.log("get eleemtn by class = ", document.getElementsByClassName("<%= page %>"));
