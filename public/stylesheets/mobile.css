@@ -1,3 +1,9 @@
+.closeNavButton, #open_nav_button, #close_menu_button, 
+.openNavDiv, .menu_icon, 
+.cartArrowNav, .cartArrowImg {
+  display: none;
+} 
+
 .navDropdown {
     display: hidden;
     position: fixed;
@@ -11,8 +17,8 @@
 
 @media only screen and (max-width: 768px) {
     .closeNavButton, #open_nav_button, #close_menu_button, 
-      .openNavDiv, .menu_icon, 
-      .cartArrowNav, .cartArrowImg {
+    .openNavDiv, .menu_icon, 
+    .cartArrowNav, .cartArrowImg {
         display: inline;
       } 
     
