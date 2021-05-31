@@ -1,16 +1,16 @@
 
-.cartArrowDesktop_mobile, .closeCartDiv_mobile {
+.cartArrowDesktop, .closeCartDiv {
     display: none;
 }
 
-.navbar_element_mobile {
+.navbar_element {
     background-color: #53bcc0;
     padding-top: 2%;
     padding-bottom: 2%;
     font-size: 24px;
 }
 
-.navDropdown_mobile {
+.navDropdown {
     display: hidden;
     position: fixed;
     top: 4%;
@@ -21,7 +21,7 @@
     z-index: 1;
 }
 
-.openNavDiv_mobile {
+.openNavDiv {
     display: inline;
     top: 50px;
     left: 50px;
@@ -29,57 +29,57 @@
     z-index: 10;
 }
 
-#settings_div_mobile {
+#settings_div {
     display:none;
 }
 
-#order_now_div_mobile {
+#order_now_div {
     margin-top: 35%;
 }
 
-.item_card_mobile {
+.item_card {
     width: 80%;
 }
-h1.orderNowHeading_mobile {
+h1.orderNowHeading {
     margin-top: 15%;
 }
-.cart_mobile {
+.cart {
     margin-top: 0%;
     
 }
 
-#cart_div_mobile {
+#cart_div {
     font-size: 12px;
 }
 
-.closeCartButton_mobile {
+.closeCartButton {
     margin-top: 0%;
     width: 5%;
     margin-right: 20px;
 }
 
-.cartArrowNav_mobile, #close_menu_button_mobile {
+.cartArrowNav, #close_menu_button {
     display: inline;
 }
 
-.cartArrow_mobile {
+.cartArrow  {
     right: 0;
     top: 10px;
     z-index: 10;
 }
 
-#cart_arrow_mobile {
+#cart_arrow  {
     position: unset;
     width: 35%;
     float: right;
 }
 
-.cartArrowImg_mobile {
+.cartArrowImg  {
     display: inline;
     z-index: 10;
 }
 
-.closeNavButton_mobile {
+.closeNavButton  {
     display: hidden;
     position: absolute;
     top: 0;
@@ -87,7 +87,7 @@ h1.orderNowHeading_mobile {
     background-color:#53bcc0;
 }
 
-#open_nav_button_mobile {
+#open_nav_button  {
     display: inline-block;
     font-size: 16px;
     width: 215%;
@@ -97,20 +97,20 @@ h1.orderNowHeading_mobile {
     border-radius: 0;
 }
 
-.menu_icon_mobile {
+.menu_icon  {
 display: inline;
 right: -12%;
 width: 10%;
 vertical-align: bottom;
 }
 
-.logo_img_mobile {
+.logo_img  {
 display: inline;
 z-index: 15;
 margin-left: 27%;    
 }
 
-.logout_button_mobile {
+.logout_button  {
 width: 120%;
 margin-right: 10%;
 padding-top: 2%;
@@ -118,6 +118,6 @@ padding-bottom: 2%;
 vertical-align: center;
 }
 
-#item_quantity_mobile {
+#item_quantity  {
 width: 25%;
 }
