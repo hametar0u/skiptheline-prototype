@@ -798,6 +798,12 @@ th {
 }
 
 
+#cart_arrow {
+  position: fixed;
+  float: top;
+  
+}
+
 .transition-wipe {
   opacity: 1;
   transition: 1000ms;
@@ -969,6 +975,7 @@ html.is-leaving .transition-fade {
 #calendar #navigation-wrapper button:first-of-type {
   transform: rotate(180deg);
 }
+
 
 
 
