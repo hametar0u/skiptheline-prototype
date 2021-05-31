@@ -4,6 +4,10 @@
   display: none;
 } 
 
+.closeCartDiv, .headerDesktop {
+    display: inline;
+  }
+
 .navDropdown {
     display: hidden;
     position: fixed;
@@ -16,13 +20,13 @@
   }
 
 @media only screen and (max-width: 768px) {
-    .closeNavButton, #open_nav_button, #close_menu_button, 
+    .closeNavButton, #open_nav_button,
     .openNavDiv, .menu_icon, 
     .cartArrowNav, .cartArrowImg {
         display: inline;
       } 
     
-    .cartArrowDesktop, .closeCartDiv {
+    .cartArrowDesktop, .closeCartDiv, .navbar, .navbar_element, .headerDesktop, .cartArrowDesktopImg {
       display: none;
     }
 
@@ -115,6 +119,7 @@
     right: -12%;
     width: 10%;
     vertical-align: bottom;
+    z-index: 100;
   }
 
   h1 {

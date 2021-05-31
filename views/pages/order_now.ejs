@@ -11,10 +11,8 @@
 
   <style>
       
-      .closeCartDiv, .headerDesktop {
-        display: inline;
-        
-      }
+      
+
       .cartArrowDesktop {
         display: inline;
         margin-left: 94%;
@@ -196,6 +194,7 @@
           document.getElementById("close_cart_div").style.display = 'inline';
           document.getElementById("close_cart_div").style.top = '0';
           document.getElementById("close_cart_button").style.display = 'inline';
+          document.getElementById("close_menu_button").style.display = 'inline';
           document.getElementById("close_cart_button").style.marginRight = '0';
           document.getElementById("close_cart_button").style.fontSize = '48px';
 
@@ -228,6 +227,7 @@
         document.getElementById("cart_div").style.height = 0;
         document.getElementById("cart_div").style.top = "-100px";
         document.getElementById("close_cart_button").style.fontSize = 0;
+        document.getElementById("close_menu_button").style.display = 'none';
         document.getElementById("order_now_div").style.marginRight = 0;
         document.getElementById("cart_arrow").style.display = 'inline';
         // document.getElementById("close_menu_button").style.fontSize = "0px";
@@ -244,8 +244,16 @@
         }
         
         //document.getElementById("cart_arrow").style.display = "none";
-        document.getElementByClass("navDrop").style.marginTop = "0";
-        document.getElementByClass("navDrop").style.display = "inline-block";
+        document.getElementsByClassName("navDrop")[0].style.marginTop = "0";
+        document.getElementsByClassName("navDrop")[0].style.display = "inline";
+
+
+        //document.getElementsByClassName("navbar_element").style.display = "inline";
+        var ele = document.getElementsByClassName('navbar_element');
+        for (var i = 0; i < ele.length; i++ ) {
+            ele[i].style.display = "inline";
+        }
+        
         document.getElementById("close_nav_div").style.display = "inline";
         document.getElementById("open_nav_div").style.display = "none";
         document.getElementById("logo_img").style.marginLeft = "38.2%";
@@ -258,10 +266,15 @@
       } else if (menuStatus == 1) {
         document.getElementById("cart_arrow").style.display = "inline";
         document.getElementById("logo_img").style.marginLeft = "27%";
-        document.getElementByClass("navDrop").style.marginTop = "-500%";
+        document.getElementsByClassName("navDrop")[0].style.marginTop = "-500%";
         document.getElementById("open_nav_div").style.display = "inline";
         document.getElementById("close_nav_div").style.display = "none";
         document.getElementById("header").style.backgroundColor = "#60D5DA";
+
+        var ele = document.getElementsByClassName('navbar_element');
+        for (var i = 0; i < ele.length; i++ ) {
+            ele[i].style.display = "none";
+        }
         
         menuStatus = 0;
       }
