@@ -162,6 +162,7 @@ button:hover {
   display:  table-cell;
   vertical-align: bottom;
   margin-top: -25%;
+  z-index: 50;
 }
 
 #settings_div {
@@ -583,6 +584,7 @@ th {
   overflow: hidden;
   text-align: center;
   padding: 20px;
+  z-index: 30;
 }
 
 #cart_arrow {
@@ -772,8 +774,9 @@ th {
   margin-left: auto;
   margin-right: auto;
   width:65px;
-  /* vertical-align: top; */
-  margin-top:7px;
+  vertical-align: top;
+  margin-top: 0.4%;
+  margin-right: 1.5%;
 }
 
 #settings_icon {
