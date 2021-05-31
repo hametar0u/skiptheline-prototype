@@ -125,7 +125,7 @@ button:hover {
   text-align:right;
   float: right;
   padding:0px;
-  padding-right: 3%;
+  padding-right: 4%;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -151,6 +151,18 @@ button:hover {
   color: white;
   font-size: 100%;
 }  
+
+ .settings_div {
+  background-color: #60D5DA;
+  width: 23%;
+  right: 0;
+  position: fixed;
+  margin-top: -2.7%;
+  height: 50%;
+  display:  table-cell;
+  vertical-align: bottom;
+  margin-top: -25%;
+}
 
 #settings_div {
   display:none;

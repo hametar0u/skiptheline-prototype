@@ -155,4 +155,16 @@
     width: 25%;
   }
 
+  .settings_div {
+    background-color: #60D5DA;
+    width: 120%;
+    right: 0;
+    position: fixed;
+    height: 23%;
+    display:  inline;
+    vertical-align: none;
+    margin-top: 0%;
+    z-index: 50;
+  }
+
 }
