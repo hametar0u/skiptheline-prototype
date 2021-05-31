@@ -894,10 +894,21 @@ app.post('/edit_password', checkAuth, (req,res) => {
           <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
         </div>
         <div class="what">
-          <p>Your password has recently been changed. If this is not you, please <a href="http://localhost:5000/reset_password/${resetpwdlink}">click here</a> to reset your password immediately.</p>
-          <form action="http://localhost:5000/reset_password/${resetpwdlink}">
-            <input type="submit" value="Reset Your Password">
-          </form>
+          <p>Your password has recently been changed. If this is not you, please click the button below to reset your password immediately.</p>
+          <br>
+          <a href="http://localhost:5000/reset_password/${resetpwdlink}">
+            <button style="background: none;
+            color: rgb(94, 94, 94);
+            border-radius: 1px;
+            width: 200px;
+            border: 2px solid rgb(94,94,94);
+            display: inline-block;
+            transition: 0.1s;
+            padding:10px;
+            border-radius: 0.4em;">
+              Reset Your Password
+            </button>
+          </a>
         </div>
         
         `,// plain text body
@@ -933,6 +944,8 @@ app.post('/edit_password', checkAuth, (req,res) => {
   });
 });
 
+//app.get('/resetPassword', (req, res) => { res.render("pages/reset_password.ejs");});
+
 app.get('/forgot_password', (req, res) => {
   res.render('pages/forgot_password.ejs', {'messageStatus': 0});
 });
@@ -963,7 +976,84 @@ app.post('/forgot_password', (req, res) => {
           from: 'kevinlu1248@gmail.com', // sender address //wait can we just change this
           to: usr, // list of receivers
           subject: 'Skip The Line Reset Password Link', // Subject line
-          html: `<p>Click <a href="http://localhost:5000/reset_password/${resetpwdlink}">here</a> to reset your password. <br><br> Skip the Line Team </p>`// plain text body
+          html: `
+            <style>
+              html {
+                text-align:center;
+                font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+              }
+              p {
+                color: black;
+                font-size: 20px;
+                text-align: center;
+              }
+              h1 {
+                color: black;
+                font-size: 40px; 
+                font-weight: 500;
+                text-align: center;
+              }
+        
+              .header {
+                /* padding-top: 2%;
+                padding-bottom: 1%; */
+                background-color: white; 
+                width:  100%;
+                top:    0;
+                left:   0;
+                margin: auto;
+                font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+                background-color:#60D5DA;
+                color:white;
+                  /* position:fixed;
+                margin-bottom:20px; */
+                text-align:center;
+                padding-left: 3%;
+                padding-right: 3%;
+                display:inline-block;
+                z-index: 69;
+                margin-bottom: 30px;
+              }
+              .what {
+                padding: 30px;
+                background-color: rgb(240,240,240);
+                width: 100%;
+              }
+              #logo {
+                width: 100px;
+                line-height: 100%;
+              }
+            </style>
+            <div class="header" style=" background-color: white;">
+              <img id="logo" src="cid:logo">
+              <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
+            </div>
+            <div class="what">
+              <p>Please click the button below to reset your password immediately.</p>
+              <br>
+              <a href="http://localhost:5000/reset_password/${resetpwdlink}">
+                <button style="background: none;
+                color: rgb(94, 94, 94);
+                border-radius: 1px;
+                width: 200px;
+                border: 2px solid rgb(94,94,94);
+                display: inline-block;
+                transition: 0.1s;
+                padding:10px;
+                border-radius: 0.4em;">
+                  Reset Your Password
+                </button>
+              </a>
+            </div>
+            
+          `,// plain text body
+          attachments: [
+            {
+              filename:'logo-teal.png',
+              path:'https://cdn.discordapp.com/attachments/845815813865078824/846761434649722920/logo-teal.png',
+              cid: 'logo'
+            }
+          ]
         }
       
         transporter.sendMail(mailOptions, function (err, info) {
@@ -995,6 +1085,7 @@ app.get('/reset_password/:resetpwdlink', (req, res) => {
     res.render('pages/reset_password.ejs');
   }
   else {
+    console.log(req.params.resetpwdlink, req.session.resetpwdlink);
     res.redirect('/error');
   }
 });
@@ -1011,7 +1102,84 @@ app.post('/reset_password', (req, res) => {
     from: 'kevinlu1248@gmail.com', // sender address //wait can we just change this
     to: usr, // list of receivers
     subject: 'Skip The Line Reset Password Confirmation', // Subject line
-    html: `<p>Your password has successfully been changed.</p>`// plain text body
+    html: `
+            <style>
+              html {
+                text-align:center;
+                font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+              }
+              p {
+                color: black;
+                font-size: 20px;
+                text-align: center;
+              }
+              h1 {
+                color: black;
+                font-size: 40px; 
+                font-weight: 500;
+                text-align: center;
+              }
+        
+              .header {
+                /* padding-top: 2%;
+                padding-bottom: 1%; */
+                background-color: white; 
+                width:  100%;
+                top:    0;
+                left:   0;
+                margin: auto;
+                font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+                background-color:#60D5DA;
+                color:white;
+                  /* position:fixed;
+                margin-bottom:20px; */
+                text-align:center;
+                padding-left: 3%;
+                padding-right: 3%;
+                display:inline-block;
+                z-index: 69;
+                margin-bottom: 30px;
+              }
+              .what {
+                padding: 30px;
+                background-color: rgb(240,240,240);
+                width: 100%;
+              }
+              #logo {
+                width: 100px;
+                line-height: 100%;
+              }
+            </style>
+            <div class="header" style=" background-color: white;">
+              <img id="logo" src="cid:logo">
+              <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
+            </div>
+            <div class="what">
+              <p>Your password has successfully been changed. Click the button below to login.</p>
+              <br>
+              <a href="http://localhost:5000/">
+                <button style="background: none;
+                color: rgb(94, 94, 94);
+                border-radius: 1px;
+                width: 200px;
+                border: 2px solid rgb(94,94,94);
+                display: inline-block;
+                transition: 0.1s;
+                padding:10px;
+                border-radius: 0.4em;">
+                  Log In
+                </button>
+              </a>
+            </div>
+            
+          `,// plain text body
+          attachments: [
+            {
+              filename:'logo-teal.png',
+              path:'https://cdn.discordapp.com/attachments/845815813865078824/846761434649722920/logo-teal.png',
+              cid: 'logo'
+            }
+          ]
   }
 
   transporter.sendMail(mailOptions, function (err, info) {
