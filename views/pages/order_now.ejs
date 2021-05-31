@@ -244,8 +244,8 @@
         }
         
         //document.getElementById("cart_arrow").style.display = "none";
-        document.getElementById("navDrop").style.marginTop = "0";
-        document.getElementById("navDrop").style.display = "inline-block";
+        document.getElementByClass("navDrop").style.marginTop = "0";
+        document.getElementByClass("navDrop").style.display = "inline-block";
         document.getElementById("close_nav_div").style.display = "inline";
         document.getElementById("open_nav_div").style.display = "none";
         document.getElementById("logo_img").style.marginLeft = "38.2%";
@@ -258,7 +258,7 @@
       } else if (menuStatus == 1) {
         document.getElementById("cart_arrow").style.display = "inline";
         document.getElementById("logo_img").style.marginLeft = "27%";
-        document.getElementById("navDrop").style.marginTop = "-500%";
+        document.getElementByClass("navDrop").style.marginTop = "-500%";
         document.getElementById("open_nav_div").style.display = "inline";
         document.getElementById("close_nav_div").style.display = "none";
         document.getElementById("header").style.backgroundColor = "#60D5DA";

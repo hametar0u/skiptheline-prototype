@@ -1,6 +1,6 @@
 .closeNavButton, #open_nav_button, #close_menu_button, 
 .openNavDiv, .menu_icon, 
-.cartArrowNav, .cartArrowImg {
+.cartArrowNav, .cartArrowImg, .closeCartButton {
   display: none;
 } 
 
@@ -65,12 +65,13 @@
     }
 
     .closeCartButton {
+      display: none;
       margin-top: 0%;
       width: 5%;
       margin-right: 20px;
     }
     
-    .cartArrowNav, #close_menu_button {
+    .cartArrowNav {
       display: inline;
     }
 
