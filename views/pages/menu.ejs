@@ -18,6 +18,14 @@
             </div>
         </div>
     </head>
+
+    <style>
+      h3 {
+        margin-block-start: 0em;
+        margin-block-end: 0em;
+      }
+    </style>
+
     <body style="text-align: center;">
         <!-- <main id="swup" class="transition-wipe"> -->
             <!--error message here but it didn't work-->
@@ -28,10 +36,12 @@
                 <form method="POST" action="/menu_add">
                     <input class="menufields" required type="text" name="menuItemAdd" id="menuItemAdd" placeholder="Item">
                     <input class="menufields" required type="number" step="0.05" min="0" name="menuItemPrice" id="itemPrice" placeholder="0.00">
-                    <h3 style="margin-block-start: 0em;margin-block-end: 0em;">Available Starting:</h3>
+                    <h3>Available Starting:</h3>
                     <input class="menufields" required type="date" name="menuItemStartDate" id="menuItemStartDate">
-                    <h3 style="margin-block-start: 0em;margin-block-end: 0em;">To:</h3>
+                    <h3>To:</h3>
                     <input class="menufields" required type="date" name="menuItemEndDate" id="menuItemEndDate">
+                    <h3>Image (JPG only)</h3>
+                    <input type="file" id="menuImage">
                     <input class="submit_button" type="submit" value="Add Menu Item" style="margin-bottom: 1.5em; width: 75%;">
                 </form> <!--add multiple simultaneous add options-->
             </div>
@@ -40,6 +50,8 @@
                 <form method="POST" action="/drink_menu_add">
                     <input class="menufields" required type="text" name="drinkMenuItemAdd" id="drinkMenuItemAdd" placeholder="Item">
                     <input class="menufields" required type="number" step="0.05" min="0" name="drinkMenuItemPrice" id="drinkItemPrice" placeholder="0.00">
+                    <h3>Image (JPG only)</h3>
+                    <input type="file" id="menuImage">
                     <input class="submit_button" type="submit" value="Add Drink Menu Item" style="margin-bottom: 1.5em; width: 75%;">
                 </form> <!--add multiple simultaneous add options-->
             </div>

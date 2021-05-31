@@ -3,7 +3,6 @@
 Immediate TO DO
 //cors
 //use regex to check file name regardless of extension -- or just use jpg for best results
-// half of this: highlight tab you're currently on + disable the button
 //js import error cannot start react
 //fix email up
 
@@ -51,6 +50,8 @@ IMPROVEMENTS:
 // revert edit password changes if not owner
 
 problems:
+//input type submit MIA
+//gmail client screws up my class and id names which screws up CSS
 //back to login in reset password goes to the 500 page
 //stripe receipt email not sending through --  might be the test api key
 //sometimes the pricelist cookie gets wiped and the app crashes when adding to cart
@@ -465,7 +466,7 @@ app.post('/createaccount', (req, res) => {
         var mailOptions = {
           from: 'kevinlu1248@gmail.com', // sender address
           to: req.session.usr, // list of receivers
-          subject: `${confcode}' is your Skip The Line Confirmation Code`, // Subject line
+          subject: `${confcode} is your Skip The Line Confirmation Code`, // Subject line
           html: `
           <style>
             html {
@@ -473,13 +474,15 @@ app.post('/createaccount', (req, res) => {
               font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
             }
             p {
-              color: white;
+              color: black;
               font-size: 20px;
+              text-align: center;
             }
             h1 {
-              color: white;
+              color: black;
               font-size: 40px; 
               font-weight: 500;
+              text-align: center;
             }
 
             .header {
@@ -493,8 +496,8 @@ app.post('/createaccount', (req, res) => {
               font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
               background-color:#60D5DA;
               color:white;
-              position:fixed;
-              /* margin-bottom:20px; */
+               /* position:fixed;
+             margin-bottom:20px; */
               text-align:center;
               padding-left: 3%;
               padding-right: 3%;
@@ -502,21 +505,34 @@ app.post('/createaccount', (req, res) => {
               z-index: 69;
               margin-bottom: 30px;
             }
-            #what {
-              padding-top: 30px;
-              background-color: black;
+            .what {
+              padding: 30px;
+              background-color: rgb(240,240,240);
               width: 100%;
             }
+            #logo {
+              width: 100px;
+              line-height: 100%;
+            }
           </style>
-          <div class="header" style=" background-color: #60D5DA;">
-            <h1 style="color: white; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
+          <div class="header" style=" background-color: white;">
+            <img id="logo" src="cid:logo">
+            <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
           </div>
-          <div id="what">
-            <h1>Testing out HTML functionality</h1><br>
-            <p>Your confirmation code is: '${confcode}'</p><br>
+          <div class="what">
+            <p>Your confirmation code is:</p><br>
+            <h1>${confcode}</h1>
+            <p>Please paste this code onto the website to complete your registration.</p>
           </div>
           
-          `// plain text body
+          `,// plain text body
+          attachments: [
+            {
+              filename:'logo-teal.png',
+              path:'https://cdn.discordapp.com/attachments/845815813865078824/846761434649722920/logo-teal.png',
+              cid: 'logo'
+            }
+          ]
         };
       
         transporter.sendMail(mailOptions, function (err, info) {
@@ -553,13 +569,15 @@ app.post('/resend_confirmation', (req, res) => {
         font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
       }
       p {
-        color: white;
+        color: black;
         font-size: 20px;
+        text-align: center;
       }
       h1 {
-        color: white;
+        color: black;
         font-size: 40px; 
         font-weight: 500;
+        text-align: center;
       }
 
       .header {
@@ -573,8 +591,8 @@ app.post('/resend_confirmation', (req, res) => {
         font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
         background-color:#60D5DA;
         color:white;
-        position:fixed;
-        /* margin-bottom:20px; */
+          /* position:fixed;
+        margin-bottom:20px; */
         text-align:center;
         padding-left: 3%;
         padding-right: 3%;
@@ -582,20 +600,24 @@ app.post('/resend_confirmation', (req, res) => {
         z-index: 69;
         margin-bottom: 30px;
       }
-      #what {
-        padding-top: 30px;
-        background-color: black;
+      .what {
+        padding: 30px;
+        background-color: rgb(240,240,240);
         width: 100%;
       }
+      #logo {
+        width: 100px;
+        line-height: 100%;
+      }
     </style>
-    <div class="header" style=" background-color: #60D5DA;">
-      <h1 style="color: white; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
-      <img src="cid:logo">
+    <div class="header" style=" background-color: white;">
+      <img id="logo" src="cid:logo">
+      <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
     </div>
-    <div id="what">
-      <h1>Testing out HTML functionality</h1><br>
-      <p>Your confirmation code is: '${confcode}'</p><br>
-      <img src="cid:logo">
+    <div class="what">
+      <p>Your confirmation code is:</p><br>
+      <h1>${confcode}</h1>
+      <p>Please paste this code onto the website to complete your registration.</p>
     </div>
     
     `,// plain text body
@@ -819,7 +841,73 @@ app.post('/edit_password', checkAuth, (req,res) => {
           from: 'kevinlu1248@gmail.com', // sender address //wait can we just change this
           to: req.session.username, // list of receivers
           subject: 'Skip The Line Edit Password Alert', // Subject line
-          html: `<p>Your password has recently been changed. If this is not you, please <a href="http://localhost:5000/reset_password/${resetpwdlink}">click here</a> to reset your password immediately.</p>`// plain text body
+          html: `
+          <style>
+          html {
+            text-align:center;
+            font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+          }
+          p {
+            color: black;
+            font-size: 20px;
+            text-align: center;
+          }
+          h1 {
+            color: black;
+            font-size: 40px; 
+            font-weight: 500;
+            text-align: center;
+          }
+    
+          .header {
+            /* padding-top: 2%;
+            padding-bottom: 1%; */
+            background-color: white; 
+            width:  100%;
+            top:    0;
+            left:   0;
+            margin: auto;
+            font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+            background-color:#60D5DA;
+            color:white;
+              /* position:fixed;
+            margin-bottom:20px; */
+            text-align:center;
+            padding-left: 3%;
+            padding-right: 3%;
+            display:inline-block;
+            z-index: 69;
+            margin-bottom: 30px;
+          }
+          .what {
+            padding: 30px;
+            background-color: rgb(240,240,240);
+            width: 100%;
+          }
+          #logo {
+            width: 100px;
+            line-height: 100%;
+          }
+        </style>
+        <div class="header" style=" background-color: white;">
+          <img id="logo" src="cid:logo">
+          <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
+        </div>
+        <div class="what">
+          <p>Your password has recently been changed. If this is not you, please <a href="http://localhost:5000/reset_password/${resetpwdlink}">click here</a> to reset your password immediately.</p>
+          <form action="http://localhost:5000/reset_password/${resetpwdlink}">
+            <input type="submit" value="Reset Your Password">
+          </form>
+        </div>
+        
+        `,// plain text body
+        attachments: [
+          {
+            filename:'logo-teal.png',
+            path:'https://cdn.discordapp.com/attachments/845815813865078824/846761434649722920/logo-teal.png',
+            cid: 'logo'
+          }
+        ]
         };
       
         transporter.sendMail(mailOptions, function (err, info) {
