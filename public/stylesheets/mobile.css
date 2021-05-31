@@ -33,7 +33,10 @@
 
     .header {
         padding-left: 0%;
+    }
 
+    input {
+        width: 100%;
     }
     .navbar_element {
       background-color: #53bcc0;
