@@ -140,8 +140,9 @@
 
   .logo_img {
     display: inline;
-    z-index: 15;
-    margin-left: 27%;    
+    z-index: 30;
+    margin-left: 27%;
+    margin-top: 1.5%;    
   }
 
   .logout_button {
