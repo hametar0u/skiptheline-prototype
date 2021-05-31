@@ -22,11 +22,12 @@
 @media only screen and (max-width: 768px) {
     .closeNavButton, #open_nav_button,
     .openNavDiv, .menu_icon, 
-    .cartArrowNav, .cartArrowImg {
+    .cartArrowNav, .cartArrowImg, #close_cart_button, #close_cart_div,
+    #close_menu_button, #close_menu_div {
         display: inline;
       } 
     
-    .cartArrowDesktop, .closeCartDiv, .navbar, .navbar_element, .headerDesktop, .cartArrowDesktopImg {
+    .cartArrowDesktop, .closeCartDiv, .navbar, .navbar_element, .headerDesktop, .cartArrowDesktopImg, .settings_icon {
       display: none;
     }
 
@@ -65,14 +66,17 @@
     }
 
     #cart_div {
+      display: none; 
       font-size: 12px;
+      z-index: 75;  
     }
 
     .closeCartButton {
       display: none;
-      margin-top: 0%;
+      margin-top: 1.5%;
       width: 5%;
       margin-right: 20px;
+      z-index: 50;
     }
     
     .cartArrowNav {
@@ -87,7 +91,7 @@
     
     #cart_arrow {
       position: unset;
-      width: 35%;
+      width: 33%;
       float: right;
     }
 
