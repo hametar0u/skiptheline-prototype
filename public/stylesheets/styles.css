@@ -113,8 +113,8 @@ button:hover {
     position:fixed;
     /* margin-bottom:20px; */
     text-align:left;
-    padding-left: 3%;
-    padding-right: 3%;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
     display:inline-block;
     z-index: 69;
     margin-bottom: 30px;
@@ -141,7 +141,7 @@ button:hover {
   background: none;
   color: white;
   transition: 0.1s;
-  font-size: 100%;
+  font-size: 1em;
   border-style:none;
   outline-style: none;
   padding:10px;
