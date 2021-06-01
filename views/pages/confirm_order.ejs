@@ -64,13 +64,11 @@
           <% } %>
         </table>
         <h2>Subtotal: <%= subtotal %></h2>
-        
-        <br>
         <form action="/order_now" method="GET">
-          <input class="submit_button" style="width:40%; display:inline-block;" type="submit" value="Go Back">
+          <input class="submit_button" style="width:40%; display:inline-block; margin-block-end: 10px;" type="submit" value="Go Back">
         </form>
 
-        <button class="submit_button" style="width:40%; display:inline-block; margin-bottom: 20px;" id="checkout-button">Pay Now</button>
+        <button class="submit_button" style="width:40%; display:inline-block; margin-bottom: 30px;" id="checkout-button">Pay Now</button>
 
         <script type="text/javascript">
           // Create an instance of the Stripe object with your publishable API key

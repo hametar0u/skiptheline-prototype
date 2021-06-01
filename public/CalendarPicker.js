@@ -263,7 +263,7 @@ CalendarPicker.prototype._insertDaysIntoGrid = function () {
 
 
 
-    console.log(arrayOfDays);
+    // console.log(arrayOfDays);
     var firstDayOfMonth = arrayOfDays[0].getDay();
 
     // Converting Sunday (0 when using getDay()) to 7 to make it easier to work with.

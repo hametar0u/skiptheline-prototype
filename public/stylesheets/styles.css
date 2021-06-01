@@ -689,7 +689,7 @@ th {
 .remove_button:hover {
   background: rgb(94, 94, 94);
   color: white;
-  border: 2px solid white;
+  border: 2px solid rgb(94,94,94);
   width: 100%;
   display: inline-block;
   border-radius: 0.4em;
@@ -699,7 +699,7 @@ th {
   color: white;
   border-radius: 1px;
   width: 27%;
-  border: 2px solid white;
+  border: 0px;
   display: inline-block;
   transition: 0.1s;
   padding:10px;
@@ -708,7 +708,6 @@ th {
 .remove_all_button:hover {
   background: rgb(94, 94, 94);
   color: white;
-  border: 2px solid white;
   width: 27%;
   display: inline-block;
   border-radius: 0.4em;

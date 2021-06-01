@@ -1,34 +1,20 @@
 /*
 
 Immediate TO DO
+// add next calendar at end of months
 //cors
 //use regex to check file name regardless of extension -- or just use jpg for best results
 //js import error cannot start react
-//fix email up
 
 Done
-// url-ify images thru discord
-https://cdn.discordapp.com/attachments/845815813865078824/846761425170202644/Chicken_Rice.jpg
-https://cdn.discordapp.com/attachments/845815813865078824/846761429771091998/Chocolate_Milk.jpg
-https://cdn.discordapp.com/attachments/845815813865078824/846761430820061254/Dasani_Water.jpg
-https://cdn.discordapp.com/attachments/845815813865078824/846761432158437406/Fiji_Water.jpg
-https://cdn.discordapp.com/attachments/845815813865078824/846761433161007124/Hamburger.jpg
-https://cdn.discordapp.com/attachments/845815813865078824/846761434649722920/logo-teal.png
-https://cdn.discordapp.com/attachments/845815813865078824/846761436159934494/logo.png
-https://cdn.discordapp.com/attachments/845815813865078824/846761437565026384/menu_icon.png
-https://cdn.discordapp.com/attachments/845815813865078824/846761438683987988/Orange_Juice.jpg
-https://cdn.discordapp.com/attachments/845815813865078824/846761440413351986/Orange.jpg
-https://cdn.discordapp.com/attachments/845815813865078824/846761489443323984/shopping-cart-icon-vector.png
-https://cdn.discordapp.com/attachments/845815813865078824/846761497395724298/Smoothie.jpg
-https://cdn.discordapp.com/attachments/845815813865078824/846761510088867880/Special.png
-https://cdn.discordapp.com/attachments/845815813865078824/846761513921675294/Unknown.png
-https://cdn.discordapp.com/attachments/845815813865078824/846762274399322122/settings_icon.png
+//fix email up -- somewhat
 
 
 For next session 
 // disable invert colors for dark mode
 
 UI / cosmetics
+// unable to align email divs to center
 // gear icon aspect ratio wack + doesn't scale at all
 // date select calendar formatting
 //make email not look so basic
@@ -50,8 +36,7 @@ IMPROVEMENTS:
 // revert edit password changes if not owner
 
 problems:
-//input type submit MIA
-//gmail client screws up my class and id names which screws up CSS
+//gmail client screws up my class and id names which screws up CSS -- resolved through inline styling but even so things are still f'ed
 //back to login in reset password goes to the 500 page
 //stripe receipt email not sending through --  might be the test api key
 //sometimes the pricelist cookie gets wiped and the app crashes when adding to cart
@@ -62,6 +47,23 @@ Pending:
 //change sendgrid to actual STL email
 //Integrate React by refactoring the entire code
 //random idea for security but we should log all the actions of admin and sudo accounts (ehem mihoyo)
+
+image urls
+https://cdn.discordapp.com/attachments/845815813865078824/846761425170202644/Chicken_Rice.jpg
+https://cdn.discordapp.com/attachments/845815813865078824/846761429771091998/Chocolate_Milk.jpg
+https://cdn.discordapp.com/attachments/845815813865078824/846761430820061254/Dasani_Water.jpg
+https://cdn.discordapp.com/attachments/845815813865078824/846761432158437406/Fiji_Water.jpg
+https://cdn.discordapp.com/attachments/845815813865078824/846761433161007124/Hamburger.jpg
+https://cdn.discordapp.com/attachments/845815813865078824/846761434649722920/logo-teal.png
+https://cdn.discordapp.com/attachments/845815813865078824/846761436159934494/logo.png
+https://cdn.discordapp.com/attachments/845815813865078824/846761437565026384/menu_icon.png
+https://cdn.discordapp.com/attachments/845815813865078824/846761438683987988/Orange_Juice.jpg
+https://cdn.discordapp.com/attachments/845815813865078824/846761440413351986/Orange.jpg
+https://cdn.discordapp.com/attachments/845815813865078824/846761489443323984/shopping-cart-icon-vector.png
+https://cdn.discordapp.com/attachments/845815813865078824/846761497395724298/Smoothie.jpg
+https://cdn.discordapp.com/attachments/845815813865078824/846761510088867880/Special.png
+https://cdn.discordapp.com/attachments/845815813865078824/846761513921675294/Unknown.png
+https://cdn.discordapp.com/attachments/845815813865078824/846762274399322122/settings_icon.png
 
 
 menu page
@@ -469,62 +471,97 @@ app.post('/createaccount', (req, res) => {
           subject: `${confcode} is your Skip The Line Confirmation Code`, // Subject line
           html: `
           <style>
-            html {
-              text-align:center;
+              html {
+                text-align:center;
+                font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+              }
+              p {
+                color: black;
+                font-size: 20px;
+                text-align: center;
+              }
+              h1 {
+                color: black;
+                font-size: 40px; 
+                font-weight: 500;
+                text-align: center;
+              }
+
+              .header {
+                /* padding-top: 2%;
+                padding-bottom: 1%; */
+                background-color: white; 
+                width:  100%;
+                top:    0;
+                left:   0;
+                margin: auto;
+                font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+                background-color:#60D5DA;
+                color:white;
+                /* position:fixed;
+              margin-bottom:20px; */
+                text-align:center;
+                padding-left: 3%;
+                padding-right: 3%;
+                display:inline-block;
+                z-index: 69;
+                margin-bottom: 30px;
+              }
+              .what {
+                padding: 30px;
+                background-color: rgb(240,240,240);
+                width: 100%;
+              }
+              #logo {
+                width: 100px;
+                line-height: 100%;
+              }
+            </style>
+            <div class="header" style=" 
+            background-color: white;
+            background-color: white; 
+            width:  100%;
+            top:    0;
+            left:   0;
+            margin: auto;
+            font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+            background-color:#60D5DA;
+            color:white;
+            text-align:center;
+            padding-left: 3%;
+            padding-right: 3%;
+            display:inline-block;
+            z-index: 69;
+            margin-bottom: 30px;">
+              <img id="logo" src="cid:logo" style="width: 100px;">
+              <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em; font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif; font-weight: 500;">SKIP THE LINE</h1>
+            </div>
+            <div class="what" style="
+            padding: 30px;
+            background-color: rgb(240,240,240);">
+              <p style="
               font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
-            }
-            p {
               color: black;
               font-size: 20px;
-              text-align: center;
-            }
-            h1 {
+              text-align: center;">
+                Your confirmation code is:<br>
+              </p>
+              <h1 style="
               color: black;
               font-size: 40px; 
               font-weight: 500;
-              text-align: center;
-            }
-
-            .header {
-              /* padding-top: 2%;
-              padding-bottom: 1%; */
-              background-color: white; 
-              width:  100%;
-              top:    0;
-              left:   0;
-              margin: auto;
+              text-align: center;">
+                ${confcode}
+              </h1>
+              <p style="
               font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
-              background-color:#60D5DA;
-              color:white;
-               /* position:fixed;
-             margin-bottom:20px; */
-              text-align:center;
-              padding-left: 3%;
-              padding-right: 3%;
-              display:inline-block;
-              z-index: 69;
-              margin-bottom: 30px;
-            }
-            .what {
-              padding: 30px;
-              background-color: rgb(240,240,240);
-              width: 100%;
-            }
-            #logo {
-              width: 100px;
-              line-height: 100%;
-            }
-          </style>
-          <div class="header" style=" background-color: white;">
-            <img id="logo" src="cid:logo">
-            <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
-          </div>
-          <div class="what">
-            <p>Your confirmation code is:</p><br>
-            <h1>${confcode}</h1>
-            <p>Please paste this code onto the website to complete your registration.</p>
-          </div>
-          
+              color: black;
+              font-size: 20px;
+              text-align: center;">
+                Please paste this code onto the website to complete your registration.
+              </p>
+              <br>
+            </div>
           `,// plain text body
           attachments: [
             {
@@ -564,62 +601,97 @@ app.post('/resend_confirmation', (req, res) => {
     subject: `${confcode}' is your Skip The Line Confirmation Code`, // Subject line
     html: `
     <style>
-      html {
-        text-align:center;
+        html {
+          text-align:center;
+          font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+        }
+        p {
+          color: black;
+          font-size: 20px;
+          text-align: center;
+        }
+        h1 {
+          color: black;
+          font-size: 40px; 
+          font-weight: 500;
+          text-align: center;
+        }
+
+        .header {
+          /* padding-top: 2%;
+          padding-bottom: 1%; */
+          background-color: white; 
+          width:  100%;
+          top:    0;
+          left:   0;
+          margin: auto;
+          font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+          background-color:#60D5DA;
+          color:white;
+          /* position:fixed;
+        margin-bottom:20px; */
+          text-align:center;
+          padding-left: 3%;
+          padding-right: 3%;
+          display:inline-block;
+          z-index: 69;
+          margin-bottom: 30px;
+        }
+        .what {
+          padding: 30px;
+          background-color: rgb(240,240,240);
+          width: 100%;
+        }
+        #logo {
+          width: 100px;
+          line-height: 100%;
+        }
+      </style>
+      <div class="header" style=" 
+      background-color: white;
+      background-color: white; 
+      width:  100%;
+      top:    0;
+      left:   0;
+      margin: auto;
+      font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+      background-color:#60D5DA;
+      color:white;
+      text-align:center;
+      padding-left: 3%;
+      padding-right: 3%;
+      display:inline-block;
+      z-index: 69;
+      margin-bottom: 30px;">
+        <img id="logo" src="cid:logo" style="width: 100px;">
+        <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em; font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif; font-weight: 500;">SKIP THE LINE</h1>
+      </div>
+      <div class="what" style="
+      padding: 30px;
+      background-color: rgb(240,240,240);">
+        <p style="
         font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
-      }
-      p {
         color: black;
         font-size: 20px;
-        text-align: center;
-      }
-      h1 {
+        text-align: center;">
+          Your confirmation code is:<br>
+        </p>
+        <h1 style="
         color: black;
         font-size: 40px; 
         font-weight: 500;
-        text-align: center;
-      }
-
-      .header {
-        /* padding-top: 2%;
-        padding-bottom: 1%; */
-        background-color: white; 
-        width:  100%;
-        top:    0;
-        left:   0;
-        margin: auto;
+        text-align: center;">
+          ${confcode}
+        </h1>
+        <p style="
         font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
-        background-color:#60D5DA;
-        color:white;
-          /* position:fixed;
-        margin-bottom:20px; */
-        text-align:center;
-        padding-left: 3%;
-        padding-right: 3%;
-        display:inline-block;
-        z-index: 69;
-        margin-bottom: 30px;
-      }
-      .what {
-        padding: 30px;
-        background-color: rgb(240,240,240);
-        width: 100%;
-      }
-      #logo {
-        width: 100px;
-        line-height: 100%;
-      }
-    </style>
-    <div class="header" style=" background-color: white;">
-      <img id="logo" src="cid:logo">
-      <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
-    </div>
-    <div class="what">
-      <p>Your confirmation code is:</p><br>
-      <h1>${confcode}</h1>
-      <p>Please paste this code onto the website to complete your registration.</p>
-    </div>
-    
+        color: black;
+        font-size: 20px;
+        text-align: center;">
+          Please paste this code onto the website to complete your registration.
+        </p>
+        <br>
+      </div>
     `,// plain text body
     attachments: [
       {
@@ -858,7 +930,7 @@ app.post('/edit_password', checkAuth, (req,res) => {
             font-weight: 500;
             text-align: center;
           }
-    
+
           .header {
             /* padding-top: 2%;
             padding-bottom: 1%; */
@@ -870,8 +942,8 @@ app.post('/edit_password', checkAuth, (req,res) => {
             font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
             background-color:#60D5DA;
             color:white;
-              /* position:fixed;
-            margin-bottom:20px; */
+            /* position:fixed;
+          margin-bottom:20px; */
             text-align:center;
             padding-left: 3%;
             padding-right: 3%;
@@ -889,28 +961,53 @@ app.post('/edit_password', checkAuth, (req,res) => {
             line-height: 100%;
           }
         </style>
-        <div class="header" style=" background-color: white;">
-          <img id="logo" src="cid:logo">
-          <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
+        <div class="header" style=" 
+        background-color: white;
+        background-color: white; 
+        width:  100%;
+        top:    0;
+        left:   0;
+        margin: auto;
+        font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+        background-color:#60D5DA;
+        color:white;
+        text-align:center;
+        padding-left: 3%;
+        padding-right: 3%;
+        display:inline-block;
+        z-index: 69;
+        margin-bottom: 30px;">
+          <img id="logo" src="cid:logo" style="width: 100px;">
+          <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em; font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif; font-weight: 500;">SKIP THE LINE</h1>
         </div>
-        <div class="what">
-          <p>Your password has recently been changed. If this is not you, please click the button below to reset your password immediately.</p>
+        <div class="what" style="
+        padding: 30px;
+        background-color: rgb(240,240,240);">
+          <p style="
+          font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+          color: black;
+          font-size: 20px;
+          text-align: center;">
+          Your password has recently been changed. If this is not you, please click the button below to reset your password immediately.
+          </p>
           <br>
-          <a href="http://localhost:5000/reset_password/${resetpwdlink}">
-            <button style="background: none;
-            color: rgb(94, 94, 94);
-            border-radius: 1px;
-            width: 200px;
-            border: 2px solid rgb(94,94,94);
-            display: inline-block;
-            transition: 0.1s;
-            padding:10px;
-            border-radius: 0.4em;">
-              Reset Your Password
-            </button>
-          </a>
+          <div>
+            <a href="http://localhost:5000/reset_password/${resetpwdlink}">
+              <button style="background: none;
+              color: rgb(94, 94, 94);
+              border-radius: 1px;
+              width: 200px;
+              border: 2px solid rgb(94,94,94);
+              display: inline-block;
+              transition: 0.1s;
+              padding:10px;
+              border-radius: 0.4em;
+              font-size: 16px;">
+                Reset Your Password
+              </button>
+            </a>
+          </div>
         </div>
-        
         `,// plain text body
         attachments: [
           {
@@ -993,7 +1090,7 @@ app.post('/forgot_password', (req, res) => {
                 font-weight: 500;
                 text-align: center;
               }
-        
+
               .header {
                 /* padding-top: 2%;
                 padding-bottom: 1%; */
@@ -1005,8 +1102,8 @@ app.post('/forgot_password', (req, res) => {
                 font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
                 background-color:#60D5DA;
                 color:white;
-                  /* position:fixed;
-                margin-bottom:20px; */
+                /* position:fixed;
+              margin-bottom:20px; */
                 text-align:center;
                 padding-left: 3%;
                 padding-right: 3%;
@@ -1024,26 +1121,52 @@ app.post('/forgot_password', (req, res) => {
                 line-height: 100%;
               }
             </style>
-            <div class="header" style=" background-color: white;">
-              <img id="logo" src="cid:logo">
-              <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
+            <div class="header" style=" 
+            background-color: white;
+            background-color: white; 
+            width:  100%;
+            top:    0;
+            left:   0;
+            margin: auto;
+            font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+            background-color:#60D5DA;
+            color:white;
+            text-align:center;
+            padding-left: 3%;
+            padding-right: 3%;
+            display:inline-block;
+            z-index: 69;
+            margin-bottom: 30px;">
+              <img id="logo" src="cid:logo" style="width: 100px;">
+              <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em; font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif; font-weight: 500;">SKIP THE LINE</h1>
             </div>
-            <div class="what">
-              <p>Please click the button below to reset your password immediately.</p>
+            <div class="what" style="
+            padding: 30px;
+            background-color: rgb(240,240,240);">
+              <p style="
+              font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+              color: black;
+              font-size: 20px;
+              text-align: center;">
+                Please click the button below to reset your password immediately.
+              </p>
               <br>
-              <a href="http://localhost:5000/reset_password/${resetpwdlink}">
-                <button style="background: none;
-                color: rgb(94, 94, 94);
-                border-radius: 1px;
-                width: 200px;
-                border: 2px solid rgb(94,94,94);
-                display: inline-block;
-                transition: 0.1s;
-                padding:10px;
-                border-radius: 0.4em;">
-                  Reset Your Password
-                </button>
-              </a>
+              <div>
+                <a href="http://localhost:5000/reset_password/${resetpwdlink}">
+                  <button style="background: none;
+                  color: rgb(94, 94, 94);
+                  border-radius: 1px;
+                  width: 200px;
+                  border: 2px solid rgb(94,94,94);
+                  display: inline-block;
+                  transition: 0.1s;
+                  padding:10px;
+                  border-radius: 0.4em;
+                  font-size: 16px;">
+                    Reset Your Password
+                  </button>
+                </a>
+              </div>
             </div>
             
           `,// plain text body
@@ -1103,83 +1226,108 @@ app.post('/reset_password', (req, res) => {
     to: usr, // list of receivers
     subject: 'Skip The Line Reset Password Confirmation', // Subject line
     html: `
-            <style>
-              html {
-                text-align:center;
-                font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
-              }
-              p {
-                color: black;
-                font-size: 20px;
-                text-align: center;
-              }
-              h1 {
-                color: black;
-                font-size: 40px; 
-                font-weight: 500;
-                text-align: center;
-              }
-        
-              .header {
-                /* padding-top: 2%;
-                padding-bottom: 1%; */
-                background-color: white; 
-                width:  100%;
-                top:    0;
-                left:   0;
-                margin: auto;
-                font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
-                background-color:#60D5DA;
-                color:white;
-                  /* position:fixed;
-                margin-bottom:20px; */
-                text-align:center;
-                padding-left: 3%;
-                padding-right: 3%;
-                display:inline-block;
-                z-index: 69;
-                margin-bottom: 30px;
-              }
-              .what {
-                padding: 30px;
-                background-color: rgb(240,240,240);
-                width: 100%;
-              }
-              #logo {
-                width: 100px;
-                line-height: 100%;
-              }
-            </style>
-            <div class="header" style=" background-color: white;">
-              <img id="logo" src="cid:logo">
-              <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em;">SKIP THE LINE</h1>
-            </div>
-            <div class="what">
-              <p>Your password has successfully been changed. Click the button below to login.</p>
-              <br>
-              <a href="http://localhost:5000/">
-                <button style="background: none;
-                color: rgb(94, 94, 94);
-                border-radius: 1px;
-                width: 200px;
-                border: 2px solid rgb(94,94,94);
-                display: inline-block;
-                transition: 0.1s;
-                padding:10px;
-                border-radius: 0.4em;">
-                  Log In
-                </button>
-              </a>
-            </div>
-            
-          `,// plain text body
-          attachments: [
-            {
-              filename:'logo-teal.png',
-              path:'https://cdn.discordapp.com/attachments/845815813865078824/846761434649722920/logo-teal.png',
-              cid: 'logo'
-            }
-          ]
+    <style>
+      html {
+        text-align:center;
+        font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+      }
+      p {
+        color: black;
+        font-size: 20px;
+        text-align: center;
+      }
+      h1 {
+        color: black;
+        font-size: 40px; 
+        font-weight: 500;
+        text-align: center;
+      }
+
+      .header {
+        /* padding-top: 2%;
+        padding-bottom: 1%; */
+        background-color: white; 
+        width:  100%;
+        top:    0;
+        left:   0;
+        margin: auto;
+        font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+        background-color:#60D5DA;
+        color:white;
+        /* position:fixed;
+      margin-bottom:20px; */
+        text-align:center;
+        padding-left: 3%;
+        padding-right: 3%;
+        display:inline-block;
+        z-index: 69;
+        margin-bottom: 30px;
+      }
+      .what {
+        padding: 30px;
+        background-color: rgb(240,240,240);
+        width: 100%;
+      }
+      #logo {
+        width: 100px;
+        line-height: 100%;
+      }
+    </style>
+    <div class="header" style=" 
+    background-color: white;
+    background-color: white; 
+    width:  100%;
+    top:    0;
+    left:   0;
+    margin: auto;
+    font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+    background-color:#60D5DA;
+    color:white;
+    text-align:center;
+    padding-left: 3%;
+    padding-right: 3%;
+    display:inline-block;
+    z-index: 69;
+    margin-bottom: 30px;">
+      <img id="logo" src="cid:logo" style="width: 100px;">
+      <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em; font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif; font-weight: 500;">SKIP THE LINE</h1>
+    </div>
+    <div class="what" style="
+    padding: 30px;
+    background-color: rgb(240,240,240);">
+      <p style="
+      font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+      color: black;
+      font-size: 20px;
+      text-align: center;">
+        Your password has successfully been changed. Click the button below to login.
+      </p>
+      <br>
+      <div>
+        <a href="http://localhost:5000/">
+          <button style="background: none;
+          color: rgb(94, 94, 94);
+          border-radius: 1px;
+          width: 200px;
+          border: 2px solid rgb(94,94,94);
+          display: inline-block;
+          transition: 0.1s;
+          padding:10px;
+          border-radius: 0.4em;
+          font-size: 16px;">
+            Reset Your Password
+          </button>
+        </a>
+      </div>
+    </div>      
+  `,// plain text body
+  attachments: [
+    {
+      filename:'logo-teal.png',
+      path:'https://cdn.discordapp.com/attachments/845815813865078824/846761434649722920/logo-teal.png',
+      cid: 'logo'
+    }
+  ]
   }
 
   transporter.sendMail(mailOptions, function (err, info) {
