@@ -210,17 +210,17 @@
           document.getElementById("cart_div").style.paddingTop = '2%';
           document.getElementById("cart_div").style.paddingLeft = '3%';
           document.getElementById("cart_div").style.paddingRight = '3%';
-          document.getElementById("cart_div").style.marginRight = '-2%';
+          // document.getElementById("cart_div").style.marginRight = '-2%';
           // document.getElementById("order_now_div").style.marginRight = '30%';
           //close button position
-          document.getElementById("close_cart_button").style.marginRight = '-1.2%';
-          document.getElementById("close_cart_button").style.marginTop = '3.9%';
+          // document.getElementById("close_cart_button").style.marginRight = '-1.2%';
+          document.getElementById("close_cart_button").style.marginTop = '13%';
           document.getElementById("close_cart_button").style.display = 'inline';
           document.getElementById("cart_arrow").style.display = "none";
         }
         
         document.getElementById("cart_div").style.top = "0px";
-        document.getElementById("close_cart_button").style.fontSize = '48px';
+        document.getElementById("close_cart_button").style.fontSize = '60px';
 
         cartStatus = 1;
 
@@ -325,12 +325,22 @@
     <!-- cart -->
     <div id="cart_div" class="cart">
       <!-- close cart button -->
-      <div id="close_cart_div" class="closeCartDiv">
-        <a href="javascript:void(0)" id="close_cart_button" class ="closeCartButton" onclick="toggleCart()" style="text-align: right;">&times;</a>
-      </div>
-      <h1>Cart</h1>
+      
       <% if (row4.cartrow.length != 0) { %> 
-      <table>
+      <table style="
+        margin-right: 0px;
+        width: -webkit-fill-available;
+        height: 10%;
+      ">
+        <tr>
+          <td></td>
+          <td><h1>Cart</h1></td>
+          <td>
+            <div id="close_cart_div" class="closeCartDiv">
+              <a href="javascript:void(0)" id="close_cart_button" class ="closeCartButton" onclick="toggleCart()" style="text-align: right;">&times;</a>
+            </div>
+          </td>
+        </tr>
         <tr>
           <th>Item</th>
           <!-- <th>Price</th> -->
@@ -363,6 +373,24 @@
             <input class="submit_button" type="submit" value="Confirm Order">
           </form>
       <% } else { %> 
+        <table style="
+          margin-right: 0px;
+          width: -webkit-fill-available;
+          height: 10%;
+        ">
+        <tr>
+          <td></td>
+          <td></td>
+          <td><h1>Cart</h1></td>
+          <td></td>
+          <td>
+            <div id="close_cart_div" class="closeCartDiv">
+              <a href="javascript:void(0)" id="close_cart_button" class ="closeCartButton" onclick="toggleCart()" style="text-align: right;">&times;</a>
+            </div>
+          </td>
+          
+        </tr>
+        </table>
         <h3>You have no Items in Cart!</h3>
       <% } %> 
     </div>

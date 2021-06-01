@@ -42,7 +42,7 @@ body {
 
 h1 {
     text-align: center;
-    font-size: 40px; 
+    font-size: 200%; 
     font-weight:500;
 }
 h2 {
@@ -576,7 +576,7 @@ th {
   width: 0;
   height: 0;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 120%;
   color: black;
   border-radius: 0 5px 5px 0;
   background-color: rgb(240,240,240);
@@ -602,7 +602,7 @@ th {
 }
 
 #close_cart_button {
-  position: fixed;
+  /* position: absolute; */
   font-size: 0;
   font-weight:200;
   color: black;
@@ -698,7 +698,7 @@ th {
   background: rgb(143, 143, 143);
   color: white;
   border-radius: 1px;
-  width: 27%;
+  width: 35%;
   border: 0px;
   display: inline-block;
   transition: 0.1s;
