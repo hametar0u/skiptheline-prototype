@@ -123,13 +123,13 @@ button:hover {
 .headerDesktop {
   position: relative;
   display: inline-block;
-  height: 50px;
-  width: 17em;
+  /* height: 50px; */
+  width: 21em;
   background:black;
 }
 
 #headerText {
-  position: absolute;
+  /* position: absolute; */
   top: 0;
   bottom: 0;
   right: 0;
