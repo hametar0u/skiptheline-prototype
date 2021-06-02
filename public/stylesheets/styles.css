@@ -124,7 +124,7 @@ button:hover {
   position: relative;
   display: inline-block;
   /* height: 50px; */
-  width: 19em;
+  /* width: 19em; */
   background:black;
 }
 
@@ -795,10 +795,10 @@ th {
 }
 
 .logo_img {
-  position: absolute;
+  /* position: absolute; */
   top: 0;
   bottom: 0;
-  margin-top: auto;
+  margin-top: 8%;
   margin-bottom: auto;
   width:65px;
 }
