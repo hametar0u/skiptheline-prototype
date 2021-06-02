@@ -14,8 +14,11 @@
       
 
       .cartArrowDesktop {
-        display: inline;
-        margin-left: 94%;
+        position: fixed;
+        width: 20em;
+        right: 0;
+        background-color: pink;
+        border: 1px black solid;
       }
 
       .cartArrowDesktopImg {
@@ -191,7 +194,7 @@
           document.getElementById("cart_div").style.paddingLeft = '10%';
           document.getElementById("cart_div").style.paddingRight = '10%';
           document.getElementById("cart_div").style.marginRight = '-2.5%';
-          document.getElementById("cart_arrow").style.display = 'none';
+          document.getElementById("cart_icon").style.display = 'none';
           document.getElementById("close_cart_div").style.display = 'inline';
           document.getElementById("close_cart_div").style.top = '0';
           document.getElementById("close_cart_button").style.display = 'inline';
@@ -216,7 +219,7 @@
           // document.getElementById("close_cart_button").style.marginRight = '-1.2%';
           document.getElementById("close_cart_button").style.marginTop = '13%';
           document.getElementById("close_cart_button").style.display = 'inline';
-          document.getElementById("cart_arrow").style.display = "none";
+          document.getElementById("cart_icon").style.display = "none";
         }
         
         document.getElementById("cart_div").style.top = "0px";
@@ -233,7 +236,7 @@
         document.getElementById("close_cart_button").style.fontSize = 0;
         document.getElementById("close_cart_button").style.display = "none";
         document.getElementById("order_now_div").style.marginRight = 0;
-        document.getElementById("cart_arrow").style.display = 'inline';
+        document.getElementById("cart_icon").style.display = 'inline';
         // document.getElementById("close_menu_button").style.fontSize = "0px";
 
         cartStatus = 0;
@@ -401,7 +404,7 @@
     <div id="order_now_div" class="order_now">
       <!-- open cart button -->
       <div id="cart_arrow" class="cartArrowDesktop">
-        <img id="cart_arrow" src="images/shopping-cart-icon-vector.png" alt="&lt;- cart" onclick="toggleCart()" class="cartArrowDesktopImg">
+        <img id="cart_icon" src="images/shopping-cart-icon-vector.png" alt="&lt;- cart" onclick="toggleCart()" class="cartArrowDesktopImg">
       </div>
       
 
