@@ -124,12 +124,12 @@ button:hover {
   position: relative;
   display: inline-block;
   /* height: 50px; */
-  /* width: 19em; */
+  width: 10em;
   background:black;
 }
 
 #headerText {
-  /* position: absolute; */
+  position: absolute;
   top: 0;
   bottom: 0;
   right: 0;
