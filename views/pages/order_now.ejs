@@ -11,7 +11,6 @@
 
   <style>
       
-      
 
       .cartArrowDesktop {
         position: fixed;
@@ -22,10 +21,16 @@
       #close_cart_div {
         position: fixed;
         right: 0;
-        z-index: 30;
+        z-index: 80;
         height: 50px; 
         overflow: hidden;
-        width: 55px;
+        width: 70px;
+        display: none;
+
+      }
+
+      .closeCartButton {
+        z-index: 81;
       }
 
       .cartArrowDesktopImg {
@@ -226,6 +231,7 @@
           // document.getElementById("close_cart_button").style.marginRight = '-1.2%';
           document.getElementById("close_cart_button").style.marginTop = '13%';
           document.getElementById("close_cart_button").style.display = 'inline';
+          document.getElementById("close_cart_div").style.display = 'inline';
           document.getElementById("cart_icon").style.display = "none";
         }
         
@@ -346,11 +352,11 @@
         <tr>
           <td></td>
           <td style="padding-top:0%;"><h1>Cart</h1></td>
-          <td style="padding-top:0%;text-align: right;padding-right: 0%;">
-            <div id="close_cart_div" class="closeCartDiv" style="text-align: right; display:none;">
+          <!-- <td style="padding-top:0%;text-align: right;padding-right: 0%;">
+            <div id="close_cart_div" class="closeCartDiv" style="text-align: right;background-color: pink;">
               <a href="javascript:void(0)" id="close_cart_button" class ="closeCartButton" onclick="toggleCart()" style="text-align: right;">&times;</a>
             </div>
-          </td>
+          </td> -->
         </tr>
         <tr>
           <th>Item</th>
@@ -412,7 +418,7 @@
       <div id="cart_arrow" class="cartArrowDesktop">
         <img id="cart_icon" src="images/shopping-cart-icon-vector.png" alt="&lt;- cart" onclick="toggleCart()" class="cartArrowDesktopImg">
       </div>
-      <div id="close_cart_div" class="closeCartDiv">
+      <div id="close_cart_div" class="closeCartDiv"> 
         <a href="javascript:void(0)" id="close_cart_button" class ="closeCartButton" onclick="toggleCart()" style="text-align: right; line-height:50px;">&times;</a>
       </div>
       
