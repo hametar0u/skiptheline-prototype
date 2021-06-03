@@ -15,10 +15,17 @@
 
       .cartArrowDesktop {
         position: fixed;
-        width: 20em;
         right: 0;
-        background-color: pink;
-        border: 1px black solid;
+        /* background-color: pink;
+        border: 1px black solid; */
+      }
+      #close_cart_div {
+        position: fixed;
+        right: 0;
+        z-index: 30;
+        height: 50px; 
+        overflow: hidden;
+        width: 55px;
       }
 
       .cartArrowDesktopImg {
@@ -235,6 +242,7 @@
         document.getElementById("cart_div").style.top = "-100px";
         document.getElementById("close_cart_button").style.fontSize = 0;
         document.getElementById("close_cart_button").style.display = "none";
+        document.getElementById("close_cart_div").style.display = "none";
         document.getElementById("order_now_div").style.marginRight = 0;
         document.getElementById("cart_icon").style.display = 'inline';
         // document.getElementById("close_menu_button").style.fontSize = "0px";
@@ -339,7 +347,7 @@
           <td></td>
           <td style="padding-top:0%;"><h1>Cart</h1></td>
           <td style="padding-top:0%;text-align: right;padding-right: 0%;">
-            <div id="close_cart_div" class="closeCartDiv" style="text-align: right;">
+            <div id="close_cart_div" class="closeCartDiv" style="text-align: right; display:none;">
               <a href="javascript:void(0)" id="close_cart_button" class ="closeCartButton" onclick="toggleCart()" style="text-align: right;">&times;</a>
             </div>
           </td>
@@ -387,9 +395,7 @@
           <td><h1>Cart</h1></td>
           <td></td>
           <td style="text-align: right;">
-            <div id="close_cart_div" class="closeCartDiv">
-              <a href="javascript:void(0)" id="close_cart_button" class ="closeCartButton" onclick="toggleCart()" style="text-align: right;">&times;</a>
-            </div>
+            
           </td>
           
         </tr>
@@ -405,6 +411,9 @@
       <!-- open cart button -->
       <div id="cart_arrow" class="cartArrowDesktop">
         <img id="cart_icon" src="images/shopping-cart-icon-vector.png" alt="&lt;- cart" onclick="toggleCart()" class="cartArrowDesktopImg">
+      </div>
+      <div id="close_cart_div" class="closeCartDiv">
+        <a href="javascript:void(0)" id="close_cart_button" class ="closeCartButton" onclick="toggleCart()" style="text-align: right; line-height:50px;">&times;</a>
       </div>
       
 

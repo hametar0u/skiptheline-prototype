@@ -639,11 +639,6 @@ th {
   color: white;
 }
 
-#close_cart_div {
-  width:5%;
-  /* right:30%; doesn't do anything; I'm trying to line 3 divs side by side */
-}
-
 #close_menu_button {
   position: fixed;
   font-size: 48px;
@@ -795,7 +790,7 @@ th {
 }
 
 .logo_img {
-  /* position: absolute; */
+  position: absolute;
   top: 0;
   bottom: 0;
   margin-top: auto;

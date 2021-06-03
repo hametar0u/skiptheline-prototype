@@ -4,10 +4,6 @@
   display: none;
 } 
 
-.closeCartDiv,  #close_cart_button {
-    display: inline;
-  }
-
 .navDropdown {
     position: fixed;
     top: 4%;
