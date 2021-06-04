@@ -125,7 +125,7 @@ button:hover {
   display: inline-block;
   height: 40px;
   /* width: 19em; */
-  background:black;
+  /* background:black; */
 }
 
 #headerText {
@@ -791,11 +791,12 @@ th {
 }
 
 .logo_img {
-  position: absolute;
+  /* position: absolute; */
   top: 0;
   bottom: 0;
   margin-top: auto;
   margin-bottom: auto;
+  padding-top: 8%;
   width:65px;
 }
 

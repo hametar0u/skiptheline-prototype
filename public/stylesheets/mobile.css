@@ -1,6 +1,6 @@
 .closeNavButton, #open_nav_button, #close_menu_button, 
 .openNavDiv, .menu_icon, 
-.cartArrowNav, .cartArrowImg, .closeCartButton {
+.cartArrowNav, .cartArrowImg, .closeCartButton, #logo_img_mobile {
   display: none;
 } 
 
@@ -140,13 +140,14 @@
 
   #logo_img_mobile {
     display: inline;
-    z-index: 30;
+    z-index: 90;
     /* margin-left: 27%; */
     right: 0;
     left: 0;
     margin: auto;
     height: -webkit-fill-available;
     width: auto;
+    padding-top: 0%;
   }
 
   .logout_button {
