@@ -151,7 +151,7 @@ button:hover {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  width:65%;
+  width:50em;
 }
 .navbar_element {
   width: 100%;
@@ -167,6 +167,7 @@ button:hover {
   border-style:none;
   outline-style: none;
   padding:0.2em;
+  width: 100%;
 }  
 .navbar_button:hover {
   background: #59c7cb;

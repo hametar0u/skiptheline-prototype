@@ -134,7 +134,11 @@
     font-size: 24px;
   }
 
-  .logo_img {
+  #logo_img_desktop {
+    display: none;
+  }
+
+  #logo_img_mobile {
     display: inline;
     z-index: 30;
     /* margin-left: 27%; */
