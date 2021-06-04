@@ -1,6 +1,8 @@
 /*
 
 Immediate TO DO
+//random gap under elements in header
+//vertical centering on the success pages
 // add next calendar at end of months
 //cors
 //use regex to check file name regardless of extension -- or just use jpg for best results
@@ -8,6 +10,7 @@ Immediate TO DO
 
 Done
 //fix email up -- somewhat
+//various scaling and positioning issues
 
 
 For next session 
@@ -976,8 +979,9 @@ app.post('/edit_password', checkAuth, (req,res) => {
         padding-right: 3%;
         display:inline-block;
         z-index: 69;
+        position: relative;
         margin-bottom: 30px;">
-          <img id="logo" src="cid:logo" style="width: 100px;">
+          <img id="logo" src="cid:logo" style="width: 100px; position: absolute; top: 0; bottom: 0; margin: auto;">
           <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em; font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif; font-weight: 500;">SKIP THE LINE</h1>
         </div>
         <div class="what" style="
@@ -1136,8 +1140,9 @@ app.post('/forgot_password', (req, res) => {
             padding-right: 3%;
             display:inline-block;
             z-index: 69;
-            margin-bottom: 30px;">
-              <img id="logo" src="cid:logo" style="width: 100px;">
+            margin-bottom: 30px;
+            position: relative;">
+              <img id="logo" src="cid:logo" style="width: 100px; position; absolute; top: 0; bottom: 0; margin: auto;">
               <h1 style="color: #60D5DA; text-align:center; display:inline-block; margin-block-start:0em; margin-block-end: 0em; font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif; font-weight: 500;">SKIP THE LINE</h1>
             </div>
             <div class="what" style="
