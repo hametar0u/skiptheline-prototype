@@ -1,5 +1,10 @@
 /*
 
+Imgur client ID
+45d3e08f6d057e0
+Imgur client secret
+ac7c89ce7c15000fd0a623723cfc3b52e48dc6fa
+
 Immediate TO DO
 //random gap under elements in header
 //vertical centering on the success pages
@@ -1841,6 +1846,95 @@ app.post('/drink_menu_remove', function (req, res) {
     }
   });
 });
+
+app.post('/upload_images', async function (req, res) {
+  //note: put id="img" in menu option
+  //check if req.body.img is a binary or base64. If not, convert it
+  var requestOptions = {method: "POST",
+                        // Token: "6f493c6ea4806759308a2e53c2cd8e123204160e",
+                        headers: {
+                          Authorization: "Client-ID 45d3e08f6d057e0" //change to ENV in prod
+                        },
+                        body: {image: req.body.img},
+                        redirect: "follow"};
+
+  var data;
+  await fetch("https://api.imgur.com/3/upload", requestOptions).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error('data fetch failed, status: ' + response.status);
+    }
+  })
+  .then((responseJson) => {
+    //handle responseJson
+    console.log(responseJson);
+    data = responseJson;
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+  console.log(data);
+
+
+  //grab deletehash from the fetch, and add it to the album
+
+  requestOptions = {method: "POST",
+                        // Token: "6f493c6ea4806759308a2e53c2cd8e123204160e",
+                        headers: {
+                          Authorization: "Client-ID 45d3e08f6d057e0" //change to ENV in prod
+                        },
+                        body: {'deletehashes[]': "aa"/*image deletehash*/}, //[] not an error
+                        redirect: "follow"};
+
+  await fetch("https://api.imgur.com/3/album/kX13zMtvFfWIIau/add", requestOptions).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error('data fetch failed, status: ' + response.status);
+    }
+  })
+  .then((responseJson) => {
+    //handle responseJson
+    console.log(responseJson);
+    data = responseJson;
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+  console.log(data);
+  
+  res.send(data); //REPLACE WITH WHATEVER REDIRECT I WANT TO DO
+});
+
+app.get("/get_images", async (req, res) => {
+  var requestOptions = {method: "GET",
+                        headers: {
+                          Authorization: "Client-ID 45d3e08f6d057e0" //change to ENV in prod
+                        },
+                        redirect: "follow"};
+
+  var data;
+  await fetch("https://api.imgur.com/3/album/bNH4P4d/images", requestOptions).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error('data fetch failed, status: ' + response.status);
+    }
+  })
+  .then((responseJson) => {
+    //handle responseJson
+    console.log(responseJson);
+    data = responseJson;
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+  console.log(data);
+
+  res.send(data);
+});
+
 
 app.post('/logout', function (req, res) {
   req.session.destroy();
