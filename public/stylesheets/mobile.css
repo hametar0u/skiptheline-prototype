@@ -1,6 +1,7 @@
 .closeNavButton, #open_nav_button, #close_menu_button, 
 .openNavDiv, .menu_icon, 
-.cartArrowNav, .cartArrowImg, .closeCartButton {
+.cartArrowNav, .cartArrowImg, .closeCartButton, #logo_img_mobile,
+.nav_table_mobile {
   display: none;
 } 
 
@@ -19,7 +20,7 @@
     .closeNavButton, #open_nav_button,
     .openNavDiv, .menu_icon, 
     .cartArrowNav, .cartArrowImg, #close_cart_button, #close_cart_div,
-    #close_menu_button, #close_menu_div {
+    #close_menu_button, #close_menu_div, .nav_table_mobile {
         display: inline;
       } 
     
@@ -95,7 +96,7 @@
     
     #cart_arrow {
       position: unset;
-      width: 11%;
+      width: 50%;
       float: right;
     }
 
@@ -125,7 +126,7 @@
   .menu_icon {
     display: inline;
     right: -12%;
-    width: 10%;
+    width: 45%;
     vertical-align: bottom;
     z-index: 100;
   }
@@ -140,13 +141,29 @@
 
   #logo_img_mobile {
     display: inline;
-    z-index: 30;
+    z-index: 90;
     /* margin-left: 27%; */
     right: 0;
     left: 0;
     margin: auto;
+    /* height: -webkit-fill-available; */
+    /* width: -webkit-fill-availble; */
+    padding-top: 5px;
+    width: 35%;
+  }
+
+  .nav_table_mobile {
+    border-width: 0px;
+  }
+
+  .nav_table_mobile tr {
     height: -webkit-fill-available;
-    width: auto;
+  }
+
+  .nav_table_mobile td {
+    padding: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
   }
 
   .logout_button {
@@ -171,5 +188,7 @@
     margin-top: 0%;
     z-index: 50;
   }
+
+  
 
 }

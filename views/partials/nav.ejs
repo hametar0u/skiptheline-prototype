@@ -1,24 +1,34 @@
 <!-- NAVBAR -->
 <div class="header" id="header">
   <!-- open dropdown -->
-<div id="open_nav_div" class="openNavDiv">
-  <!-- <a href="javascript:void(0)"  onclick="showNav()" style="text-align: right;">Open Navbar</a> -->
-  <!-- <input class="navbar_element" type="button" value="Open Navbar" id="open_nav_button" onclick="showNav()"> -->
-  <img src="images/menu_icon.png" alt="Open Navbar" onclick="toggleMenu()" class="menu_icon">
-</div>
-<img id="logo_img_mobile" src="images/logo.png" class="logo_img" style="display: none;">
-<div id="close_nav_div" class="closeCartDiv">
-  <a href="javascript:void(0)" id="close_menu_button" class ="closeCartButton" onclick="toggleMenu()" style="text-align: left;">&times;</a>
-</div>
-  <!-- open button for the cart -->
-  <div id="cart_arrow_nav" class="cartArrowNav">
-    <img id="cart_arrow" src="images/shopping-cart-icon-vector.png" alt="&lt;- cart" onclick="toggleCart()" class="cartArrowImg">
-  </div>
+  <table class="nav_table_mobile">
+    <tr>
+      <td style="width: 20%;text-align: left;">
+        <div id="open_nav_div" class="openNavDiv">
+          <!-- <a href="javascript:void(0)"  onclick="showNav()" style="text-align: right;">Open Navbar</a> -->
+          <!-- <input class="navbar_element" type="button" value="Open Navbar" id="open_nav_button" onclick="showNav()"> -->
+          <img src="images/menu_icon.png" alt="Open Navbar" onclick="toggleMenu()" class="menu_icon">
+        </div>
+        <div id="close_nav_div" class="closeCartDiv">
+          <a href="javascript:void(0)" id="close_menu_button" class ="closeCartButton" onclick="toggleMenu()" style="text-align: left;">&times;</a>
+        </div>
+      </td>
+      <td>
+        <img id="logo_img_mobile" src="images/logo.png" class="logo_img">
+      </td> 
+      <td style="width: 20%;text-align: right;">
+        <!-- open button for the cart -->
+        <div id="cart_arrow_nav" class="cartArrowNav">
+          <img id="cart_arrow" src="images/shopping-cart-icon-vector.png" alt="&lt;- cart" onclick="toggleCart()" class="cartArrowImg">
+        </div>
+      </td> 
+    </tr>
+  </table>
 
-<div class="headerDesktop">
-  <img id="logo_img_desktop" src="images/logo.png" class="logo_img">
-  <!-- <h1 id="headerText" style="margin-left: 30%;margin-top: 0.5%">SKIP THE LINE</h1> -->
-</div>
+  <div class="headerDesktop">
+    <img id="logo_img_desktop" src="images/logo.png" class="logo_img">
+    <!-- <h1 id="headerText" style="margin-left: 30%;margin-top: 0.5%">SKIP THE LINE</h1> -->
+  </div>
 
     <div class="navbar" id="navbar">
       <!-- <form class="navbar_element" action="/order_management" method="GET">
@@ -46,9 +56,9 @@
         <img class="settings_icon" id="settings_icon" src="images/settings_icon.png" alt="settings" onclick="toggleSettings()">
       </div>
     </div>
-  </div>
+</div>
     
-    <div id="settings_div" class="settings_div">
+<div id="settings_div" class="settings_div">
     <form action="/edit_password" method="GET" class="settings_form" style="
   position: absolute;
   bottom: 0;
