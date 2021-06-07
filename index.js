@@ -25,7 +25,6 @@ UI / cosmetics
 // unable to align email divs to center
 // gear icon aspect ratio wack + doesn't scale at all
 // date select calendar formatting
-//make email not look so basic
 // mobile menu position kinda jank and doesn't scale with screen size -- MEDIUM
 // order success mobile scaling -- MEDIUM
 //  order now (cart table kinda jank cuz adding hamburger pushes the table off the screen) -- MEDIUM
@@ -1847,9 +1846,11 @@ app.post('/drink_menu_remove', function (req, res) {
   });
 });
 
-app.post('/upload_images', async function (req, res) {
-  //note: put id="img" in menu option
+app.post('/upload_image', async function (req, res) {
   //check if req.body.img is a binary or base64. If not, convert it
+  var img = req.body.imgBase64;
+  console.log("img: ", img); // UNDEFINED
+
   var requestOptions = {method: "POST",
                         // Token: "6f493c6ea4806759308a2e53c2cd8e123204160e",
                         headers: {
@@ -1863,18 +1864,18 @@ app.post('/upload_images', async function (req, res) {
     if (response.ok) {
       return response.json();
     } else {
-      throw new Error('data fetch failed, status: ' + response.status);
+      throw new Error('data fetch failed 1, status: ' + response.status); //this gets thrown
     }
   })
   .then((responseJson) => {
     //handle responseJson
-    console.log(responseJson);
+    console.log("responseJson: ", responseJson);
     data = responseJson;
   })
   .catch((error) => {
     console.log(error);
   });
-  console.log(data);
+  console.log("data: ", data);
 
 
   //grab deletehash from the fetch, and add it to the album
@@ -1884,7 +1885,7 @@ app.post('/upload_images', async function (req, res) {
                         headers: {
                           Authorization: "Client-ID 45d3e08f6d057e0" //change to ENV in prod
                         },
-                        body: {'deletehashes[]': "aa"/*image deletehash*/}, //[] not an error
+                        body: {'deletehashes[]': "aa"/*image deletehash*/}, 
                         redirect: "follow"};
 
   await fetch("https://api.imgur.com/3/album/kX13zMtvFfWIIau/add", requestOptions).then((response) => {
