@@ -796,8 +796,9 @@ th {
   bottom: 0;
   margin-top: auto;
   margin-bottom: auto;
-  padding-top: 8%;
+  /* padding-top: 8%; */
   width:65px;
+  vertical-align: text-bottom;
 }
 
 #settings_icon {
