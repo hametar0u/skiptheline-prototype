@@ -86,10 +86,7 @@
         z-index: 10;
       }
 
-      #settings_div {
-        display:none;
-      }
-
+  
       #order_now_div {
         margin-top: 35%;
       }
@@ -318,7 +315,10 @@
           toggleCart();
         } 
         
-        document.getElementById("settings_div").style.display = "inline";
+        if (screen.width >= 768) {
+          document.getElementById("settings_div").style.display = "block";
+        }
+    
         settingStatus = 1;
 
       } else if (settingStatus == 1) {

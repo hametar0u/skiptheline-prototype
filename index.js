@@ -10,7 +10,49 @@ Immediate TO DO
 //vertical centering on the success pages
 // add next calendar at end of months
 //go through all pages to see which ones still need styling
+  DESKTOP
+  - order now --> edit pwd div could use some work, settings logo alignment
+  - login %
+  - date_select.ejs --> calendar alignment
+  - confirm_order.ejs %
+  - sign up.html --> include partials lmfao turn into ejs?, div width different from login
+  - sign up.ejs --> labels instead of value
+  - confirmation_code.ejs --> import bootstrap?
+  - unauthorized.html --> include partials lmfao turn into ejs? + vertical aligning
+  - error.html --> include partials lmfao turn into ejs? + vertical aligning
+  - order_history
+  - pending orders
+  - order_success_local.html
+  - create_account_success.ejs --> white header instead of teal
+  - edit_password.ejs
+  - password change success
+  - forget password
+  - reset password
+  - admin_dashboard.ejs
+  - order management
+  - menu.ejs
+  - emails
+  MOBILE
+  - order now --> edit pwd too fat
+  - login
+  - date_select.ejs
+  - confirm_order.ejs
+  - sign up.html
+  - sign up.ejs
+  - confirmation_code.ejs
+  - unauthorized.html
+  - error.html
+  - order_history
+  - pending orders
+  - order_success_local.html
+  - create_account_success.ejs
+  - edit_password.ejs
+  - password change success
+  - forget password
+  - reset password
+  - emails --> vertical alignment on logo
 //start preparing the prod version
+//database pages
 
 
 //cors
