@@ -49,24 +49,20 @@
       <form class="navbar_element" method="POST" action="/logout">
         <input class="logout_button" type="submit" value="Log Out">
       </form>
-      <form action="/edit_password" method="GET" id="settings_form_mobile" class="settings_form">
+      <form action="/edit_password" method="GET" id="settings_form_mobile" class="settings_form navbar_element">
         <input class="navbar_button" type="submit" value="Edit Password">
       </form>
       <div style="position: relative; top: 0; right: 0;">
         <img class="settings_icon" id="settings_icon" src="images/settings_icon.png" alt="settings" onclick="toggleSettings()">
       </div>
     </div>
+    <div id="settings_div">
+      <form action="/edit_password" method="GET" id="settings_form_desktop" class="settings_form navbar_element">
+        <input class="navbar_button" type="submit" value="Edit Password">
+      </form>
+    </div>
 </div>
     
-<div id="settings_div" class="settings_div">
-    <form action="/edit_password" method="GET" class="settings_form" style="
-  position: absolute;
-  bottom: 0;
-  width: 115%;
-  ">
-    <input class="navbar_button" type="submit" value="Edit Password">
-  </form>
-</div>
 
 <script>
   console.log("page: ", <%= page %>);
@@ -74,8 +70,8 @@
     console.log("screen width < 768")
     document.getElementById("navbar").classList.remove("navbar");
     document.getElementById("navbar").classList.add("navDrop"); 
-    // document.getElementById("settings_form_desktop").style.display = "none";
-    // document.getElementById("settings_form_mobile").style.display = "inline";
+    document.getElementById("settings_form_desktop").style.display = "none";
+    document.getElementById("settings_form_mobile").style.display = "inline";
   }
   else {
     console.log("screen width >= 768")

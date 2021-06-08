@@ -807,6 +807,13 @@ th {
   object-fit: cover;
 }
 
+#settings_form_desktop {
+  width: 10em;
+  float: right;
+}
+
+
+
 .product_image {
   object-fit: cover;
   width: 100%;

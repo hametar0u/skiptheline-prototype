@@ -9,8 +9,11 @@ Immediate TO DO
 //random gap under elements in header
 //vertical centering on the success pages
 // add next calendar at end of months
+//go through all pages to see which ones still need styling
+//start preparing the prod version
+
+
 //cors
-//use regex to check file name regardless of extension -- or just use jpg for best results
 //js import error cannot start react
 
 Done
