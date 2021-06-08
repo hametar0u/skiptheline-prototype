@@ -812,7 +812,9 @@ th {
   float: right;
 }
 
-
+.edit_pwd_btn {
+  padding: 1em;
+}
 
 .product_image {
   object-fit: cover;
