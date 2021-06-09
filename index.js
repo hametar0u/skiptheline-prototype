@@ -13,6 +13,7 @@ Immediate TO DO
   DESKTOP
   - order now --> edit pwd div could use some work + absolutely fucked on pages that are not order now, settings logo alignment
   - login %
+  - login fail --> partials
   - date_select.ejs --> calendar alignment
   - confirm_order.ejs %
   - sign up.html --> include partials lmfao turn into ejs?, div width different from login
@@ -33,23 +34,24 @@ Immediate TO DO
   - menu.ejs --> navbar fucked
   - emails --> I give up
   MOBILE
-  - order now --> edit pwd too fat
-  - login
-  - date_select.ejs
-  - confirm_order.ejs
-  - sign up.html
+  - order now --> edit pwd too fat, cart heading + table off center
+  - login --> bone gets pushed down for mobile S size, might actually look better without box bordering on the sides
+  - date_select.ejs -->  calendar spacing wackkk
+  - confirm_order.ejs --> table pushes out of the div, buttons look weird
+  - nav.ejs --> bone too big, yikes on every page that's not order now
+  - sign up.html --> box width different from login
   - sign up.ejs
-  - confirmation_code.ejs
-  - unauthorized.html
-  - error.html
-  - order_history
-  - pending orders
-  - order_success_local.html
-  - create_account_success.ejs
-  - edit_password.ejs
-  - password change success
-  - forget password
-  - reset password
+  - confirmation_code.ejs --> STL banner not scaled properly, code box too narrow, submit button extra ugly, resend confirmation a ref cut off
+  - unauthorized.html --> include partials lmfao turn into ejs?, button + text too large
+  - error.html --> partials
+  - order_history --> Might need a heading + table pushes out of page
+  - pending orders --> Might need a heading + table pushes out of page
+  - order_success_local.html --> text looks weird, partials
+  - create_account_success.ejs --> wack font size + white header??
+  - edit_password.ejs --> same as desktop
+  - password change success --> font size inconsistent with other similar pages
+  - forget password --> consider taking out the borders on the sides, an email has been sent ___ similar problems as ddesktop ver.
+  - reset password --> same as desktop
   - emails --> vertical alignment on logo
 //start preparing the prod version
 //database pages
