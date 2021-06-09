@@ -11,7 +11,7 @@ Immediate TO DO
 // add next calendar at end of months
 //go through all pages to see which ones still need styling
   DESKTOP
-  - order now --> edit pwd div could use some work, settings logo alignment
+  - order now --> edit pwd div could use some work + absolutely fucked on pages that are not order now, settings logo alignment
   - login %
   - date_select.ejs --> calendar alignment
   - confirm_order.ejs %
@@ -20,18 +20,18 @@ Immediate TO DO
   - confirmation_code.ejs --> import bootstrap?
   - unauthorized.html --> include partials lmfao turn into ejs? + vertical aligning
   - error.html --> include partials lmfao turn into ejs? + vertical aligning
-  - order_history
-  - pending orders
-  - order_success_local.html
+  - order_history --> table and text above not aligned horizontally
+  - pending orders --> table and text above not aligned horizontally
+  - order_success_local.html --> include partials lmfao turn into ejs? + vertical aligning
   - create_account_success.ejs --> white header instead of teal
-  - edit_password.ejs
-  - password change success
-  - forget password
-  - reset password
-  - admin_dashboard.ejs
-  - order management
-  - menu.ejs
-  - emails
+  - edit_password.ejs --> width of form fields, confirm button, STL banner 
+  - password change success --> include partials lmfao turn into ejs? + vertical aligning
+  - forget password --> STL banner, an email has been sent to ___ wack
+  - reset password --> stylesheet not connected for some reason
+  - admin_dashboard.ejs --> navbar fucked
+  - order management --> table not center aligned, complete order button spacing, perhaps add some instructions to make it clearer?
+  - menu.ejs --> navbar fucked
+  - emails --> I give up
   MOBILE
   - order now --> edit pwd too fat
   - login
