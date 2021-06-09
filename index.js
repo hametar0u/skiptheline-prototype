@@ -13,7 +13,7 @@ Immediate TO DO
   DESKTOP
   - order now --> edit pwd div could use some work + absolutely fucked on pages that are not order now, settings logo alignment
   - login %
-  - login fail --> partials
+  - login fail %
   - date_select.ejs --> calendar alignment
   - confirm_order.ejs %
   - sign up.html --> include partials lmfao turn into ejs?, div width different from login
@@ -212,7 +212,7 @@ function makeconfcode(length) {
 async function checkAuth(req, res, next) {
   if (!req.session.user_id) {
     console.log('You are not authorized to view this page');
-    res.redirect("unauthorized.html");
+    res.render("pages/unauthorized.ejs");
   }
   else {
     console.log("check auth success")
@@ -233,7 +233,7 @@ function checkAdmin(req,res,next) { //for level 1
       console.log("result.rows=",result.rows);
       if (result.rows.length == 0) {
         console.log("result.rows was empty");
-        res.redirect("login.html");
+        res.redirect("/");
       }
       else {
         results = {'rows': result.rows };
@@ -241,7 +241,7 @@ function checkAdmin(req,res,next) { //for level 1
         console.log("level = ",level)
         if (level == 0) {
           console.log("you don't have level 1+ clearance");
-          res.redirect("unauthorized.html");
+          res.render("pages/unauthorized.ejs");
         }
         else {
           console.log("level 1+ clearance");
@@ -264,7 +264,7 @@ function checkAdmin2(req,res,next) { //for level 2
       console.log("result.rows=",result.rows);
       if (result.rows.length == 0) {
         console.log("result.rows was empty");
-        res.redirect("login.html");
+        res.redirect("/");
       }
       else {
         results = {'rows': result.rows };
@@ -276,7 +276,7 @@ function checkAdmin2(req,res,next) { //for level 2
         }
         else {
           console.log("you don't have level 2 clearance");
-          res.redirect("unauthorized.html");
+          res.render("pages/unauthorized.ejs");
         }
       }
     }
@@ -474,8 +474,8 @@ if(process.env.NODE_ENV === 'production') {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.get('/', (req, res) => res.redirect('login.html'));
-app.get('/login', (req, res) => res.redirect('login.html'));
+app.get('/', (req, res) => res.render('pages/login.ejs'));
+app.get('/login', (req, res) => res.render('pages/login.ejs'));
 app.get('/test', (req, res) => res.redirect('test_page.html'));
 
 app.get('/my_secret_page', checkAdmin2, function (req, res) {
@@ -795,7 +795,7 @@ app.post('/confirmation', (req, res) => {
           console.log("username_array = ",username_array);
         while (usr in username_array) {
           console.log("account already exists");
-          res.redirect("login.html");
+          res.redirect("/");
         }
         while (user_id in id_array || user_id[0]==0) {
           user_id = makeconfcode(7);
@@ -884,6 +884,8 @@ app.get('/menu', checkAdmin2, async (req, res) => { //make admin checkAuth funct
   }
 });
 
+app.get('/failure', (req, res) => res.render('pages/failure.ejs'));
+
 app.post('/login',  (req, res) => {
   var loginUsername = req.body.username;
   if (loginUsername == "sudoUser") { //remove in prod
@@ -911,7 +913,7 @@ app.post('/login',  (req, res) => {
     else {
       var results = {'rows': result.rows };
       if (results.rows === undefined || results.rows.length == 0){
-        res.redirect("failure.html");
+        res.redirect("/failure");
         //tell user email/password is wrong -> redirect to another page/go back to the beginning
       }
 
@@ -1407,10 +1409,10 @@ app.post('/reset_password', (req, res) => {
 
 app.get('/password_change_success', (req, res) => {
   if (LOCAL_DEV_FLAG) {
-    res.redirect('password_change_success_local.html');
+    res.render('pages/password_change_success_local.ejs');
   }
   else {
-    res.redirect('password_change_success.html');
+    res.render('pages/password_change_success.ejs');
   }
 });
 
@@ -1719,10 +1721,10 @@ app.get('/order_success', async (req,res) => { //bugged sometimes; result.rows u
       req.session.cart = cart.getItems(); 
       
       if (LOCAL_DEV_FLAG) {
-        res.redirect('/order_success_local.html');
+        res.render('pages/order_success_local.ejs');
       }
       else{
-        res.redirect('/order_success.html');
+        res.render('pages/order_success.ejs');
       }
     }
   });
@@ -1986,11 +1988,11 @@ app.get("/get_images", async (req, res) => {
 
 app.post('/logout', function (req, res) {
   req.session.destroy();
-  res.redirect('login.html');
+  res.redirect('/');
 });
 
 app.get('/error', (req,res) => {
-  res.redirect('error.html');
+  res.render('pages/error.ejs');
 });
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
