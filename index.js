@@ -482,7 +482,7 @@ app.get('/my_secret_page', checkAdmin2, function (req, res) {
   res.send('if you are viewing this page it means the function works');
 }); 
 
-app.get('/signup', (req, res) => res.render('pages/sign_up.ejs'));
+app.get('/signup', (req, res) => res.render('pages/sign_up.ejs', {account_exists:0}));
 app.get('/createaccountsuccess', (req, res) => res.render('pages/create_account_success.ejs')); //REMOVE IN PROD
 
 app.post('/createaccount', (req, res) => {
