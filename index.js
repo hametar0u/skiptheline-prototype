@@ -16,17 +16,16 @@ Immediate TO DO
   - login fail %
   - date_select.ejs --> calendar alignment
   - confirm_order.ejs %
-  - sign up.html --> include partials lmfao turn into ejs?, div width different from login
-  - sign up.ejs --> labels instead of value
+  - sign up.ejs --> labels instead of value, div width different from login
   - confirmation_code.ejs --> import bootstrap?
-  - unauthorized.html --> include partials lmfao turn into ejs? + vertical aligning
-  - error.html --> include partials lmfao turn into ejs? + vertical aligning
+  - unauthorized.html --> vertical aligning (use top:0 bottom:0 shit), teal header instead of white
+  - error.html -->  vertical aligning
   - order_history --> table and text above not aligned horizontally
   - pending orders --> table and text above not aligned horizontally
-  - order_success_local.html --> include partials lmfao turn into ejs? + vertical aligning
+  - order_success_local --> vertical aligning, teal header instead of white
   - create_account_success.ejs --> white header instead of teal
   - edit_password.ejs --> width of form fields, confirm button, STL banner 
-  - password change success --> include partials lmfao turn into ejs? + vertical aligning
+  - password change success --> vertical aligning, teal banner
   - forget password --> STL banner, an email has been sent to ___ wack
   - reset password --> stylesheet not connected for some reason
   - admin_dashboard.ejs --> navbar fucked
@@ -42,11 +41,11 @@ Immediate TO DO
   - sign up.html --> box width different from login
   - sign up.ejs
   - confirmation_code.ejs --> STL banner not scaled properly, code box too narrow, submit button extra ugly, resend confirmation a ref cut off
-  - unauthorized.html --> include partials lmfao turn into ejs?, button + text too large
-  - error.html --> partials
+  - unauthorized.html --> button + text too large
+  - error.html --> same as desktop
   - order_history --> Might need a heading + table pushes out of page
   - pending orders --> Might need a heading + table pushes out of page
-  - order_success_local.html --> text looks weird, partials
+  - order_success_local.html --> text looks weird
   - create_account_success.ejs --> wack font size + white header??
   - edit_password.ejs --> same as desktop
   - password change success --> font size inconsistent with other similar pages
