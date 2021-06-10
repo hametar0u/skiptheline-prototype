@@ -70,15 +70,11 @@
           </p>
           <input class="submit_button" type="submit" value="Login">
         </form>
-        <% if (LOCAL_DEV_FLAG) { %> 
-          <p style="text-align: center; padding-top:20px; padding-bottom:0%;"> Don't have an account? <br> 
-            Sign up <a href="http://localhost:5000/signup"> here </a></p>
-            <a href="http://localhost:5000/forgot_password">Forgot Password</a>
-        <% else { %>
-          <p style="text-align: center; padding-top:20px; padding-bottom:0%;"> Don't have an account? <br> 
-            Sign up <a href="https://skipthelinebeta.herokuapp.com/signup"> here </a></p>
-            <a href="https://skipthelinebeta.herokuapp.com/forgot_password">Forgot Password</a>
-        <% } %>  
+  
+        <p style="text-align: center; padding-top:20px; padding-bottom:0%;"> Don't have an account? <br> 
+          Sign up <a href="/signup"> here </a></p>
+          <a href="/forgot_password">Forgot Password</a>
+   
       </div>
     </div>
     <div id="Login"></div>
