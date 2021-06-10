@@ -134,7 +134,9 @@ const path = require('path');
 const PORT = process.env.PORT || 5000 
 const { Pool } = require('pg');
 var pool;
-var LOCAL_DEV_FLAG = true;
+var LOCAL_DEV_FLAG = false;
+var local_dev_object = {'LOCAL_DEV_FLAG': LOCAL_DEV_FLAG};
+
 if (LOCAL_DEV_FLAG){
   pool = new Pool ({
     user: 'postgres',
@@ -473,16 +475,16 @@ if(process.env.NODE_ENV === 'production') {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.get('/', (req, res) => res.render('pages/login.ejs'));
-app.get('/login', (req, res) => res.render('pages/login.ejs'));
+app.get('/', (req, res) => res.render('pages/login.ejs', local_dev_object));
+app.get('/login', (req, res) => res.render('pages/login.ejs', local_dev_object));
 app.get('/test', (req, res) => res.redirect('test_page.html'));
 
 app.get('/my_secret_page', checkAdmin2, function (req, res) {
   res.send('if you are viewing this page it means the function works');
 }); 
 
-app.get('/signup', (req, res) => res.render('pages/sign_up.ejs', {account_exists:0}));
-app.get('/createaccountsuccess', (req, res) => res.render('pages/create_account_success.ejs')); //REMOVE IN PROD
+app.get('/signup', (req, res) => res.render('pages/sign_up.ejs', {account_exists:0, 'LOCAL_DEV_FLAG': LOCAL_DEV_FLAG}));
+app.get('/createaccountsuccess', (req, res) => res.render('pages/create_account_success.ejs', local_dev_object)); //REMOVE IN PROD
 
 app.post('/createaccount', (req, res) => {
   var usr = req.body.usr;
