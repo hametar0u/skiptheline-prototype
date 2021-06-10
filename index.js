@@ -6,9 +6,8 @@ Imgur client secret
 ac7c89ce7c15000fd0a623723cfc3b52e48dc6fa
 
 Immediate TO DO
-//random gap under elements in header
-//vertical centering on the success pages
 // add next calendar at end of months
+
 //go through all pages to see which ones still need styling
   DESKTOP
   - order now --> edit pwd div could use some work + absolutely fucked on pages that are not order now, settings logo alignment
@@ -52,6 +51,7 @@ Immediate TO DO
   - forget password --> consider taking out the borders on the sides, an email has been sent ___ similar problems as ddesktop ver.
   - reset password --> same as desktop
   - emails --> vertical alignment on logo
+
 //start preparing the prod version
 //database pages
 
@@ -812,7 +812,7 @@ app.post('/confirmation', (req, res) => {
         res.redirect("/error");
       }
       else {
-        res.render("pages/create_account_success.ejs");
+        res.render("pages/create_account_success.ejs", {'LOCAL_DEV_FLAG': LOCAL_DEV_FLAG});
       }
         
     });
@@ -1407,12 +1407,7 @@ app.post('/reset_password', (req, res) => {
 });
 
 app.get('/password_change_success', (req, res) => {
-  if (LOCAL_DEV_FLAG) {
-    res.render('pages/password_change_success_local.ejs');
-  }
-  else {
-    res.render('pages/password_change_success.ejs');
-  }
+  res.render('pages/password_change_success.ejs', {'LOCAL_DEV_FLAG': LOCAL_DEV_FLAG});
 });
 
 app.get('/admin_dashboard', checkAdmin, (req, res) => {res.render("pages/admin_dashboard.ejs");});
@@ -1626,7 +1621,7 @@ app.post("/create-checkout-session", async (req, res) => {
   console.log(line_item_array);
   
   var success_url = "https://skipthelinebeta.herokuapp.com/order_success";
-  var cancel_url = "https://skipthelinebeta.herokuapp.com/order_now";
+  var cancel_url = "https://skipthelinebeta.herokuapp.com/date_select";
 
   if (LOCAL_DEV_FLAG) {
     success_url = "http://localhost:5000/order_success";
@@ -1719,12 +1714,9 @@ app.get('/order_success', async (req,res) => { //bugged sometimes; result.rows u
       cart.clearItems(); //clear cart on order success
       req.session.cart = cart.getItems(); 
       
-      if (LOCAL_DEV_FLAG) {
-        res.render('pages/order_success_local.ejs');
-      }
-      else{
-        res.render('pages/order_success.ejs');
-      }
+
+      res.render('pages/order_success.ejs', {'LOCAL_DEV_FLAG':LOCAL_DEV_FLAG});
+
     }
   });
 });

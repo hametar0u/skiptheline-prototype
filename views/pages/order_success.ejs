@@ -2,13 +2,20 @@
   <head>
     <link rel="stylesheet" href="stylesheets/styles.css">
     
-    <meta http-equiv="refresh" content=3;url="http://localhost:5000/" />
     <script defer src="../node_modules/swup/dist/swup.min.js"></script>
     <script defer src="../public/scripts/scripts.js"></script>
     <link rel="stylesheet" href="stylesheets/styles.css">
 
     <% include ../partials/header_white.ejs %>
+
   </head>
+
+<% if (LOCAL_DEV_FLAG) { %> 
+    <meta http-equiv="refresh" content=3;url="http://localhost:5000/order_now" />
+<% } else { %>  
+    <meta http-equiv="refresh" content=3;url="https://skipthelinebeta.herokuapp.com/order_now" />
+<% } %> 
+
   <body style="margin-top:25%; text-align:center;">
     <svg id="fader"></svg>
     <script>
@@ -27,9 +34,10 @@
       <img src="images/logo-teal.png" class="logo_img" style="width:75px;">
     </div> -->
   
-      <h1 style="font-size:400%;">Your password has been changed successfully!</h1>
+      <h1 style="font-size:400%;">Thanks for your order!</h1>
       <p style="font-size:200%; font-weight:450;">
-        Redirecting you automatically to the Login ...
+        If you have any questions, please email
+        <a href="mailto:admin@skiptheline.digital">admin@skiptheline.digital</a>.
       </p>
   </body>
 </html>
