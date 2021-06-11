@@ -28,8 +28,11 @@ Immediate TO DO
   - forget password --> STL banner, an email has been sent to ___ wack
   - reset password --> stylesheet not connected for some reason
   - admin_dashboard.ejs --> navbar fucked
+  - sudo_dashboard.ejs --> new button spacing
   - order management --> table not center aligned, complete order button spacing, perhaps add some instructions to make it clearer?
-  - menu.ejs --> navbar fucked
+  - menu.ejs --> navbar fucked, don't mind the image upload stuff for now
+  - users, orders, order_details.ejs --> teal banner
+  - database_nav.ejs --> make it look nice ig? Kinda like a sub navbar
   - emails --> I give up
   MOBILE
   - order now --> edit pwd too fat, cart heading + table off center
@@ -50,18 +53,15 @@ Immediate TO DO
   - password change success --> font size inconsistent with other similar pages
   - forget password --> consider taking out the borders on the sides, an email has been sent ___ similar problems as ddesktop ver.
   - reset password --> same as desktop
-  - emails --> vertical alignment on logo
+  - emails --> vertical alignment on logo  
+  
+  //cors
+  //js import error cannot start react
+  
+  Done
+  //database pages
+  //start preparing the prod version
 
-//start preparing the prod version
-//database pages
-
-
-//cors
-//js import error cannot start react
-
-Done
-//fix email up -- somewhat
-//various scaling and positioning issues
 
 
 For next session 
@@ -83,6 +83,7 @@ UI / cosmetics
 //make images more robust
 
 IMPROVEMENTS:
+// sort order_details by most recent first
 // make the date format readable -- partially solved except pending orders/order history
 //check if the db queries on the order now have already been run and if so just don't run it
 // check if current password and new password is the same
@@ -134,7 +135,7 @@ const path = require('path');
 const PORT = process.env.PORT || 5000 
 const { Pool } = require('pg');
 var pool;
-var LOCAL_DEV_FLAG = false;
+var LOCAL_DEV_FLAG = true;
 var websiteurl = 'https://skipthelinebeta.herokuapp.com';
 if (LOCAL_DEV_FLAG) {
   websiteurl = 'http://localhost:5000';
@@ -224,7 +225,7 @@ async function checkAuth(req, res, next) {
   }
 }
 
-function checkAdmin(req,res,next) { //for level 1
+function checkAdmin(req, res, next) { //for level 1
   var adminQuery = `SELECT authority FROM users WHERE username = '${req.session.username}';`;
   var results;
   var level = 0;
@@ -835,11 +836,10 @@ app.get('/users', checkAdmin2, async (req, res) => { //change the EJS and query 
     const client = await pool.connect()
     const result = await client.query('SELECT * FROM users');
     const results = { 'results': (result) ? result.rows : null};
-    res.render('pages/users', results );
+    res.render('pages/users.ejs', results );
     client.release();
   } catch (err) {
-    console.error(err);
-    console.log(error);
+    console.log(err);
     res.redirect("/error");
   }
 });
@@ -849,11 +849,10 @@ app.get('/orders', checkAdmin2, async (req, res) => {
     const client = await pool.connect()
     const result = await client.query('SELECT * FROM orders');
     const results = { 'results': (result) ? result.rows : null};
-    res.render('pages/orders', results );
+    res.render('pages/orders.ejs', results );
     client.release();
   } catch (err) {
-    console.error(err);
-    console.log(error);
+    console.log(err);
     res.redirect("/error");
   }
 });
@@ -861,18 +860,17 @@ app.get('/orders', checkAdmin2, async (req, res) => {
 app.get('/order_details', checkAdmin2, async (req, res) => {
   try {
     const client = await pool.connect()
-    const result = await client.query('SELECT * FROM order_details WHERE ;');
+    const result = await client.query('SELECT * FROM order_details;');
     const results = { 'results': (result) ? result.rows : null};
-    res.render('pages/order_details', results );
+    res.render('pages/order_details.ejs', results );
     client.release();
   } catch (err) {
-    console.error(err);
-    console.log(error);
+    console.log(err);
     res.redirect("/error");
   }
 });
 
-app.get('/menu', checkAdmin2, async (req, res) => { //make admin checkAuth function and call it here
+app.get('/menu', checkAdmin, async (req, res) => { 
   try {
     const client = await pool.connect()
     const foodResult = await client.query('SELECT * FROM foodmenu;');
@@ -896,14 +894,14 @@ app.post('/login',  (req, res) => {
     console.log("sudo user remove in prod");
     req.session.user_id = makeid(10);
     req.session.username = loginUsername;
-    res.redirect("/admin_dashboard")
+    res.redirect("/sudo_dashboard");
     return;
   }
   else if (loginUsername == "cafAdmin") { //remove
     console.log("caf admin account remove in prod");
     req.session.user_id = makeid(10);
     req.session.username = loginUsername;
-    res.redirect("/date_select")
+    res.redirect("/admin_dashboard")
     return;
   }
 
@@ -1416,6 +1414,7 @@ app.get('/password_change_success', (req, res) => {
 });
 
 app.get('/admin_dashboard', checkAdmin, (req, res) => {res.render("pages/admin_dashboard.ejs");});
+app.get('/sudo_dashboard', checkAdmin2, (req, res) => {res.render("pages/sudo_dashboard.ejs");});
 
 app.get('/order_now', checkAuth, async (req, res) => {
   var chosenDate = req.session.chosenDate;

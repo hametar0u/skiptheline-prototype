@@ -1,23 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <% include ../partials/header.ejs %>
+  <link rel="stylesheet" href="stylesheets/styles.css">
+  <% include ../partials/header_white.ejs %>
+  <% include ../partials/database_nav.ejs %>
 </head>
 
 <body>
 
-<% include ../partials/nav.ejs %>
 
 <div class="container">
   <h2>Database Results</h2>
-  <!-- <main id="swup" class="transition-wipe"> -->
-    <ul>
-        <% results.forEach(function(r) { %>
-            <li><%= r.order_id %> - <%= r.item %> - <%= r.price %> – <%= r.date %></li>
-        <% }); %>
-    </ul>
+ 
+    <table>
+      <th>order_id</th>
+      <th>item</th>
+      <th>price</th>
+      <th>quantity</th>
+      <th>date</th>
+      <% results.forEach(function(r) { %>
+        <tr>
+          <td><%= r.order_id %></td>
+          <td><%= r.item %></td>
+          <td><%= r.price %></td>
+          <td><%= r.quantity %></td>
+          <td><%= r.date %></td>
+        </tr>
+      <% }); %>
 
+    </table>
     </div>
-  <!-- </main> -->
 </body>
 </html>

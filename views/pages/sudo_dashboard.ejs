@@ -6,8 +6,7 @@
     <link rel="stylesheet" href="stylesheets/styles.css">
     <title>admin dashboard
     </title>
-    <!-- turn this into another partial maybe since we have like 5 pages with it now -->
-    <div class="header"> 
+    <div class="header">
         <img src="images/logo.png" class="logo_img">
         <h1 style="text-align:left; display:inline-block; font-size: 200%;margin-block-start: 0em; margin-block-end: 0em;">SKIP THE LINE</h1>
         <div class="navbar">
@@ -18,16 +17,19 @@
             <input class="logout_button" type="submit" value="Log Out">
           </form>
         </div>
-    </div>
+      </div>
 </head>
 <body>
-  <h1>Welcome Admin!</h1>
+  <h1>Welcome SudoUser!</h1>
   <div class="admin_panel">
       <form class="admin_panel_element" action="/menu">
           <input class="admin_button" type="submit" value="Edit Menu">
       </form>
       <form class="admin_panel_element" action="/order_management">
           <input class="admin_button" type="submit" value="Manage Orders">
+      </form>
+      <form class="admin_panel_element" action="/users">
+          <input class="admin_button" type="submit" value="View Database">
       </form>
   </div>
 </body>

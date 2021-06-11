@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <% include ../partials/header.ejs %>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <% include ../partials/header_white.ejs %>
+    <% include ../partials/database_nav.ejs %>
   </head>
 
   <body>
@@ -9,13 +11,21 @@
 
     <div class="container">
       <h2>Database Results</h2>
+        <table>
+          <th>user_id</th>
+          <th>username</th>
+          <th>password</th>
+          <th>authority</th>
+          <% results.forEach(function(r) { %>
+            <tr>
+              <td><%= r.user_id %></td>
+              <td><%= r.username %></td>
+              <td><%= r.password %></td>
+              <td><%= r.authority %></td>
+            </tr>
+          <% }); %>
 
-      <!-- <main id="swup" class="transition-wipe"> -->
-        <ul>
-            <% results.forEach(function(r) { %>
-                <li><%= r.username %> - <%= r.password %></li>
-            <% }); %>
-        </ul>
+        </table>
       <!-- </main> -->
     </div>
   
