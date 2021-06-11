@@ -880,8 +880,7 @@ app.get('/menu', async (req, res) => { //add checkAdmin back in prod
     res.render('pages/menu.ejs', {row1: foodResults, row2: drinkResults} );
     client.release();
   } catch (err) {
-    console.error(err);
-    console.log(error);
+    console.log(err);
     res.redirect("/error");
   }
 });
