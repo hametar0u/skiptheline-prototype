@@ -16,7 +16,7 @@ Immediate TO DO
 
 //go through all pages to see which ones still need styling
   DESKTOP
-  - order now --> edit pwd div could use some work + absolutely fucked on pages that are not order now, settings logo alignment
+  - order now --> edit pwd div could use some work + absolutely fucked on pages that are not order now, settings logo alignment (display: block; instead of inline)
   - login %
   - login fail %
   - date_select.ejs --> calendar alignment
