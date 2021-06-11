@@ -1,5 +1,11 @@
 /*
 
+- database problem
+- pool queries don't run
+- been working until recently so we assumed it was a node modules thing
+- tried reinstalling node modules but couldn't
+
+
 Imgur client ID
 45d3e08f6d057e0
 Imgur client secret
@@ -135,7 +141,7 @@ const path = require('path');
 const PORT = process.env.PORT || 5000 
 const { Pool } = require('pg');
 var pool;
-var LOCAL_DEV_FLAG = false;
+var LOCAL_DEV_FLAG = true;
 var websiteurl = 'https://skipthelinebeta.herokuapp.com';
 if (LOCAL_DEV_FLAG) {
   websiteurl = 'http://localhost:5000';
@@ -831,7 +837,7 @@ app.post('/confirmation', (req, res) => {
 });
 
 
-app.get('/users', checkAdmin2, async (req, res) => { //change the EJS and query strings
+app.get('/users', async (req, res) => { //change the EJS and query strings add checkAdmin2 back later
   try {
     const client = await pool.connect()
     const result = await client.query('SELECT * FROM users');
