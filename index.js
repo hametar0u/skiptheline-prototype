@@ -1413,8 +1413,8 @@ app.get('/password_change_success', (req, res) => {
   res.render('pages/password_change_success.ejs');
 });
 
-app.get('/admin_dashboard', checkAdmin, (req, res) => {res.render("pages/admin_dashboard.ejs");});
-app.get('/sudo_dashboard', checkAdmin2, (req, res) => {res.render("pages/sudo_dashboard.ejs");});
+app.get('/admin_dashboard', (req, res) => {res.render("pages/admin_dashboard.ejs");}); //add checkAdmin functions back in prod
+app.get('/sudo_dashboard', (req, res) => {res.render("pages/sudo_dashboard.ejs");});
 
 app.get('/order_now', checkAuth, async (req, res) => {
   var chosenDate = req.session.chosenDate;
