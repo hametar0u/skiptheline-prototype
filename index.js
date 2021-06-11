@@ -135,7 +135,7 @@ const path = require('path');
 const PORT = process.env.PORT || 5000 
 const { Pool } = require('pg');
 var pool;
-var LOCAL_DEV_FLAG = true;
+var LOCAL_DEV_FLAG = false;
 var websiteurl = 'https://skipthelinebeta.herokuapp.com';
 if (LOCAL_DEV_FLAG) {
   websiteurl = 'http://localhost:5000';
