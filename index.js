@@ -870,7 +870,7 @@ app.get('/order_details', checkAdmin2, async (req, res) => {
   }
 });
 
-app.get('/menu', checkAdmin, async (req, res) => { 
+app.get('/menu', async (req, res) => { //add checkAdmin back in prod
   try {
     const client = await pool.connect()
     const foodResult = await client.query('SELECT * FROM foodmenu;');
