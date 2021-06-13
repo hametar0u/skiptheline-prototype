@@ -1,18 +1,14 @@
 /*
 
-- database problem
-- pool queries don't run
-- been working until recently so we assumed it was a node modules thing
-- tried reinstalling node modules but couldn't
-
-
 Imgur client ID
 45d3e08f6d057e0
 Imgur client secret
 ac7c89ce7c15000fd0a623723cfc3b52e48dc6fa
 
 Immediate TO DO
+// take a look at  connect-busboy or multer or connect-multiparty for getting files
 // add next calendar at end of months
+// pathing on back to dashboard
 
 //go through all pages to see which ones still need styling
   DESKTOP
@@ -169,6 +165,8 @@ const nodemailer = require("nodemailer");
 const sgTransport = require('nodemailer-sendgrid-transport');
 const { isNullOrUndefined } = require('util');
 const fs = require('fs');
+const formidable = require('formidable');
+const fileupload = require("express-fileupload");
 const { callbackPromise } = require('nodemailer/lib/shared'); 
 const { appengine } = require('googleapis/build/src/apis/appengine');
 
@@ -458,7 +456,7 @@ var cart = new Cart();
 var app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
+app.use(fileupload());
 app.use(express.static(path.join(__dirname, 'public')));
 //app.use('/public', express.static(path.join(__dirname, 'public')));
 
@@ -1895,25 +1893,69 @@ app.post('/drink_menu_remove', function (req, res) {
   });
 });
 
+app.post("/upload", function(req, res)
+{
+    var file;
+    console.log("req.files: ", req.files);
+
+    if(!req.files)
+    {
+        res.send("File was not found");
+        return;
+    }
+
+    file = req.files.img;  // here is the field name of the form
+
+    res.send("File Uploaded");
+
+
+});
+
 app.post('/upload_image', async function (req, res) {
   //check if req.body.img is a binary or base64. If not, convert it
-  var img = req.body.imgBase64;
-  console.log("img: ", img); // UNDEFINED
+  // var img = req.body.img;
+  // console.log("img: ", img); // UNDEFINED
+  // console.log("req.body.lol: ",req.body.lol);
 
+  // const toBase64 = file => new Promise((resolve, reject) => {
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //   reader.onload = () => resolve(reader.result);
+  //   reader.onerror = error => reject(error);
+  // });
+
+  // async function Main() {
+  //   const file = req.files[0];
+  //   console.log(typeof file);
+  //   console.log(await toBase64(file));
+  // }
+
+  // Main();
+  const form = new formidable.IncomingForm();
+  console.log("form: ", form);
+  var img;
+  form.parse(req, (err, fields, files) => {
+    img = fs.readFileSync(files.img.path);
+  });
+  console.log("img ", img);
+  console.log(typeof img);
   var requestOptions = {method: "POST",
                         // Token: "6f493c6ea4806759308a2e53c2cd8e123204160e",
                         headers: {
                           Authorization: "Client-ID 45d3e08f6d057e0" //change to ENV in prod
                         },
-                        body: {image: req.body.img},
+                        body: { image: img,
+                                album: 'bNH4P4d'
+                              },
                         redirect: "follow"};
+
 
   var data;
   await fetch("https://api.imgur.com/3/upload", requestOptions).then((response) => {
     if (response.ok) {
       return response.json();
     } else {
-      throw new Error('data fetch failed 1, status: ' + response.status); //this gets thrown
+      throw new Error('data fetch failed, status: ' + response.status); //this gets thrown
     }
   })
   .then((responseJson) => {
@@ -1929,30 +1971,30 @@ app.post('/upload_image', async function (req, res) {
 
   //grab deletehash from the fetch, and add it to the album
 
-  requestOptions = {method: "POST",
-                        // Token: "6f493c6ea4806759308a2e53c2cd8e123204160e",
-                        headers: {
-                          Authorization: "Client-ID 45d3e08f6d057e0" //change to ENV in prod
-                        },
-                        body: {'deletehashes[]': "aa"/*image deletehash*/}, 
-                        redirect: "follow"};
+  // requestOptions = {method: "POST",
+  //                       // Token: "6f493c6ea4806759308a2e53c2cd8e123204160e",
+  //                       headers: {
+  //                         Authorization: "Client-ID 45d3e08f6d057e0" //change to ENV in prod
+  //                       },
+  //                       body: {'deletehashes[]': "aa"/*image deletehash*/}, 
+  //                       redirect: "follow"};
 
-  await fetch("https://api.imgur.com/3/album/kX13zMtvFfWIIau/add", requestOptions).then((response) => {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw new Error('data fetch failed, status: ' + response.status);
-    }
-  })
-  .then((responseJson) => {
-    //handle responseJson
-    console.log(responseJson);
-    data = responseJson;
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-  console.log(data);
+  // await fetch("https://api.imgur.com/3/album/kX13zMtvFfWIIau/add", requestOptions).then((response) => {
+  //   if (response.ok) {
+  //     return response.json();
+  //   } else {
+  //     throw new Error('data fetch failed, status: ' + response.status);
+  //   }
+  // })
+  // .then((responseJson) => {
+  //   //handle responseJson
+  //   console.log(responseJson);
+  //   data = responseJson;
+  // })
+  // .catch((error) => {
+  //   console.log(error);
+  // });
+  // console.log(data);
   
   res.send(data); //REPLACE WITH WHATEVER REDIRECT I WANT TO DO
 });
@@ -1993,6 +2035,9 @@ app.post('/logout', function (req, res) {
 
 app.get('/error', (req,res) => {
   res.render('pages/error.ejs');
+});
+app.get('/unauthorized', (req,res) => {
+  res.render('pages/unauthorized.ejs');
 });
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
