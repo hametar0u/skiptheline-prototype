@@ -12,7 +12,7 @@ Immediate TO DO
 
 //go through all pages to see which ones still need styling
   DESKTOP
-  - order now --> edit pwd div could use some work + absolutely fucked on pages that are not order now, settings logo alignment
+  - order now --> edit pwd div could use some work + absolutely fucked on pages that are not order now, settings logo alignment (display: block; instead of inline)
   - login %
   - login fail %
   - date_select.ejs --> calendar alignment
@@ -875,15 +875,26 @@ app.get('/order_details', checkAdmin2, async (req, res) => {
 });
 
 app.get('/menu', async (req, res) => { //add checkAdmin back in prod
+  console.log("before");
   try {
+    console.log("in try");
+
     const client = await pool.connect()
+    console.log("after await");
     const foodResult = await client.query('SELECT * FROM foodmenu;');
     const foodResults = { 'fRows': (foodResult) ? foodResult.rows : null};
+
+    console.log(foodResults);
     const drinkResult = await client.query('SELECT * FROM drinkmenu;');
     const drinkResults = { 'dRows': (drinkResult) ? drinkResult.rows : null};
+    console.log(drinkResults);
+    console.log("before render");
     res.render('pages/menu.ejs', {row1: foodResults, row2: drinkResults} );
+    console.log("before rel");    
     client.release();
+    console.log("after rel");
   } catch (err) {
+    console.log("catch");
     console.log(err);
     res.redirect("/error");
   }
