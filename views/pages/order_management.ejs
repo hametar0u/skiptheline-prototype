@@ -22,11 +22,20 @@
     IMPROVEMENTS:
     - Group orders on separate days under separate headings
     -->
-
+  <style>
+    table {
+      width: 100%;
+    }
+  </style>
   </head>
   <body>    
     <% if(rows && rows.length) {%>
       <h1 style="text-align: left;"><%= rows[0].date.toString().slice(0,15) %></h1>
+      <h2 style='text-align: center;'>Click "Complete Order" on the matching order shown on the 
+                                      "Pending orders" page of the student whose order you have delivered.
+      </h2>
+    
+
       <div class="row">
         <div class="item_card">
           <h2>Order ID: <%= rows[0].order_id%></h2>

@@ -27,6 +27,14 @@ Done:
     - menu.ejs --> navbar fucked, don't mind the image upload stuff for now %
     - users, orders, order_details.ejs --> teal banner %
     - database_nav.ejs --> make it look nice ig? Kinda like a sub navbar %
+    - create_account_success.ejs --> white header instead of teal (cannot make account) %
+    - password change success --> vertical aligning, teal banner (cannot make account) %
+    - forget password --> STL banner, an email has been sent to ___ wack (cannot make account) % 
+    - reset password --> stylesheet not connected for some reason (cant make an account) %
+    - order_history --> table and text above not aligned horizontally    (cannot stripe = cannot make orders) %
+    - pending orders --> table and text above not aligned horizontally   (cannot make orders) %
+    - order_success_local --> vertical aligning, teal header instead of white (cannot make orders) %
+    - order management --> table not center aligned, complete order button spacing, perhaps add some instructions to make it clearer? (cannot make orders) %
   Mobile:
     - order now --> edit pwd too fat, cart heading + table off center %
     - login --> bone gets pushed down for mobile S size, might actually look better without box bordering on the sides %
@@ -34,37 +42,24 @@ Done:
     - sign up.html --> box width different from login %
     - error.html --> same as desktop %
     - edit_password.ejs --> same as desktop %
+    - password change success --> font size inconsistent with other similar pages %
+    - forget password --> consider taking out the borders on the sides, an email has been sent ___ similar problems as ddesktop ver. %
+    - reset password --> same as desktop %
+    - create_account_success.ejs --> wack font size + white header?? %
+    - confirm_order.ejs --> table pushes out of the div, buttons look weird %
+    - order_history --> Might need a heading + table pushes out of page %
+    - pending orders --> Might need a heading + table pushes out of page %
+    - order_success_local.html --> text looks weird %
 
 Cant access/style for given reason: 
 Desktop:
 - unauthorized.html --> vertical aligning (use top:0 bottom:0 shit), teal header instead of white (cant GET)
-- confirmation_code.ejs --> import bootstrap? (cannot make account)
-
-- order_history --> table and text above not aligned horizontally    (cannot stripe = cannot make orders)
-- pending orders --> table and text above not aligned horizontally   (cannot make orders)
-- order_success_local --> vertical aligning, teal header instead of white (cannot make orders)
-- order management --> table not center aligned, complete order button spacing, perhaps add some instructions to make it clearer? (cannot make orders)
-
-- create_account_success.ejs --> white header instead of teal (cannot make account)
-- password change success --> vertical aligning, teal banner (cannot make account)
-- forget password --> STL banner, an email has been sent to ___ wack (cannot make account)
-- reset password --> stylesheet not connected for some reason (cant make an account)
+- confirmation_code.ejs --> import bootstrap? (cannot make account) ??????? what
 Mobile: 
-  - confirm_order.ejs --> table pushes out of the div, buttons look weird
   - unauthorized.html --> button + text too large
-  - order_history --> Might need a heading + table pushes out of page
-  - pending orders --> Might need a heading + table pushes out of page
-  - order_success_local.html --> text looks weird
-  - create_account_success.ejs --> wack font size + white header??
-  - password change success --> font size inconsistent with other similar pages
-  - forget password --> consider taking out the borders on the sides, an email has been sent ___ similar problems as ddesktop ver.
-  - reset password --> same as desktop
-
 DESKTOP
   - emails --> I give up
 MOBILE
-  
-  
   - date_select.ejs -->  calendar spacing wackkk
   - confirmation_code.ejs --> STL banner not scaled properly, code box too narrow, submit button extra ugly, resend confirmation a ref cut off 
     (gap between edges and loginbox is driving me crazy)
