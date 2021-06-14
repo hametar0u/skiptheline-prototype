@@ -797,14 +797,14 @@ app.post('/confirmation', (req, res) => {
         var username_array = [];
         console.log(result[i]);
         for (var i = 0; i<result.rowCount; i++) {
-          console.log(result.rows[i]);
+          // console.log(result.rows[i]);
           id_array.push(result.rows[i]['user_id']);
           username_array.push(result.rows[i]['username']); 
-          console.log("result.rows[i]['user_id'] = ",result.rows[i]['user_id']);
-          console.log("result.rows[i]['username'] = ",result.rows[i]['username']);
+          // console.log("result.rows[i]['user_id'] = ",result.rows[i]['user_id']);
+          // console.log("result.rows[i]['username'] = ",result.rows[i]['username']);
         }
-          console.log("id_array = ",id_array);
-          console.log("username_array = ",username_array);
+          // console.log("id_array = ",id_array);
+          // console.log("username_array = ",username_array);
         while (usr in username_array) {
           console.log("account already exists");
           res.redirect("/");
