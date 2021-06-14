@@ -30,9 +30,8 @@
         <!-- <main id="swup" class="transition-wipe"> -->
             <!--error message here but it didn't work-->
           <div class="flex-container">
-            <form action="/upload_image" method="POST">
+            <form action="/upload" method="POST">
               <input type="file" id="img" name="img">
-              <input type="hidden" id="imgBase64" value="">
               <input type="submit" class="submit_button" value="submit">
             </form>
 
@@ -119,30 +118,30 @@
             </div>
     </body>
     <script>
-      // get a reference to the file input
-      const fileInput = document.querySelector("input[name='img']"); //grabs correctly
-      // console.log("fileinput: ", fileInput);
+      // // get a reference to the file input
+      // const fileInput = document.querySelector("input[name='img']"); //grabs correctly
+      // // console.log("fileinput: ", fileInput);
     
-      // listen for the change event so we can capture the file
-      fileInput.addEventListener("change", (e) => {
-        // get a reference to the file
-        const file = e.target.files[0];
+      // // listen for the change event so we can capture the file
+      // fileInput.addEventListener("change", (e) => {
+      //   // get a reference to the file
+      //   const file = e.target.files[0];
     
-        // encode the file using the FileReader API
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          // use a regex to remove data url part
-          const base64String = reader.result
-            .replace("data:", "")
-            .replace(/^.+,/, "");
+      //   // encode the file using the FileReader API
+      //   const reader = new FileReader();
+      //   reader.onloadend = () => {
+      //     // use a regex to remove data url part
+      //     const base64String = reader.result
+      //       .replace("data:", "")
+      //       .replace(/^.+,/, "");
     
-          // log to console
-          // logs wL2dvYWwgbW9yZ...
-          console.log("base64string: ", base64String); //nothing gets printed here
-          document.getElementById("imgBase64").value = base64String;
-        };
-        reader.readAsDataURL(file); // idk what this line does
-      });
+      //     // log to console
+      //     // logs wL2dvYWwgbW9yZ...
+      //     console.log("base64string: ", base64String); //nothing gets printed here
+      //     document.getElementById("imgBase64").value = base64String;
+      //   };
+      //   reader.readAsDataURL(file); // idk what this line does
+      // });
     </script>
     
 </html>
