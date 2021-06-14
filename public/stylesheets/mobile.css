@@ -24,10 +24,14 @@
         display: inline;
       } 
     
-    .cartArrowDesktop, .closeCartDiv, .navbar, .navbar_element, .headerDesktop, .cartArrowDesktopImg, .settings_icon {
+    .cartArrowDesktop, .closeCartDiv, .navbar, .navbar_element, .headerDesktop, .cartArrowDesktopImg, .settings_icon,
+    #settings_form-desktop {
       display: none;
     }
 
+    .edit_pwd_btn {
+      font-size: 12px;
+    }
     .header {
         padding-left: 0%;
     }
@@ -189,6 +193,9 @@
     z-index: 50;
   }
 
-  
+  #settings_form_mobile {
+    height: 50%;
+  }
+
 
 }

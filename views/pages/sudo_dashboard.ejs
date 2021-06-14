@@ -18,6 +18,26 @@
           </form>
         </div>
       </div>
+<style>
+  .navbar {
+    font-size: 24px;
+    width: 30em;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .navbar_button, .logout_button, .navbar_element {
+      width: 100%;
+    }
+    .navbar {
+      width: 16em;
+    }
+
+    .admin_button, .admin_panel_element {
+      width: 100%;
+      margin: unset;
+    }
+  }
+</style>
 </head>
 <body>
   <h1>Welcome SudoUser!</h1>
@@ -28,6 +48,7 @@
       <form class="admin_panel_element" action="/order_management">
           <input class="admin_button" type="submit" value="Manage Orders">
       </form>
+      <br>
       <form class="admin_panel_element" action="/users">
           <input class="admin_button" type="submit" value="View Database">
       </form>

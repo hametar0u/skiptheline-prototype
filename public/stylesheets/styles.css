@@ -98,6 +98,20 @@ button:hover {
   border-radius: 0.4em;
 }   */
 
+.dbNav {
+  text-align:right;
+  float: left; 
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  background-color: #60D5DA;
+}
+.dbNav_element {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  /* padding:10px; */
+}
 
 .header {
     /* padding-top: 2%;
@@ -147,7 +161,7 @@ button:hover {
   text-align:right;
   float: right;
   padding:0px;
-  padding-right: 4%;
+  padding-right: 3%;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -245,9 +259,9 @@ button:hover {
 }
 
 .confirmation_box {
-  width: 60%;
-  margin-left:auto;
-  margin-right:auto;
+  width: 100%;
+  margin-left: 0%;
+  margin-right:0%;
   margin-top: 20%;
 }
 #code {
@@ -372,7 +386,7 @@ input {
 
 @media only screen and (max-width: 768px) {
   .loginbox {
-    width: 95%;
+    width: 100%;
     margin-top: 30%;
   }
   .loginfields {
@@ -388,6 +402,7 @@ input {
   h1 {
     font-size: 24px;
   }
+
 }
 
 
@@ -514,16 +529,20 @@ th {
   margin: auto;
   text-align: center;
   width: 80%;
-  margin-top: 15%;
+  margin-top: 5%;
 }
 
 .admin_panel_element {
   width: 30%;
   display: inline-block;
-  margin: auto 5%;
+  margin: auto 15%;
 }
 
 .admin_button {
+    top: 0;
+    bottom: 0;
+    margin-top: 5%;
+    margin-bottom: 5%; 
     background-color: #889494;
     color: white;
     font-size: 150%;
@@ -822,12 +841,19 @@ th {
 }
 
 #settings_form_desktop {
-  width: 10em;
+  width: 14em;
   float: right;
 }
 
 .edit_pwd_btn {
-  padding: 1em;
+  background: none;
+  color: white;
+  transition: 0.1s;
+  border-style:none;
+  outline-style: none;
+  padding:0.2em;
+  width: 100%;
+  font-size: 1.2em;
 }
 
 .product_image {
