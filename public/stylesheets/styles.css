@@ -243,7 +243,7 @@ button:hover {
     font-size: 20px;
     margin: auto;
     margin-top: 200px;
-    width: 27%;
+    width: 30em;
     box-shadow: 10px 10px 30px -5px;
     border-style: solid;
     border-width: 2px;
@@ -617,7 +617,9 @@ th {
     margin-top: 0.2em;
   }
 
-
+.back_button {
+  width: 10em;
+}
 
 .order_now {
   /* -webkit-animation: fadein 2s; */
@@ -780,7 +782,7 @@ th {
   font-size: 20px;
   margin: auto;
   margin-top: 200px;
-  width: 30%;
+  width: 30em;
   box-shadow: 10px 10px 30px -5px;
   border-style: solid;
   border-width: 2px;
@@ -841,8 +843,9 @@ th {
 }
 
 #settings_form_desktop {
-  width: 14em;
+  width: 13em;
   float: right;
+  margin-right: 1.5em;
 }
 
 .edit_pwd_btn {
@@ -851,9 +854,12 @@ th {
   transition: 0.1s;
   border-style:none;
   outline-style: none;
-  padding:0.2em;
+  padding:0.8em;
   width: 100%;
-  font-size: 1.2em;
+  font-size: 1em;
+}
+.edit_pwd_btn:hover {
+  background: #59c7cb;
 }
 
 .product_image {
