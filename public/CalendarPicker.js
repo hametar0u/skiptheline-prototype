@@ -108,7 +108,7 @@ function CalendarPicker(element, options) {
 CalendarPicker.prototype._getDaysInMonth = function (month, year) {
     if ((!month && month !== 0) || (!year && year !== 0)) return;
 
-    var date = new Date(year, month, (this.day)+7);
+    var date = new Date(year, month, (this.day)+14);
     var days = [];
 
     // while (date.getMonth() === month) {
@@ -183,7 +183,7 @@ CalendarPicker.prototype._insertCalendarIntoWrapper = function () {
  * @description Adds the "main" calendar-header.
  */
 CalendarPicker.prototype._insertHeaderIntoCalendarWrapper = function () {
-    this.calendarHeaderTitle.textContent = this.listOfAllMonthsAsText[this.month] + ' - ' + this.year;
+    this.calendarHeaderTitle.textContent = this.listOfAllMonthsAsText[this.month] + ' - ' + this.listOfAllMonthsAsText[(this.month)+1] + ' ' + this.year;
     this.calendarHeader.appendChild(this.calendarHeaderTitle);
     this.calendarWrapper.appendChild(this.calendarHeader);
 }
