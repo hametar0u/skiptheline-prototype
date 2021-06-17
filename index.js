@@ -6,34 +6,40 @@ Imgur client secret
 ac7c89ce7c15000fd0a623723cfc3b52e48dc6fa
 
 Immediate TO DO
-// take a look at  connect-busboy or multer or connect-multiparty for getting files
+// take a look at  connect-busboy or multer or connect-multiparty for getting files --can I die now
 // add next calendar at end of months
-// pathing on back to dashboard
 
 //go through all pages to see which ones still need styling
 
 Done:
+// prevent submit without selecting a date in date select
+// pathing on back to dashboard
+
+
   Desktop:
-  - order now --> edit pwd div could use some work + absolutely fucked on pages that are not order now, settings logo alignment (display: block; instead of inline) %
-    - login %
-    - login fail %
-    - date_select.ejs --> calendar alignment %
-    - confirm_order.ejs %
-    - sign up.ejs --> labels instead of value, div width different from login %
-    - error.html -->  vertical aligning %
+  - teal banner vertical alignment on logo off; order_success header text font size fucked (btw if you just type /order_success or /unauthorized you can access order success and unauthorized respectively)
+  - sudo_dashboard.ejs --> buttons move when you click them, font size kinda big?
+  - admin_dashboard.ejs --> navbar fucked but sudo_dashboard fine?
+  - sudo nav font size big
+  - admin nav messed up
+<    - order now --> edit pwd div could use some work + absolutely fucked on pages that are not order now, settings logo alignment (display: block; instead of inline) %
+<    - login %
+<    - login fail %
+<    - date_select.ejs --> calendar alignment %
+<    - confirm_order.ejs %
+<    - sign up.ejs --> labels instead of value, div width different from login %
+<    - error.html -->  vertical aligning %
     - edit_password.ejs --> width of form fields, confirm button, STL banner %
-    - admin_dashboard.ejs --> navbar fucked %
-    - sudo_dashboard.ejs --> new button spacing %
-    - menu.ejs --> navbar fucked, don't mind the image upload stuff for now %
+!   - menu.ejs --> navbar fucked, don't mind the image upload stuff for now %
     - users, orders, order_details.ejs --> teal banner %
     - database_nav.ejs --> make it look nice ig? Kinda like a sub navbar %
     - create_account_success.ejs --> white header instead of teal (cannot make account) %
     - password change success --> vertical aligning, teal banner (cannot make account) %
-    - forget password --> STL banner, an email has been sent to ___ wack (cannot make account) % 
+<    - forget password --> STL banner, an email has been sent to ___ wack (cannot make account) % 
     - reset password --> stylesheet not connected for some reason (cant make an account) %
     - order_history --> table and text above not aligned horizontally    (cannot stripe = cannot make orders) %
     - pending orders --> table and text above not aligned horizontally   (cannot make orders) %
-    - order_success_local --> vertical aligning, teal header instead of white (cannot make orders) %
+    - order_success --> header font size messed up (cannot make orders) 
     - order management --> table not center aligned, complete order button spacing, perhaps add some instructions to make it clearer? (cannot make orders) %
   Mobile:
     - order now --> edit pwd too fat, cart heading + table off center %
@@ -175,8 +181,23 @@ const nodemailer = require("nodemailer");
 const sgTransport = require('nodemailer-sendgrid-transport');
 const { isNullOrUndefined } = require('util');
 const fs = require('fs');
-const formidable = require('formidable');
-const fileupload = require("express-fileupload");
+const formidable = require('formidable'); // remove
+const fileupload = require("express-fileupload"); // remove
+const multer = require('multer');
+// var storage = multer.memoryStorage();
+// var upload = multer({storage: storage});
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '/tmp')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now())
+  }
+})
+var upload = multer({ storage: storage }).single('img')
+
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
 const { callbackPromise } = require('nodemailer/lib/shared'); 
 const { appengine } = require('googleapis/build/src/apis/appengine');
 
@@ -849,7 +870,7 @@ app.get('/users', async (req, res) => { //change the EJS and query strings add c
   try {
     const client = await pool.connect()
     const result = await client.query('SELECT * FROM users');
-    const results = { 'results': (result) ? result.rows : null};
+    const results = { 'results': (result) ? result.rows : null, page: 'users'};
     res.render('pages/users.ejs', results );
     client.release();
   } catch (err) {
@@ -862,7 +883,7 @@ app.get('/orders', checkAdmin2, async (req, res) => {
   try {
     const client = await pool.connect()
     const result = await client.query('SELECT * FROM orders');
-    const results = { 'results': (result) ? result.rows : null};
+    const results = { 'results': (result) ? result.rows : null, page: 'orders'};
     res.render('pages/orders.ejs', results );
     client.release();
   } catch (err) {
@@ -875,7 +896,7 @@ app.get('/order_details', checkAdmin2, async (req, res) => {
   try {
     const client = await pool.connect()
     const result = await client.query('SELECT * FROM order_details;');
-    const results = { 'results': (result) ? result.rows : null};
+    const results = { 'results': (result) ? result.rows : null, page: 'order_details'};
     res.render('pages/order_details.ejs', results );
     client.release();
   } catch (err) {
@@ -885,12 +906,11 @@ app.get('/order_details', checkAdmin2, async (req, res) => {
 });
 
 app.get('/menu', async (req, res) => { //add checkAdmin back in prod
-  console.log("before");
+  // console.log("req.session.username before try: ". req.session.username); // TypeError: Cannot read property 'session' of undefined
   try {
-    console.log("in try");
+    // console.log("req.session.username before await: ". req.session.username); // TypeError: Cannot read property 'session' of undefined
 
     const client = await pool.connect()
-    console.log("after await");
     const foodResult = await client.query('SELECT * FROM foodmenu;');
     const foodResults = { 'fRows': (foodResult) ? foodResult.rows : null};
 
@@ -898,17 +918,17 @@ app.get('/menu', async (req, res) => { //add checkAdmin back in prod
     const drinkResult = await client.query('SELECT * FROM drinkmenu;');
     const drinkResults = { 'dRows': (drinkResult) ? drinkResult.rows : null};
     console.log(drinkResults);
-    console.log("before render");
-    res.render('pages/menu.ejs', {row1: foodResults, row2: drinkResults} );
-    console.log("before rel");    
+    // console.log("req.session.username: ". req.session.username); // TypeError: Cannot read property 'session' of undefined
+    res.render('pages/menu.ejs', {row1: foodResults, row2: drinkResults, user: req.session.username} ); //this somehow still works so I won't touch it
     client.release();
-    console.log("after rel");
   } catch (err) {
-    console.log("catch");
     console.log(err);
     res.redirect("/error");
   }
 });
+
+app.get('/order_success', (req, res) => res.render('pages/order_success.ejs')); //remove in PROD
+app.get('/unauthorized', (req, res) => res.render('pages/unauthorized.ejs')); //remove in PROD
 
 app.get('/failure', (req, res) => res.render('pages/failure.ejs'));
 
@@ -1437,8 +1457,8 @@ app.get('/password_change_success', (req, res) => {
   res.render('pages/password_change_success.ejs');
 });
 
-app.get('/admin_dashboard', (req, res) => {res.render("pages/admin_dashboard.ejs");}); //add checkAdmin functions back in prod
-app.get('/sudo_dashboard', (req, res) => {res.render("pages/sudo_dashboard.ejs");});
+app.get('/admin_dashboard', checkAdmin, (req, res) => {res.render("pages/admin_dashboard.ejs");}); 
+app.get('/sudo_dashboard', checkAdmin2, (req, res) => {res.render("pages/sudo_dashboard.ejs");});
 
 app.get('/order_now', checkAuth, async (req, res) => {
   var chosenDate = req.session.chosenDate;
@@ -1703,7 +1723,7 @@ app.get('/order_success', async (req,res) => { //bugged sometimes; result.rows u
     }
     else {
       console.log('user id retrieve 200 OK, result = ',result.rows);
-      user_id = result.rows[0].user_id
+      user_id = result.rows[0].user_id;
       
       var orderDatabaseQuery = "INSERT INTO order_details VALUES";
       var selectedDate = req.session.chosenDate.slice(0,10);
@@ -1790,7 +1810,7 @@ app.get('/order_management', checkAdmin, function (req, res) {
     }
     else {
       console.log("result.rows order management = ",result.rows);
-      res.render('pages/order_management.ejs',result);
+      res.render('pages/order_management.ejs',{result: result, user: req.session.username});
     }
   });
 });
@@ -1914,22 +1934,27 @@ app.post('/drink_menu_remove', function (req, res) {
   });
 });
 
-app.post("/upload", function(req, res)
-{
-    var file;
-    console.log("req.files: ", req.files);
-
-    if(!req.files)
-    {
-        res.send("File was not found");
-        return;
-    }
-
-    file = req.files.img;  // here is the field name of the form
-
-    res.send("File Uploaded");
+// app.post("/upload",  upload.single('img'), function(req, res) {
+//   console.log(req.file, req.rawBody); //undefined, undefined
 
 
+// });
+
+// app.post('/upload', multipartMiddleware, function(req, resp) {
+//   console.log(req.rawBody, req.body, req.files);
+//   // don't forget to delete all req.files when done
+// });
+
+app.post('/upload', function (req, res) {
+  upload(req, res, function (err) {
+    console.log('req.file', req.file);   //undefined
+    // uploadToRemoteBucket(req.file.path)
+      // .then(data => {
+      //     // delete from disk first
+
+      //     res.end("UPLOAD COMPLETED!");
+      // })
+  })
 });
 
 app.post('/upload_image', async function (req, res) {

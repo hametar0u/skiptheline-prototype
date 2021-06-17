@@ -6,7 +6,7 @@
     <!-- <script defer src="../node_modules/swup/dist/swup.min.js"></script> -->
     <!-- <script defer src="../public/scripts/scripts.js"></script> -->
 
-    <% include ../partials/header_white.ejs %>
+    <% include ../partials/header_teal.ejs %>
 
     <title>Document</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
@@ -19,9 +19,7 @@
             text-align: center;
         }
 
-        .submit_button {
-            width: 20%;
-        }
+  
         @media only screen and (max-width: 768px) {
             .submit_button {
                 width: 100%;
@@ -35,7 +33,7 @@
     <h1 style="margin-top:25%; font-size:300%">Looks like you don't have access to this page!</h1>
     <!-- <main id="swup" class="transition-wipe"></main> -->
         <form action="/" method="GET" class="backButton">
-            <input class="submit_button" type="submit" value="Back to Login" style="font-size:200%; padding:20px; text-align:center">
+            <input class="submit_button back_button" type="submit" value="Back to Login" style="font-size:200%; padding:20px; text-align:center">
         </form>
     <!-- </main>  -->
 </body>
