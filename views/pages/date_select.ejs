@@ -86,12 +86,12 @@
                 <input type="hidden" value="1" id="isDesktop">
                   <select name="selectDate" id="selectDate" name="selectDate" required>
                     <option disabled selected value> -- select an option -- </option>
-                    <% row1.forEach((r) => { %>
-                      <option value="<%=r%>"><%=r.toLocaleDateString()%></option>
-                      <% }); %>
+                    <% //row1.forEach((r) => { %>
+                      <option value="<%=//r%>"><%=//r.toLocaleDateString()%></option>
+                      <% //}); %>
                   </select>
                   <br>
-                  <input type="hidden" value="<%=row2%>" id="orderedDates">
+                  <input type="hidden" value="<%=//row2%>" id="orderedDates">
                   
                   <h3 id="sameDateNotice"></h3>
             </div>
@@ -173,7 +173,21 @@
   
           // console.log(`The current value of the calendar is: ${currentValue}`);
           document.getElementById("calendarSelection").value = currentValue;
-      });
+          
+          if(!$('#calendarSelection').val()){
+            $('#desktopForm').hide();
+          }
+          else {
+            $('#desktopForm').show();
+          }
+        });
+      if(!$('#calendarSelection').val()){
+        $('#desktopForm').hide();
+      }
+      else {
+        $('#desktopForm').show();
+      }
+
   </script>
   
 </html>

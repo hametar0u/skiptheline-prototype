@@ -3,10 +3,11 @@
   <head>
       <script defer src="../../public/scripts/scripts.js"></script>
       <link rel="stylesheet" href="stylesheets/styles.css">
+    <% console.log(user); %> 
     <% if (user == "sudoUser") { %>
-      <% include ../partials/admin_nav.ejs %>  
+      <% include ../partials/sudo_nav.ejs %>  
     <% } else { %>
-      <% include ../partials/sudo_nav.ejs %>
+      <% include ../partials/admin_nav.ejs %>
     <% } %>  
 
   <style>

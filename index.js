@@ -6,18 +6,22 @@ Imgur client secret
 ac7c89ce7c15000fd0a623723cfc3b52e48dc6fa
 
 Immediate TO DO
-// prevent submit without selecting a date in date select
 // take a look at  connect-busboy or multer or connect-multiparty for getting files --can I die now
 // add next calendar at end of months
-// pathing on back to dashboard -- unable to use req.session big sad
 
 //go through all pages to see which ones still need styling
 
 Done:
+// prevent submit without selecting a date in date select
+// pathing on back to dashboard
+
+
   Desktop:
   - teal banner vertical alignment on logo off; order_success header text font size fucked (btw if you just type /order_success or /unauthorized you can access order success and unauthorized respectively)
-  - sudo_dashboard.ejs --> buttons move when you click them
+  - sudo_dashboard.ejs --> buttons move when you click them, font size kinda big?
   - admin_dashboard.ejs --> navbar fucked but sudo_dashboard fine?
+  - sudo nav font size big
+  - admin nav messed up
 <    - order now --> edit pwd div could use some work + absolutely fucked on pages that are not order now, settings logo alignment (display: block; instead of inline) %
 <    - login %
 <    - login fail %
@@ -866,7 +870,7 @@ app.get('/users', async (req, res) => { //change the EJS and query strings add c
   try {
     const client = await pool.connect()
     const result = await client.query('SELECT * FROM users');
-    const results = { 'results': (result) ? result.rows : null};
+    const results = { 'results': (result) ? result.rows : null, page: 'users'};
     res.render('pages/users.ejs', results );
     client.release();
   } catch (err) {
@@ -879,7 +883,7 @@ app.get('/orders', checkAdmin2, async (req, res) => {
   try {
     const client = await pool.connect()
     const result = await client.query('SELECT * FROM orders');
-    const results = { 'results': (result) ? result.rows : null};
+    const results = { 'results': (result) ? result.rows : null, page: 'orders'};
     res.render('pages/orders.ejs', results );
     client.release();
   } catch (err) {
@@ -892,7 +896,7 @@ app.get('/order_details', checkAdmin2, async (req, res) => {
   try {
     const client = await pool.connect()
     const result = await client.query('SELECT * FROM order_details;');
-    const results = { 'results': (result) ? result.rows : null};
+    const results = { 'results': (result) ? result.rows : null, page: 'order_details'};
     res.render('pages/order_details.ejs', results );
     client.release();
   } catch (err) {
@@ -902,12 +906,11 @@ app.get('/order_details', checkAdmin2, async (req, res) => {
 });
 
 app.get('/menu', async (req, res) => { //add checkAdmin back in prod
-  // console.log("before");
+  // console.log("req.session.username before try: ". req.session.username); // TypeError: Cannot read property 'session' of undefined
   try {
-    // console.log("in try");
+    // console.log("req.session.username before await: ". req.session.username); // TypeError: Cannot read property 'session' of undefined
 
     const client = await pool.connect()
-    // console.log("after await");
     const foodResult = await client.query('SELECT * FROM foodmenu;');
     const foodResults = { 'fRows': (foodResult) ? foodResult.rows : null};
 
@@ -915,14 +918,10 @@ app.get('/menu', async (req, res) => { //add checkAdmin back in prod
     const drinkResult = await client.query('SELECT * FROM drinkmenu;');
     const drinkResults = { 'dRows': (drinkResult) ? drinkResult.rows : null};
     console.log(drinkResults);
-    // console.log("before render");
-    console.log("req.session.username: ". req.session.username); // TypeError: Cannot read property 'session' of undefined
-    res.render('pages/menu.ejs', {row1: foodResults, row2: drinkResults, user: req.session.username} );
-    // console.log("before rel");    
+    // console.log("req.session.username: ". req.session.username); // TypeError: Cannot read property 'session' of undefined
+    res.render('pages/menu.ejs', {row1: foodResults, row2: drinkResults, user: req.session.username} ); //this somehow still works so I won't touch it
     client.release();
-    // console.log("after rel");
   } catch (err) {
-    // console.log("catch");
     console.log(err);
     res.redirect("/error");
   }
