@@ -108,7 +108,8 @@ function CalendarPicker(element, options) {
 CalendarPicker.prototype._getDaysInMonth = function (month, year) {
     if ((!month && month !== 0) || (!year && year !== 0)) return;
 
-    var date = new Date(year, month, (this.day)+7);
+    console.log("this.date.getDate(): " + this.date.getDate());
+    var date = new Date(year, month, Math.max(0,((this.date.getDate())-7)));
     var days = [];
 
     // while (date.getMonth() === month) {
@@ -117,7 +118,7 @@ CalendarPicker.prototype._getDaysInMonth = function (month, year) {
     // }
 
     var i;
-    for (i = 0; i < 38; i++) {
+    for (i = 0; i <= ((this.date.getDate()+22)-(this.date.getDate()-7)); i++) {
         days.push(new Date(date));
         date.setDate(date.getDate() + 1);
     }
