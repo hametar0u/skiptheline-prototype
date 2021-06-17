@@ -535,7 +535,6 @@ th {
 .admin_panel_element {
   width: 30%;
   display: inline-block;
-  margin: auto 15%;
 }
 
 .admin_button {
@@ -576,7 +575,6 @@ th {
   .admin_button:active {
     background-color: #59c7cb;
     border-bottom-width: 0;
-    margin-top: 0.2em;
   }
 .submit_button {
     display: inline-block;
@@ -1068,7 +1066,6 @@ html.is-leaving .transition-fade {
 #calendar #navigation-wrapper button:first-of-type {
   transform: rotate(180deg);
 }
-
 
 
 

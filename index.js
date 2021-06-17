@@ -17,11 +17,11 @@ Done:
 
 
   Desktop:
-  - teal banner vertical alignment on logo off; order_success header text font size fucked (btw if you just type /order_success or /unauthorized you can access order success and unauthorized respectively)
-  - sudo_dashboard.ejs --> buttons move when you click them, font size kinda big?
-  - admin_dashboard.ejs --> navbar fucked but sudo_dashboard fine?
-  - sudo nav font size big
-  - admin nav messed up
+    - teal banner vertical alignment on logo off; order_success header text font size fucked (btw if you just type /order_success or /unauthorized you can access order success and unauthorized respectively) %
+    - sudo_dashboard.ejs --> buttons move when you click them, font size kinda big?
+    - admin_dashboard.ejs --> navbar fucked but sudo_dashboard fine? %
+    - sudo nav font size big %
+     - admin nav messed up %
 <    - order now --> edit pwd div could use some work + absolutely fucked on pages that are not order now, settings logo alignment (display: block; instead of inline) %
 <    - login %
 <    - login fail %
