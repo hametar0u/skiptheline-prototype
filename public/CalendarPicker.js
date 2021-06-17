@@ -108,10 +108,16 @@ function CalendarPicker(element, options) {
 CalendarPicker.prototype._getDaysInMonth = function (month, year) {
     if ((!month && month !== 0) || (!year && year !== 0)) return;
 
-    var date = new Date(year, month, 1);
+    var date = new Date(year, month, (this.day)+7);
     var days = [];
 
-    while (date.getMonth() === month) {
+    // while (date.getMonth() === month) {
+    //     days.push(new Date(date));
+    //     date.setDate(date.getDate() + 1);
+    // }
+
+    var i;
+    for (i = 0; i < 38; i++) {
         days.push(new Date(date));
         date.setDate(date.getDate() + 1);
     }
@@ -198,7 +204,7 @@ CalendarPicker.prototype._insertCalendarGridDaysHeader = function () {
 /**
  * @description Adds the "Previous" and "Next" arrows on the side-navigation.
  * Also inits the click-events used to navigating.
- 
+
 CalendarPicker.prototype._insertNavigationButtons = function () {
     // Ugly long string, but at least the svg is pretty.
     var arrowSvg = '<svg enable-background="new 0 0 386.257 386.257" viewBox="0 0 386.257 386.257" xmlns="http://www.w3.org/2000/svg"><path d="m0 96.879 193.129 192.5 193.128-192.5z"/></svg>';
