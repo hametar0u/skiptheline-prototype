@@ -108,7 +108,7 @@ function CalendarPicker(element, options) {
 CalendarPicker.prototype._getDaysInMonth = function (month, year) {
     if ((!month && month !== 0) || (!year && year !== 0)) return;
 
-    var date = new Date(year, month, (this.day)+14);
+    var date = new Date(year, month, (this.day)+7);
     var days = [];
 
     // while (date.getMonth() === month) {
