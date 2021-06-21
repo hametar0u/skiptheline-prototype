@@ -6,56 +6,15 @@ Imgur client secret
 ac7c89ce7c15000fd0a623723cfc3b52e48dc6fa
 
 Immediate TO DO
+// pathing back to sudo dashboard/admin dashboard from menu inconsistent
 // take a look at  connect-busboy or multer or connect-multiparty for getting files --can I die now
-// add next calendar at end of months
 
 //go through all pages to see which ones still need styling
 
 Done:
+// add next calendar at end of months
 // prevent submit without selecting a date in date select
 // pathing on back to dashboard
-
-
-  Desktop:
-    - teal banner vertical alignment on logo off; order_success header text font size fucked (btw if you just type /order_success or /unauthorized you can access order success and unauthorized respectively) %
-    - sudo_dashboard.ejs --> buttons move when you click them, font size kinda big?
-    - admin_dashboard.ejs --> navbar fucked but sudo_dashboard fine? %
-    - sudo nav font size big %
-     - admin nav messed up %
-<    - order now --> edit pwd div could use some work + absolutely fucked on pages that are not order now, settings logo alignment (display: block; instead of inline) %
-<    - login %
-<    - login fail %
-<    - date_select.ejs --> calendar alignment %
-<    - confirm_order.ejs %
-<    - sign up.ejs --> labels instead of value, div width different from login %
-<    - error.html -->  vertical aligning %
-    - edit_password.ejs --> width of form fields, confirm button, STL banner %
-!   - menu.ejs --> navbar fucked, don't mind the image upload stuff for now %
-    - users, orders, order_details.ejs --> teal banner %
-    - database_nav.ejs --> make it look nice ig? Kinda like a sub navbar %
-    - create_account_success.ejs --> white header instead of teal (cannot make account) %
-    - password change success --> vertical aligning, teal banner (cannot make account) %
-<    - forget password --> STL banner, an email has been sent to ___ wack (cannot make account) % 
-    - reset password --> stylesheet not connected for some reason (cant make an account) %
-    - order_history --> table and text above not aligned horizontally    (cannot stripe = cannot make orders) %
-    - pending orders --> table and text above not aligned horizontally   (cannot make orders) %
-    - order_success --> header font size messed up (cannot make orders) 
-    - order management --> table not center aligned, complete order button spacing, perhaps add some instructions to make it clearer? (cannot make orders) %
-  Mobile:
-    - order now --> edit pwd too fat, cart heading + table off center %
-    - login --> bone gets pushed down for mobile S size, might actually look better without box bordering on the sides %
-    - nav.ejs --> bone too big, yikes on every page that's not order now %
-    - sign up.html --> box width different from login %
-    - error.html --> same as desktop %
-    - edit_password.ejs --> same as desktop %
-    - password change success --> font size inconsistent with other similar pages %
-    - forget password --> consider taking out the borders on the sides, an email has been sent ___ similar problems as ddesktop ver. %
-    - reset password --> same as desktop %
-    - create_account_success.ejs --> wack font size + white header?? %
-    - confirm_order.ejs --> table pushes out of the div, buttons look weird %
-    - order_history --> Might need a heading + table pushes out of page %
-    - pending orders --> Might need a heading + table pushes out of page %
-    - order_success_local.html --> text looks weird %
 
 Cant access/style for given reason: 
 Desktop:
@@ -67,11 +26,57 @@ DESKTOP
   - emails --> I give up
 MOBILE
   - date_select.ejs -->  calendar spacing wackkk
-  - confirmation_code.ejs --> STL banner not scaled properly, code box too narrow, submit button extra ugly, resend confirmation a ref cut off 
-    (gap between edges and loginbox is driving me crazy)
+  - confirmation_code.ejs --> STL banner not scaled properly, code box too narrow , submit button extra ugly, resend confirmation a ref cut off 
+    (gap between edges and loginbox is driving me crazy) --> remove margin on body {}
   
  
   - emails --> vertical alignment on logo  
+
+
+  Desktop:
+  - now header white has wack spacing wtf
+  - password change success --> font size lmao
+  - pending orders --> explanatino under first date heading
+<    - teal banner vertical alignment on logo off; order_success header text font size fucked (btw if you just type /order_success or /unauthorized you can access order success and unauthorized respectively) %
+<    - sudo_dashboard.ejs --> buttons move when you click them, font size kinda big?
+<    - admin_dashboard.ejs --> navbar fucked but sudo_dashboard fine? %
+<    - sudo nav font size big %
+<     - admin nav messed up %
+<    - order now --> edit pwd div could use some work + absolutely fucked on pages that are not order now, settings logo alignment (display: block; instead of inline) %
+<    - login %
+<    - login fail %
+<    - date_select.ejs --> calendar alignment %
+<    - confirm_order.ejs %
+<    - sign up.ejs --> labels instead of value, div width different from login %
+<    - error.html -->  vertical aligning %
+<    - edit_password.ejs --> width of form fields, confirm button, STL banner %
+!!   - menu.ejs --> navbar fucked, don't mind the image upload stuff for now %
+<    - users, orders, order_details.ejs --> teal banner %
+<    - database_nav.ejs --> make it look nice ig? Kinda like a sub navbar %
+<    - create_account_success.ejs --> white header instead of teal (cannot make account) %
+<    - forget password --> STL banner, an email has been sent to ___ wack (cannot make account) % 
+<    - reset password --> stylesheet not connected for some reason (cant make an account) %
+<    - order_history --> table and text above not aligned horizontally    (cannot stripe = cannot make orders) %
+<    - order_success --> header font size messed up (cannot make orders) 
+<    - order management --> table not center aligned, complete order button spacing, perhaps add some instructions to make it clearer? (cannot make orders) %
+  Mobile:
+  - date select --> table alignment
+  - error, unauthorized --> font size
+  - edit_password.ejs --> doesn't span the full width
+<    - order now --> edit pwd too fat, cart heading + table off center %
+<    - login --> bone gets pushed down for mobile S size, might actually look better without box bordering on the sides %
+<    - nav.ejs --> bone too big, yikes on every page that's not order now %
+<    - sign up.html --> box width different from login %
+<    - password change success --> font size inconsistent with other similar pages %
+<    - forget password --> consider taking out the borders on the sides, an email has been sent ___ similar problems as ddesktop ver. %
+<    - reset password --> same as desktop %
+<    - create_account_success.ejs --> wack font size + white header?? %
+<    - confirm_order.ejs --> table pushes out of the div, buttons look weird %
+<    - order_history --> Might need a heading + table pushes out of page %
+<    - pending orders --> Might need a heading + table pushes out of page %
+ 
+
+
   
   //cors
   //js import error cannot start react
@@ -927,7 +932,7 @@ app.get('/menu', async (req, res) => { //add checkAdmin back in prod
   }
 });
 
-app.get('/order_success', (req, res) => res.render('pages/order_success.ejs')); //remove in PROD
+app.get('/ordersuccess', (req, res) => res.render('pages/order_success.ejs')); //remove in PROD
 app.get('/unauthorized', (req, res) => res.render('pages/unauthorized.ejs')); //remove in PROD
 
 app.get('/failure', (req, res) => res.render('pages/failure.ejs'));
@@ -1693,6 +1698,7 @@ app.post("/create-checkout-session", async (req, res) => {
 app.get('/order_success', async (req,res) => { //bugged sometimes; result.rows undefined
   var user_id,order_id;
   var username = req.session.username;
+  console.log("req.session.username, ", username); // didnt fire
   var cart_contents = req.session.cart
   console.log("req session cart 869= ", cart_contents);
 
