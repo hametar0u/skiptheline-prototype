@@ -388,6 +388,14 @@ input {
   width: 90%;
 }
 
+.displayOnMobile {
+  display: none;
+} 
+.displayOnDesktop {
+  display: inline;
+  text-align: left;
+}
+
 @media only screen and (max-width: 768px) {
   .loginbox {
     width: 100%;
@@ -409,6 +417,16 @@ input {
 
   .header_tr {
     text-align: center;
+  }
+
+  .header {
+    padding-left: 0em;
+  }
+  .displayOnMobile {
+    display: inline;
+  } 
+  .displayOnDesktop {
+    display: none;
   }
 }
 
