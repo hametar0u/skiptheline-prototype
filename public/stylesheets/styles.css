@@ -128,10 +128,14 @@ button:hover {
     /* margin-bottom:20px; */
     text-align:left;
     padding-left: 1.5em;
-    padding-right: 1.5em;
+    /* padding-right: 1.5em; */
     display:inline-block;
     z-index: 69;
     transition: 0.3s;
+}
+
+.header_tr {
+  text-align: left;
 }
 
 .headerDesktop {
@@ -403,8 +407,10 @@ input {
     font-size: 24px;
   }
 
+  .header_tr {
+    text-align: center;
+  }
 }
-
 
 .btn {
     background-color:#60D5DA;
@@ -426,6 +432,10 @@ table, th{
 tr:nth-child(even) {
   background-color: #f2f2f2;
   text-align: center;
+}
+
+td.td_plain {
+  padding: 0px;
 }
 
 td {
