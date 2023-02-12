@@ -34,7 +34,7 @@
     "xoauth2": "^1.2.0"
   },
   "devDependencies": {
-    "got": "^11.3.0",
+    "got": "^12.5.3",
     "tape": "^4.7.0"
   },
   "repository": {
